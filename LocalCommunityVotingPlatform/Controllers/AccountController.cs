@@ -15,21 +15,21 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
-namespace Certification_System.Controllers
+namespace LocalCommunityVotingPlatform.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         //private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
 
         public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager,
             //IEmailSender emailSender,
             IConfiguration configuration)
@@ -103,7 +103,7 @@ namespace Certification_System.Controllers
             return "Register attempt failed";
         }
 
-        private async Task<string> CreateJwtToken(IdentityUser loggedUser)
+        private async Task<string> CreateJwtToken(User loggedUser)
         {
             var claims = new List<Claim>
             {

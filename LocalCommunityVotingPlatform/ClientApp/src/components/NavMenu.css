@@ -16,3 +16,27 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+.top-bar {
+    background: rgb(9,30,121);
+    background: linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%);
+}
+
+.title-bar {
+    background: rgb(9,30,121);
+    background: linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%);
+}
+
+.top-bar, .top-bar ul {
+    background: rgb(9,30,121);
+    background: linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%);
+    color: white;
+}
+
+a {
+    color: #eaeaea;
+}
+
+a:hover, a:focus {
+    color: #8cf1e8;
+}

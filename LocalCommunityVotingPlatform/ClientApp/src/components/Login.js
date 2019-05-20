@@ -9,7 +9,14 @@ const buttonStyle = {
 
 const inlineBlock = {
     "display": 'inline-block',
-    "font-size": "20px"
+    "fontSize": "20px"
+};
+
+const h1 = {
+    "background": "rgb(9,30,121)",
+    "background": "linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%)",
+    "fontSize": "24px",
+    "color": "white"
 };
 
 export class Login extends Component {
@@ -19,7 +26,8 @@ export class Login extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            formNotValid: 'false'
         }
     }
 
@@ -29,38 +37,62 @@ export class Login extends Component {
         });
     }
 
-    login(e) {
+    login = async (e) => {
+        this.props.callBack();
         e.preventDefault();
-        axios.post('/api/Login', {
-                Email: this.state.email,
-                Password: this.state.password
+        await axios.post('/api/Login', {
+            Email: this.state.email,
+            Password: this.state.password
         }).then(res => {
-            localStorage.setItem('jwt_token', res.data),
-                this.props.history.push('/counter');
+            if (res.data != "Login attempt failed") {
+                localStorage.setItem('jwt_token', res.data);
+                this.props.callBack();
+            }
         });
+    }
+
+    Rerender = () => {
+        this.forceUpdate();
+    }
+
+    validateForm = (e) => {
+        if (this.state.password.length >= 6
+            && this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+            this.setState({ formNotValid: false })
+            this.login(e);
+        }
+        else {
+            this.setState({ formNotValid: true }),
+                console.log(this.state.formNotValid)
+        }
     }
 
     render() {
         return (
-            <div className="grid-x grid-padding-x">
-                <div className="grid-container fluid callout translucent-form-overlay small-12 medium-6 cell">
-                    <div className="text-center">
-                        <h1>Logowanie</h1>
-                    </div>
-                    <form onSubmit={e=> this.login(e)}>
-                        <div className="grid-container">
-                            <div>
-                                <label><span><FontAwesomeIcon icon="envelope" /></span> Adres email</label>
-                                <input type="text" name="email" onChange={e => this.changeValue(e)} value={this.state.email} />
-
-                                <label><span><FontAwesomeIcon icon="key" /></span> Hasło</label>
-                                <input type="password" name="password" onChange={e => this.changeValue(e)} value={this.state.password}/>
-                            </div>
-                            <div>
-                                <button className="button secondary float-center" style={buttonStyle} type="submit">Zaloguj</button>
-                            </div>
+            <div>
+                <div className="text-center" style={h1}>
+                    <h1>Społeczność testowa</h1>
+                </div>
+                <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
+                    <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
+                        <div className="text-center">
+                            <h2>Logowanie</h2>
                         </div>
-                    </form>
+                        <form onSubmit={e => this.login(e)}>
+                            <div className="grid-container">
+                                <div>
+                                    <label><span><FontAwesomeIcon icon="envelope" /></span> Adres email</label>
+                                    <input type="text" name="email" onChange={e => this.changeValue(e)} value={this.state.email} />
+
+                                    <label><span><FontAwesomeIcon icon="key" /></span> Hasło</label>
+                                    <input type="password" name="password" onChange={e => this.changeValue(e)} value={this.state.password} />
+                                </div>
+                                <div>
+                                    <button className="button secondary float-center" style={buttonStyle} type="submit">Zaloguj</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         );

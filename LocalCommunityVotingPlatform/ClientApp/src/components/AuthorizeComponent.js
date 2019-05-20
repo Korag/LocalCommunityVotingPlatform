@@ -1,49 +1,82 @@
 ﻿import React, { Component } from 'react';
 import { getJWTtoken } from '../helpers/jwtHandler'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Route, Router } from 'react-router-dom'
 import axios from 'axios'
+
+import { Login } from './Login';
+import { Layout } from './Layout';
 
 class AuthorizeComponent extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            userRole: null
+            authorized: null,
+            performedLogin: false
         };
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
+        this.CheckIfAuthorized()
+    }
+
+    CheckIfAuthorized = () => {
         const token = getJWTtoken();
+
         if (!token) {
-            this.props.history.push('/Login');
+            this.setState({
+                authorized: false
+            });
         }
 
-        axios.get('/getUserRole/', {
+        axios.get('api/getUserRole/', {
             headers: {
                 Authorization: token
             }
-        }).then(res => this.setState({
-            userRole: res.data
-        })).catch(err => {
+        }).then(res => {
+            this.setState({
+                authorized: true
+            });
+        }
+        ).catch(err => {
             localStorage.removeItem('jwt_token');
-            this.props.history.push('/Login');
+            this.setState({
+                authorized: false
+            });
+        });
+
+        console.log(this.state.authorized)
+    }
+
+    Logout = () => {
+        localStorage.removeItem('jwt_token');
+        this.setState({
+            authorized: false
         });
     }
 
-    render() {
-        if (this.state.userRole === null) {
-            return (
-                < div > <h1>Waiting for api action..</h1></div>
-            );
-        }
-        if (this.state.userRole == "Admin") {
-            // return admin component
+    RerenderTest = () => {
+        this.forceUpdate();
+    }
+
+    resolveAuthorization = () => {
+    
+        if (this.state.authorized == true)
+        {
+            return (<Layout Logout={this.Logout}/>);
         }
         else {
-            // return user component
+            return (<Login callBack={this.CheckIfAuthorized} />);
         }
-    };
+    }
 
+    render() {
+        return (
+            <div>
+                {this.resolveAuthorization()}
+            </div>
+        )
+    };
 }
 
 export default withRouter(AuthorizeComponent);

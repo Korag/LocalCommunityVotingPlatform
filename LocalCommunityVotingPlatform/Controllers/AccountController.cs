@@ -18,7 +18,7 @@ using Microsoft.Extensions.Configuration;
 namespace LocalCommunityVotingPlatform.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
+    [Route("api/[action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -41,12 +41,9 @@ namespace LocalCommunityVotingPlatform.Controllers
             //_emailSender = emailSender;
         }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
-
         [HttpPost]
         [AllowAnonymous]
-        public async Task<string> Login(LoginViewModel loginModel)
+        public async Task<string> Login([FromBody]LoginViewModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +65,15 @@ namespace LocalCommunityVotingPlatform.Controllers
             List<string> AvailableRoles = new List<string>{"User", "Admin"};
 
             return AvailableRoles;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public string GetUserRole()
+        {
+            string Role = "";
+
+            return Role;
         }
 
         [HttpPost]

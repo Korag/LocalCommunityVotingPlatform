@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable } from 'mdbreact';
+import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
 import { getJWTtoken } from '../helpers/jwtHandler';
 
 export class UsersTable extends Component {
@@ -34,6 +34,12 @@ export class UsersTable extends Component {
                         field: 'role',
                         sort: 'asc',
                         width: 200
+                    },
+                    {
+                        label: 'Edytuj',
+                        field: 'edit',
+                        sort: 'asc',
+                        width: 200
                     }
                 ],
                 rows: []
@@ -57,6 +63,15 @@ export class UsersTable extends Component {
             .then(result => {
                 console.log(result);
                 data.rows = result;
+                //data.rows.push(
+                //    {
+                //        email: "l.czepielik@gmail.com",
+                //        firstName: "Łukasz",
+                //        lastName: "Czepielik",
+                //        role: "Admin",
+                //        edit: <MDBBtn label="Check" className="button tiny success" style={{ marginBottom: 0}}>Edytuj</MDBBtn>
+                //    });
+
                 this.setState({ data });
             })
     }
@@ -64,6 +79,7 @@ export class UsersTable extends Component {
     render() {
         return (
             <MDBDataTable
+                responsive
                 striped
                 bordered
                 hover

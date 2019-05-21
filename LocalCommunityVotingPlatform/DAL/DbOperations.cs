@@ -20,5 +20,15 @@ namespace LocalCommunityVotingPlatform.DAL
         {
             return _context.Users.ToList();
         }
+
+        public User GetUserById(string id)
+        {
+            return _context.Users.Where(z=> z.Id == id).FirstOrDefault();
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

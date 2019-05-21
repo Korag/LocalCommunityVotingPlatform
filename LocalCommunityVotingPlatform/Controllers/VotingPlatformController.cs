@@ -23,7 +23,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ICollection<UserViewModel> GetUsers()
         {
             var Users = _context.GetUsers();
@@ -32,19 +32,50 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             foreach (var user in Users)
             {
+                var UserRoles = _userManager.GetRolesAsync(user).Result;
+
                 UserViewModel singleUserView = new UserViewModel
                 {
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Role = "Rola"
-                    //Role =  _userManager.FindByIdAsync(user.Id).Roles.RoleId
+                    Role = UserRoles.FirstOrDefault()
                 };
 
                 usersView.Add(singleUserView);
             }
 
             return usersView;
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<User> EditUser(UserViewModel UpdatedUser)
+        {
+            User LegacyUser = _context.GetUserById(UpdatedUser.Id);
+
+            LegacyUser.FirstName = UpdatedUser.FirstName;
+            LegacyUser.LastName = UpdatedUser.LastName;
+            LegacyUser.Email = UpdatedUser.Email;
+
+            var Roles = _userManager.GetRolesAsync(LegacyUser).Result;
+            _userManager.RemoveFromRoleAsync(LegacyUser, Roles.FirstOrDefault());
+            _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<User> DeleteUser(string id)
+        {
+            User User = _context.GetUserById(id);
+            _userManager.DeleteAsync(User);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

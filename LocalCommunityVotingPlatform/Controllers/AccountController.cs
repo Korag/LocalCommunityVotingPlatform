@@ -69,11 +69,9 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpGet]
         [Authorize]
-        public string GetUserRole()
+        public string Authorize()
         {
-            string Role = "";
-
-            return Role;
+            return "OK";
         }
 
         [HttpPost]
@@ -134,13 +132,6 @@ namespace LocalCommunityVotingPlatform.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(Login), "Account");
         }
 
         //[HttpGet]

@@ -39,7 +39,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Role = UserRoles.FirstOrDefault()
+                    Role = UserRoles.FirstOrDefault(),
+
+                    Edit = "<MDBBtn label=\"Check\" className=\"button tiny success\" style={{ marginBottom: 0}}>Edytuj</MDBBtn>"
                 };
 
                 usersView.Add(singleUserView);

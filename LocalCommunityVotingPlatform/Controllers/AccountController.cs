@@ -75,7 +75,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<string> Register(RegisterViewModel registeredUser)
         {
             if (ModelState.IsValid)

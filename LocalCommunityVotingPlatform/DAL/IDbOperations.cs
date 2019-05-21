@@ -7,6 +7,7 @@ namespace LocalCommunityVotingPlatform.DAL
     {
         ICollection<User> GetUsers();
         User GetUserById(string id);
+
         void SaveChanges();
     }
 }

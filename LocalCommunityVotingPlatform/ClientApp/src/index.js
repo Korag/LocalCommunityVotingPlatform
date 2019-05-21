@@ -1,4 +1,4 @@
-//import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'foundation-sites/dist/css/foundation.css'
 import 'foundation-sites/dist/js/foundation.js'
 import './css/Style.css'

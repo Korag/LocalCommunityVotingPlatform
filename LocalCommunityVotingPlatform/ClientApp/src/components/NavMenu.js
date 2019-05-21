@@ -41,13 +41,13 @@ export class NavMenu extends Component {
                         <ul className="dropdown menu" data-dropdown-menu>
                             <li className="menu-text">Społeczność testowa</li>
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/">Uchwały</NavLink>
+                                <NavLink tag={Link} to="/">Uchwały</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/users">Użytkownicy</NavLink>
+                                <NavLink tag={Link} to="/users">Użytkownicy</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/mydata">Moje dane</NavLink>
+                                <NavLink tag={Link} to="/mydata">Moje dane</NavLink>
                             </NavItem>
 
                         </ul>

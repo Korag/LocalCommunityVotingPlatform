@@ -50,7 +50,7 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult<User> EditUser(UserViewModel UpdatedUser)
+        public IActionResult EditUser(UserViewModel UpdatedUser)
         {
             User LegacyUser = _context.GetUserByEmail(UpdatedUser.Email);
 
@@ -63,19 +63,37 @@ namespace LocalCommunityVotingPlatform.Controllers
             _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
 
             _context.SaveChanges();
-            
+
             return Ok();
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult<User> DeleteUser(string Email)
+        public ActionResult<User> DeleteUser(string email)
         {
-            User User = _context.GetUserByEmail(Email);
+            User User = _context.GetUserByEmail(email);
             _userManager.DeleteAsync(User);
             _context.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public UserViewModel GetUserByEmail(string email)
+        {
+            User User = _context.GetUserByEmail(email);
+            var UserRoles = _userManager.GetRolesAsync(User).Result;
+
+            UserViewModel userViewModel = new UserViewModel
+            {
+                Email = User.Email,
+                FirstName = User.FirstName,
+                LastName = User.LastName,
+                Role = UserRoles.FirstOrDefault()
+            };
+
+            return userViewModel;
         }
     }
 }

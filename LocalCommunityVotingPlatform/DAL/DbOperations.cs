@@ -21,9 +21,9 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Users.ToList();
         }
 
-        public User GetUserById(string id)
+        public User GetUserByEmail(string email)
         {
-            return _context.Users.Where(z=> z.Id == id).FirstOrDefault();
+            return _context.Users.Where(z=> z.Email == email).FirstOrDefault();
         }
 
         public void SaveChanges()

@@ -39,9 +39,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Role = UserRoles.FirstOrDefault(),
-
-                    Edit = "<MDBBtn label=\"Check\" className=\"button tiny success\" style={{ marginBottom: 0}}>Edytuj</MDBBtn>"
+                    Role = UserRoles.FirstOrDefault()
                 };
 
                 usersView.Add(singleUserView);
@@ -54,7 +52,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult<User> EditUser(UserViewModel UpdatedUser)
         {
-            User LegacyUser = _context.GetUserById(UpdatedUser.Id);
+            User LegacyUser = _context.GetUserByEmail(UpdatedUser.Email);
 
             LegacyUser.FirstName = UpdatedUser.FirstName;
             LegacyUser.LastName = UpdatedUser.LastName;
@@ -65,15 +63,15 @@ namespace LocalCommunityVotingPlatform.Controllers
             _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
 
             _context.SaveChanges();
-
+            
             return Ok();
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult<User> DeleteUser(string id)
+        public ActionResult<User> DeleteUser(string Email)
         {
-            User User = _context.GetUserById(id);
+            User User = _context.GetUserByEmail(Email);
             _userManager.DeleteAsync(User);
             _context.SaveChanges();
 

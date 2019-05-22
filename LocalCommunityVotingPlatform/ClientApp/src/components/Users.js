@@ -25,23 +25,24 @@ export class Users extends Component {
             userEmail: userEmailFromButton
         })          
         console.log(userEmailFromButton);
+        console.log(this.state.userEmail)
     }
 
 
-    //Delete = (userEmailFromButton) => {
+    Delete = (userEmailFromButton) => {
         
-    //    axios.post('/api/DeleteUser', {
-    //        headers: {
-    //            Authorization: getJWTtoken()
-    //        },
-    //        Email: this.state.userEmail
-    //    }).then(res => this.forceUpdate());
-    //}
+        axios.post('/api/DeleteUser', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            email: this.state.userEmail
+        }).then(res => this.ShowFormEdit(userEmailFromButton));
+    }
 
     render() {
         return <div style={{ marginTop: 30 }}>
             {this.state.showList ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete
-                ={this.Delete} /> : <UpdateUser ShowFormEdit={this.ShowFormEdit} />}
+                ={this.Delete} /> : <UpdateUser ShowFormEdit={this.ShowFormEdit} userEmail={this.state.userEmail} />}
             </div>
     }
 }

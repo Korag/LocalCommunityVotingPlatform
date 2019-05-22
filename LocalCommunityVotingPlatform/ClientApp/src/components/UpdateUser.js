@@ -43,10 +43,13 @@ export class UpdateUser extends Component {
         this.setState({ role: e.target.value });
     }
 
-    updateUser = async (e) => {
-        //this.props.callBack();
+    componentDidMount = () => {
+        this.DownloadUserData();
+    }
+
+    updateUser = (e) => {
         e.preventDefault();
-        await axios.post('/api/UpdateUser', {
+        axios.post('/api/EditUser', {
             headers: {
                 Authorization: getJWTtoken()
             },
@@ -55,10 +58,28 @@ export class UpdateUser extends Component {
             Email: this.state.email,
             Role: this.state.role
         }).then(res => {
-            //this.props.history.push(/users);
-            //this.props.callBack();
+            this.props.ShowFormEdit();
         })
     };
+
+    DownloadUserData = () => {
+        axios.get('api/GetUserByEmail', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                email: this.props.userEmail 
+            }
+        }).then(result => {
+                    this.setState({
+                    email: result.data.email,
+                    password: result.data.password,
+                    firstName: result.data.firstName,
+                    lastName: result.data.lastName,
+                    role: result.data.role,     
+                });
+            })
+    }
 
     render() {
         return (
@@ -82,8 +103,8 @@ export class UpdateUser extends Component {
                                     <input type="text" name="lastName" onChange={e => this.changeValue(e)} value={this.state.lastName} />
                                     <label>Rola</label>
                                     <select value={this.state.role} onChange={this.handleChange}>
-                                        <option value="Admin">Administrator</option>
                                         <option value="User">Użytkownik</option>
+                                        <option value="Admin">Administrator</option>
                                     </select>
                                 </div>
                                 <div className="row">

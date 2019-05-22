@@ -39,7 +39,14 @@ export class UsersTable extends Component {
                         label: 'Edytuj',
                         field: 'edit',
                         sort: 'asc',
-                        width: 200
+                        width: 150
+                    }
+                    ,
+                    {
+                        label: 'Usuń',
+                        field: 'delete',
+                        sort: 'asc',
+                        width: 150
                     }
                 ],
                 rows: []
@@ -63,6 +70,13 @@ export class UsersTable extends Component {
             .then(result => {
                 console.log(result);
                 data.rows = result;
+
+                for (var i = 0; i < data.rows.length; i++) {
+                    var singleEmail = data.rows[i].email;
+                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEdit(singleEmail)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
+                    data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => this.props.Delete(singleEmail)} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                }
+
                 //data.rows.push(
                 //    {
                 //        email: "l.czepielik@gmail.com",

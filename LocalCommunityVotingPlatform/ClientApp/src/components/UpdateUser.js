@@ -49,17 +49,17 @@ export class UpdateUser extends Component {
 
     updateUser = (e) => {
         e.preventDefault();
-        axios.post('/api/EditUser', {
-            headers: {
-                Authorization: getJWTtoken()
-            },
-            FirstName: this.state.firstName,
-            LastName: this.state.lastName,
-            Email: this.state.email,
-            Role: this.state.role
-        }).then(res => {
-            this.props.ShowFormEdit();
-        })
+
+        axios.defaults.headers.common['Authorization'] = getJWTtoken();
+        axios.post("api/EditUser",
+            {
+                FirstName: this.state.firstName,
+                LastName: this.state.lastName,
+                Email: this.state.email,
+                Role: this.state.role
+            }).then(res => {
+                this.props.ShowFormEdit();
+            });
     };
 
     DownloadUserData = () => {

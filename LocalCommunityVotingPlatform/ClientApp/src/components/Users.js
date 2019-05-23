@@ -2,9 +2,11 @@
 //import { UsersTable } from './UsersTable';
 import { UsersTable } from './UsersTable';
 import { UpdateUser } from './UpdateUser';
+import { AddUser } from './AddUser'
 
 import axios from 'axios'
 import { getJWTtoken } from '../helpers/jwtHandler'
+
 
 export class Users extends Component {
     static displayName = Users.name;
@@ -14,10 +16,10 @@ export class Users extends Component {
 
         this.state = {
             showList: true,
-            userEmail: ''
+            userEmail: '',
+            addUserReq: false
         }
     }
-
 
     ShowFormEdit = (userEmailFromButton) => {
         this.setState({
@@ -27,6 +29,14 @@ export class Users extends Component {
         console.log(userEmailFromButton);
         console.log(this.state.userEmail)
     }
+
+    ShowFormAddUser = () => {
+        console.log("jestem");
+        this.setState({
+            addUserReq: !this.state.addUserReq,
+        })
+    }
+
 
     Delete = (userEmailFromButton) => {
         
@@ -39,9 +49,18 @@ export class Users extends Component {
     }
 
     render() {
-        return <div style={{ marginTop: 30 }}>
-            {this.state.showList ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete
-                ={this.Delete} /> : <UpdateUser ShowFormEdit={this.ShowFormEdit} userEmail={this.state.userEmail} />}
+        if (this.state.addUserReq == false) {
+            return <div style={{ marginTop: 30 }}>
+                {this.state.showList
+                    ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete={this.Delete} ShowFormAddUser={this.ShowFormAddUser} />
+                    : <UpdateUser ShowFormEdit={this.ShowFormEdit} userEmail={this.state.userEmail} />
+                }
             </div>
+        }
+        else {
+            return <div style={{ marginTop: 30 }}>
+                <AddUser ShowFormAddUser={this.ShowFormAddUser}/>
+            </div>
+        }
     }
 }

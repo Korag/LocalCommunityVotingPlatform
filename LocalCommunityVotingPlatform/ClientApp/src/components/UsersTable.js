@@ -92,13 +92,18 @@ export class UsersTable extends Component {
 
     render() {
         return (
-            <MDBDataTable
-                responsive
-                striped
-                bordered
-                hover
-                data={this.state.data}
-            />
+            <div>
+                <div className="row">
+                    <button className="button float-left" onClick={() => this.props.ShowFormAddUser()}>Dodaj nowego użytkownika</button>
+                </div>
+                <MDBDataTable
+                    responsive
+                    striped
+                    bordered
+                    hover
+                    data={this.state.data}
+                />
+            </div>
         );
     }
 }

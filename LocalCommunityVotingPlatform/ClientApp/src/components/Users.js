@@ -17,7 +17,8 @@ export class Users extends Component {
         this.state = {
             showList: true,
             userEmail: '',
-            addUserReq: false
+            addUserReq: false,
+            refreshNeeded: false,
         }
     }
 
@@ -25,7 +26,7 @@ export class Users extends Component {
         this.setState({
             showList: !this.state.showList,
             userEmail: userEmailFromButton
-        })          
+        })
         console.log(userEmailFromButton);
         console.log(this.state.userEmail)
     }
@@ -37,14 +38,23 @@ export class Users extends Component {
         })
     }
 
+    RefreshComponent = () => {
+        this.setState({
+            refreshNeeded: !this.state.refreshNeeded
+        });
+    }
 
     Delete = (userEmailFromButton) => {
-        
+
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post('/api/DeleteUser',
+        axios.post('/api/DeleteUser', null,
             {
-                email: this.state.userEmail
-            }).then(res => {this.ShowFormEdit(userEmailFromButton)
+                params:
+                {
+                    email: userEmailFromButton
+                }
+            }).then(res => {
+                this.RefreshComponent()
             });
     }
 
@@ -52,14 +62,14 @@ export class Users extends Component {
         if (this.state.addUserReq == false) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
-                    ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete={this.Delete} ShowFormAddUser={this.ShowFormAddUser} />
+                    ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete={this.Delete} ShowFormAddUser={this.ShowFormAddUser} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                     : <UpdateUser ShowFormEdit={this.ShowFormEdit} userEmail={this.state.userEmail} />
                 }
             </div>
         }
         else {
             return <div style={{ marginTop: 30 }}>
-                <AddUser ShowFormAddUser={this.ShowFormAddUser}/>
+                <AddUser ShowFormAddUser={this.ShowFormAddUser} />
             </div>
         }
     }

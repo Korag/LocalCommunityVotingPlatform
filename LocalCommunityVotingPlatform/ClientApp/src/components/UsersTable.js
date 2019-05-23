@@ -54,6 +54,13 @@ export class UsersTable extends Component {
         }
     }
 
+    componentDidUpdate = async () => {
+        if (this.props.refreshNeeded == true) {
+           await this.downloadUsers();
+           await this.props.RefreshComponent();
+        }
+    }
+
     componentDidMount = () => {
         this.downloadUsers();
     }
@@ -71,10 +78,13 @@ export class UsersTable extends Component {
                 console.log(result);
                 data.rows = result;
 
-                for (var i = 0; i < data.rows.length; i++) {
-                    var singleEmail = data.rows[i].email;
+                for (let i = 0; i < data.rows.length; i++) {
+                    let singleEmail = data.rows[i].email;
+                    let userCredentials = data.rows[i].firstName + " " + data.rows[i].lastName;
+                    console.log(singleEmail);
+                    console.log(userCredentials);
                     data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEdit(singleEmail)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
-                    data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => this.props.Delete(singleEmail)} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                    data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć użytkownika "${userCredentials}" ?`)) this.props.Delete(singleEmail) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
                 }
 
                 //data.rows.push(

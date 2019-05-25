@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using LocalCommunityVotingPlatform.Services;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -24,21 +25,20 @@ namespace LocalCommunityVotingPlatform.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager,
-            //IEmailSender emailSender,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
-            //_emailSender = emailSender;
+            _emailSender = new EmailProvider(_configuration);
         }
 
         [HttpPost]
@@ -99,7 +99,15 @@ namespace LocalCommunityVotingPlatform.Controllers
 
                 if (result.Succeeded)
                 {
-                    //to do: send email with email and non hashed password
+                    await _emailSender.SendEmail(newUser.Email, "Rejestracja LocalCommunityVotingApp",
+                        $"Utworzono konto dla: {newUser.FirstName} {newUser.LastName}. <br />" +
+                        $"<br />" + 
+                        $"Twoje dane logowania: <br />" +
+                        $"email: {newUser.Email} <br />" +
+                        $"hasło: {registeredUser.Password} <br />" +
+                        $"<br />" +
+                        $"W celach bezpieczeństwa zmień swoje hasło zaraz po udanym logowaniu.");
+
                     return "Register attempt succesfull";
                 }
             }

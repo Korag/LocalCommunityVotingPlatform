@@ -13,6 +13,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Swashbuckle.AspNetCore.Swagger;
+using LocalCommunityVotingPlatform.Services;
 
 namespace LocalCommunityVotingPlatform
 {
@@ -66,6 +67,7 @@ namespace LocalCommunityVotingPlatform
             });
 
             services.AddSingleton<IDbOperations, DbOperations>();
+            services.AddTransient<IEmailSender, EmailProvider>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

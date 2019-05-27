@@ -30,5 +30,10 @@ namespace LocalCommunityVotingPlatform.DAL
         {
             _context.SaveChanges();
         }
+
+        public void AddResolution(Resolution resolution)
+        {
+            _context.Resolutions.Add(resolution);
+        }
     }
 }

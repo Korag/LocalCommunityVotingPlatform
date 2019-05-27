@@ -8,6 +8,8 @@ namespace LocalCommunityVotingPlatform.DAL
         ICollection<User> GetUsers();
         User GetUserByEmail(string email);
 
+        void AddResolution(Resolution resolution);
+
         void SaveChanges();
     }
 }

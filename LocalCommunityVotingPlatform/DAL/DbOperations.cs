@@ -16,6 +16,12 @@ namespace LocalCommunityVotingPlatform.DAL
             _context.Database.EnsureCreated();
         }
 
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
+        #region Users
         public ICollection<User> GetUsers()
         {
             return _context.Users.ToList();
@@ -23,17 +29,23 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.Where(z=> z.Email == email).FirstOrDefault();
+            return _context.Users.Where(z => z.Email == email).FirstOrDefault();
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
+        #endregion
 
+        #region Resolutions
         public void AddResolution(Resolution resolution)
         {
             _context.Resolutions.Add(resolution);
         }
+
+        public ICollection<Resolution> GetResolutions()
+        {
+            return _context.Resolutions.ToList();
+        }
+
+        #endregion
+
     }
 }

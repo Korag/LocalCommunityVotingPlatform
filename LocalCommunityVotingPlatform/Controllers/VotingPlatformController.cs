@@ -100,7 +100,7 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult<Resolution> AddResolution(ResolutionViewModel newResolution)
+        public ActionResult<Resolution> AddResolution(AddResolutionViewModel newResolution)
         {
             if (ModelState.IsValid)
             {
@@ -118,10 +118,37 @@ namespace LocalCommunityVotingPlatform.Controllers
                 _context.AddResolution(Resolution);
 
                 return Ok();
-                }
+            }
 
             return BadRequest(newResolution);
         }
 
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ICollection<DisplayResolutionViewModel> GetResolutions()
+        {
+            var Resolutions = _context.GetResolutions();
+
+            ICollection<DisplayResolutionViewModel> resolutionsViewModel = new List<DisplayResolutionViewModel>();
+
+            foreach (var resolution in Resolutions)
+            {
+                DisplayResolutionViewModel singleResolutionViewModel = new DisplayResolutionViewModel
+                {
+                    Id = resolution.Id,
+                    Date = resolution.Date,
+                    Indexer = resolution.Indexer,
+                    
+                    Title = resolution.Title,
+                    Description = resolution.Description,
+                    ActiveToVoteBeforeDate = resolution.ActiveToVoteBeforeDate
+                };
+
+                resolutionsViewModel.Add(singleResolutionViewModel);
+            }
+
+            return resolutionsViewModel;
+        }
     }
 }

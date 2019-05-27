@@ -4,8 +4,10 @@ using LocalCommunityVotingPlatform.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -95,5 +97,31 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             return userViewModel;
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<Resolution> AddResolution(ResolutionViewModel newResolution)
+        {
+            if (ModelState.IsValid)
+            {
+                var Resolution = new Resolution
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Date = DateTime.UtcNow.Date,
+                    Indexer = "",
+
+                    Title = newResolution.Title,
+                    Description = newResolution.Description,
+                    ActiveToVoteBeforeDate = newResolution.ActiveToVoteBeforeDate
+                };
+
+                _context.AddResolution(Resolution);
+
+                return Ok();
+                }
+
+            return BadRequest(newResolution);
+        }
+
     }
 }

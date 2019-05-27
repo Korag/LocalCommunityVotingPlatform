@@ -50,6 +50,12 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Resolutions.Where(z => z.Id == resolutionId).FirstOrDefault();
         }
 
+        public void RemoveResolution(string resolutionId)
+        {
+            Resolution resolution = _context.Resolutions.Where(z => z.Id == resolutionId).FirstOrDefault();
+            _context.Resolutions.Remove(resolution);
+        }
+
         #endregion
 
     }

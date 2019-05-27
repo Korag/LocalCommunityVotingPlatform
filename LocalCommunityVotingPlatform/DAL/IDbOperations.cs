@@ -17,6 +17,7 @@ namespace LocalCommunityVotingPlatform.DAL
         void AddResolution(Resolution resolution);
         ICollection<Resolution> GetResolutions();
         Resolution GetResolutionById(string resolutionId);
+        void RemoveResolution(string resolutionId);
 
         #endregion
 

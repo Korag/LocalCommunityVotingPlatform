@@ -167,5 +167,15 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             return Ok();
         }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<Resolution> DeleteResolution(string resolutionId)
+        {
+            _context.RemoveResolution(resolutionId);
+
+            return Ok();
+        }
     }
 }

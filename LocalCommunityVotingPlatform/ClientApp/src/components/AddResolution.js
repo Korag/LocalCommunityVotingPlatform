@@ -71,7 +71,7 @@ export class AddResolution extends Component {
                 <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
                     <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
                         <div className="text-center">
-                            <h2>Dodaj użytkownika</h2>
+                            <h2>Dodaj uchwałę</h2>
                         </div>
                         <form onSubmit={e => this.AddResolution(e)}>
                             <div className="grid-container">

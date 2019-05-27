@@ -137,7 +137,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 DisplayResolutionViewModel singleResolutionViewModel = new DisplayResolutionViewModel
                 {
                     Id = resolution.Id,
-                    Date = resolution.Date,
+                    CreationDate = resolution.Date,
                     Indexer = resolution.Indexer,
                     
                     Title = resolution.Title,

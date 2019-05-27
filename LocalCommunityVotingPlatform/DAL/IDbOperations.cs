@@ -18,6 +18,7 @@ namespace LocalCommunityVotingPlatform.DAL
         ICollection<Resolution> GetResolutions();
         Resolution GetResolutionById(string resolutionId);
         void RemoveResolution(string resolutionId);
+        int GetResolutionsCountByMonth(int month);
 
         #endregion
 

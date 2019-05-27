@@ -55,6 +55,10 @@ namespace LocalCommunityVotingPlatform.DAL
             Resolution resolution = _context.Resolutions.Where(z => z.Id == resolutionId).FirstOrDefault();
             _context.Resolutions.Remove(resolution);
         }
+        public int GetResolutionsCountByMonth(int month)
+        {
+           return  _context.Resolutions.Where(z => z.Date.Month == month).Count();
+        }
 
         #endregion
 

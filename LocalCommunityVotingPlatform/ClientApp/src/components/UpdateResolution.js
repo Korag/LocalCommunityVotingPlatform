@@ -1,6 +1,11 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
 import { getJWTtoken } from '../helpers/jwtHandler'
+import DatePicker, { registerLocale } from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
+import pl from 'date-fns/locale/pl';
+registerLocale('pl', pl);
 
 const buttonStyle = {
     "marginBottom": '0px',

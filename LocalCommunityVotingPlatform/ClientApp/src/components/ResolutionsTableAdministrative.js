@@ -93,7 +93,7 @@ export class ResolutionsTableAdministrative extends Component {
                     data.rows[i].push(tmp[i].activeToVoteBeforeDate);
                     data.rows[i].push(tmp[i].edit);
                     data.rows[i].push(tmp[i].delete);
-                
+
                     data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
                     data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
                 }
@@ -103,18 +103,20 @@ export class ResolutionsTableAdministrative extends Component {
     }
 
     render() {
-        <div>
-            <div className="row">
-                <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
+        return (
+            <div>
+                <div className="row">
+                    <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
+                </div>
+                <MDBDataTable
+                    responsive
+                    striped
+                    bordered
+                    hover
+                    data={this.state.data}
+                />
             </div>
-            <MDBDataTable
-                responsive
-                striped
-                bordered
-                hover
-                data={this.state.data}
-            />
-        </div>
+        );
     }
 }
 

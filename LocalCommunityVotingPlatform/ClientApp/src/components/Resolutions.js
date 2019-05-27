@@ -1,4 +1,10 @@
 ﻿import React, { Component } from 'react';
+import { ResolutionsTableAdministrative } from './ResolutionsTableAdministrative';
+import { UpdateResolution } from './UpdateResolution';
+import { AddResolution } from './AddResolution'
+
+import axios from 'axios'
+import { getJWTtoken } from '../helpers/jwtHandler'
 
 export class Resolutions extends Component {
     static displayName = Resolutions.name;
@@ -53,14 +59,14 @@ export class Resolutions extends Component {
         if (this.state.addResolutionReq == false) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
-                    ? <UsersTable ShowFormEditResolution={this.ShowFormEditResolution} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
-                    : <UpdateUser ShowFormEditResolution={this.ShowFormEditResolution} resolutionId={this.state.resolutionId} />
+                    ? <ResolutionsTableAdministrative ShowFormEditResolution={this.ShowFormEditResolution} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                    : <UpdateResolution ShowFormEditResolution={this.ShowFormEditResolution} resolutionId={this.state.resolutionId} />
                 }
             </div>
         }
         else {
             return <div style={{ marginTop: 30 }}>
-                <AddUser ShowFormAddResolution={this.ShowFormAddResolution} />
+                <AddResolution ShowFormAddResolution={this.ShowFormAddResolution} />
             </div>
         }
     }

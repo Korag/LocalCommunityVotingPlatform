@@ -150,5 +150,22 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             return resolutionsViewModel;
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult EditResolution(DisplayResolutionViewModel UpdatedResolution)
+        {
+            Resolution LegacyResolution = _context.GetResolutionById(UpdatedResolution.Id);
+
+            LegacyResolution.Title = UpdatedResolution.Title;
+            LegacyResolution.Description = UpdatedResolution.Description;
+            LegacyResolution.ActiveToVoteBeforeDate = UpdatedResolution.ActiveToVoteBeforeDate;
+
+            LegacyResolution.Date = DateTime.UtcNow.Date;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }

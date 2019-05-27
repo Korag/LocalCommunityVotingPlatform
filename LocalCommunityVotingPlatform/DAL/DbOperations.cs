@@ -45,6 +45,11 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Resolutions.ToList();
         }
 
+        public Resolution GetResolutionById(string resolutionId)
+        {
+            return _context.Resolutions.Where(z => z.Id == resolutionId).FirstOrDefault();
+        }
+
         #endregion
 
     }

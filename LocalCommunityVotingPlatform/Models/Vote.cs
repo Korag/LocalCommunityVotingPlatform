@@ -12,5 +12,8 @@ namespace LocalCommunityVotingPlatform.Models
 
         public string ResolutionId { get; set; }
         public virtual Resolution Resolution { get; set; }
+
+        public string ChosenOption { get; set; }
+        public DateTime DateOfVoting { get; set; }
     }
 }

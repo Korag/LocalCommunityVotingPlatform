@@ -10,6 +10,7 @@ namespace LocalCommunityVotingPlatform.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        // adres
 
         public virtual ICollection<Vote> Votes { get; set; }
     }

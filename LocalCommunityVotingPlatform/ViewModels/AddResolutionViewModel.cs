@@ -2,7 +2,7 @@
 
 namespace LocalCommunityVotingPlatform.ViewModels
 {
-    public class ResolutionViewModel
+    public class AddResolutionViewModel
     {
         public string Title { get; set; }
         public string Description { get; set; }

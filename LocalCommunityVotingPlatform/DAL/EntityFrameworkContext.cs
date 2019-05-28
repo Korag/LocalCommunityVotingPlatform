@@ -1,4 +1,5 @@
 ﻿using LocalCommunityVotingPlatform.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,6 +29,9 @@ namespace LocalCommunityVotingPlatform.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Vote>().HasKey(x => new { x.UserId, x.ResolutionId });
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -4,7 +4,7 @@ import { UpdateResolution } from './UpdateResolution';
 import { AddResolution } from './AddResolution'
 
 import axios from 'axios'
-import { getJWTtoken } from '../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler'
 
 export class Resolutions extends Component {
     static displayName = Resolutions.name;

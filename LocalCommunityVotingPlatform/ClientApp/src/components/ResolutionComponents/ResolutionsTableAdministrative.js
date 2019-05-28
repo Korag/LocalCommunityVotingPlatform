@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
-import { getJWTtoken } from '../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler'
 
 
 export class ResolutionsTableAdministrative extends Component {

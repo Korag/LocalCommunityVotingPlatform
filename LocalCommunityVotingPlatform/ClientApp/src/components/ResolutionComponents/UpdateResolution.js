@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler'
 import DatePicker, { registerLocale } from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,8 +23,8 @@ const h1 = {
     "color": "white"
 };
 
-export class AddResolution extends Component {
-    static displayName = AddResolution.name;
+export class UpdateResolution extends Component {
+    static displayName = UpdateResolution.name;
     constructor(props) {
         super(props);
 
@@ -35,34 +35,46 @@ export class AddResolution extends Component {
         }
     }
 
-    changeValue(e) {
+    changeValue = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
 
-    //handleChange(date) {
-    //    this.setState({
-    //        startDate: date
-    //    });
-    //}
+    componentDidMount = () => {
+        this.DownloadResolutionData();
+    }
 
-    AddUser = async (e) => {
+    updateResolution = (e) => {
         e.preventDefault();
-        console.log(this.state);
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        await axios.post("/api/Resolution/AddResolution", null,
+        axios.post("api/Resolution/EditResolution",
             {
-                params: {
-                    Title: this.state.title,
-                    Description: this.state.description,
-                    ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate
-                }
+                Title: this.state.title,
+                Description: this.state.description,
+                ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate
             }).then(res => {
-                this.props.ShowFormAddResolution();
+                this.props.ShowFormEditResolution();
             });
     };
+
+    DownloadResolutionData = () => {
+        axios.get('api/Resolution/GetResolutionById', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                Id: this.props.Id
+            }
+        }).then(result => {
+            this.setState({
+                title: result.data.title,
+                description: result.data.description,
+                activeToVoteBeforeDate: result.data.activeToVoteBeforeDate
+            });
+        })
+    }
 
     render() {
         return (
@@ -73,9 +85,9 @@ export class AddResolution extends Component {
                 <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
                     <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
                         <div className="text-center">
-                            <h2>Dodaj uchwałę</h2>
+                            <h2>Edytuj uchwałę</h2>
                         </div>
-                        <form onSubmit={e => this.AddResolution(e)}>
+                        <form onSubmit={e => this.updateResolution(e)}>
                             <div className="grid-container">
                                 <div>
                                     <label>Tytuł uchwały</label>
@@ -94,8 +106,8 @@ export class AddResolution extends Component {
                                     />
                                 </div>
                                 <div className="row">
-                                    <button className="button secondary float-center" style={buttonStyle} type="submit">Dodaj</button>
-                                    <button className="button alert float-center" style={buttonStyle} onClick={this.props.ShowFormAddResolution} type="submit">Anuluj</button>
+                                    <button className="button secondary float-center" style={buttonStyle} type="submit">Aktualizuj</button>
+                                    <button className="button alert float-center" style={buttonStyle} onClick={this.props.ShowFormEditResolution} type="submit">Anuluj</button>
                                 </div>
                             </div>
                         </form>
@@ -106,5 +118,4 @@ export class AddResolution extends Component {
     }
 }
 
-
-export default AddResolution;
+export default UpdateResolution;

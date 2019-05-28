@@ -4,11 +4,8 @@ import { NavMenu } from './NavMenu';
 
 import { Route } from 'react-router';
 
-import { Counter } from './Counter';
-import { FetchData } from './FetchData';
-
-import { Users } from './Users';
-import { Resolutions } from './Resolutions';
+import { Users } from './UserComponents/Users';
+import { Resolutions } from './ResolutionComponents/Resolutions';
 import { MyData } from './MyData';
 
 export class Layout extends Component {

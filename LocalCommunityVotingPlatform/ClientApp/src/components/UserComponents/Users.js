@@ -5,7 +5,7 @@ import { UpdateUser } from './UpdateUser';
 import { AddUser } from './AddUser'
 
 import axios from 'axios'
-import { getJWTtoken } from '../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler'
 
 
 export class Users extends Component {

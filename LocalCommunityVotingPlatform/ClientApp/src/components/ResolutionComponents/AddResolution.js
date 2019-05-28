@@ -1,11 +1,13 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
 import { getJWTtoken } from '../../helpers/jwtHandler'
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import pl from 'date-fns/locale/pl';
-registerLocale('pl', pl);
+
+import moment from 'moment';
+import 'moment/locale/pl';
+moment().locale('pl')
 
 const buttonStyle = {
     "marginBottom": '0px',
@@ -31,7 +33,7 @@ export class AddResolution extends Component {
         this.state = {
             title: '',
             description: '',
-            activeToVoteBeforeDate: ''
+            activeToVoteBeforeDate: moment()
         }
     }
 
@@ -41,15 +43,17 @@ export class AddResolution extends Component {
         });
     }
 
-    //handleChange(date) {
-    //    this.setState({
-    //        startDate: date
-    //    });
-    //}
+    handleChange = (date) => {
+        console.log(this.state.activeToVoteBeforeDate)
+        this.setState({
+            activeToVoteBeforeDate: date
+        });
+    }
 
-    AddUser = async (e) => {
+    AddResolution = async (e) => {
         e.preventDefault();
         console.log(this.state);
+        console.log(this.state.activeToVoteBeforeDate);
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
         await axios.post("/api/Resolution/AddResolution", null,
@@ -57,7 +61,7 @@ export class AddResolution extends Component {
                 params: {
                     Title: this.state.title,
                     Description: this.state.description,
-                    ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate
+                    ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate.format()
                 }
             }).then(res => {
                 this.props.ShowFormAddResolution();
@@ -86,11 +90,12 @@ export class AddResolution extends Component {
                                     </label>
                                     <label>Data końca głosowania</label>
                                     <DatePicker
-                                        dateFormat="dd/MM/YYYY"
+                                        dateFormat="DD/MM/YYYY"
                                         locale="pl"
                                         todayButton={"Dzisiaj"}
                                         selected={this.state.activeToVoteBeforeDate}
-                                        onChange={this.changeValue}
+                                        onChange={this.handleChange}
+                                        startDate={this.state.activeToVoteBeforeDate}
                                     />
                                 </div>
                                 <div className="row">

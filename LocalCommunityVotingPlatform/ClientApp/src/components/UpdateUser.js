@@ -51,7 +51,7 @@ export class UpdateUser extends Component {
         e.preventDefault();
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post("api/EditUser",
+        axios.post("api/User/EditUser",
             {
                 FirstName: this.state.firstName,
                 LastName: this.state.lastName,
@@ -63,7 +63,7 @@ export class UpdateUser extends Component {
     };
 
     DownloadUserData = () => {
-        axios.get('api/GetUserByEmail', {
+        axios.get('api/User/GetUserByEmail', {
             headers: {
                 Authorization: getJWTtoken()
             },

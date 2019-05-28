@@ -29,7 +29,7 @@ class AuthorizeComponent extends Component {
             });
         }
 
-        axios.get('api/Authorize/', {
+        axios.get('api/Account/Authorize/', {
             headers: {
                 Authorization: token
             }

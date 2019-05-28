@@ -68,7 +68,7 @@ export class ResolutionsTableAdministrative extends Component {
     downloadResolutions() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/GetResolutions', {
+        fetch('api/Resolution/GetResolutions', {
             headers: {
                 Authorization: getJWTtoken()
             }

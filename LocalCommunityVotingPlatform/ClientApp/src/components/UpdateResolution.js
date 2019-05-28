@@ -49,7 +49,7 @@ export class UpdateResolution extends Component {
         e.preventDefault();
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post("api/EditResolution",
+        axios.post("api/Resolution/EditResolution",
             {
                 Title: this.state.title,
                 Description: this.state.description,
@@ -60,7 +60,7 @@ export class UpdateResolution extends Component {
     };
 
     DownloadResolutionData = () => {
-        axios.get('api/GetResolutionById', {
+        axios.get('api/Resolution/GetResolutionById', {
             headers: {
                 Authorization: getJWTtoken()
             },

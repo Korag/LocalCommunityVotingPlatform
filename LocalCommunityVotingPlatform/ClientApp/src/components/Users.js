@@ -47,7 +47,7 @@ export class Users extends Component {
     Delete = (userEmailFromButton) => {
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post('/api/DeleteUser', null,
+        axios.post('/api/User/DeleteUser', null,
             {
                 params:
                 {

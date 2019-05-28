@@ -44,7 +44,7 @@ export class Resolutions extends Component {
     DeleteResolution = (resolutionIdFromButton) => {
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post('/api/DeleteResolution', null,
+        axios.post('/api/Resolution/DeleteResolution', null,
             {
                 params:
                 {

@@ -52,7 +52,7 @@ export class AddResolution extends Component {
         console.log(this.state);
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        await axios.post("/api/AddResolution", null,
+        await axios.post("/api/Resolution/AddResolution", null,
             {
                 params: {
                     Title: this.state.title,

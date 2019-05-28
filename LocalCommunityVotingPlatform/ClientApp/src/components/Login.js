@@ -40,7 +40,7 @@ export class Login extends Component {
     login = async (e) => {
         this.props.callBack();
         e.preventDefault();
-        await axios.post('/api/Login', {
+        await axios.post('/api/Account/Login', {
             Email: this.state.email,
             Password: this.state.password
         }).then(res => {

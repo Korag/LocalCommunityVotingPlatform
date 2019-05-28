@@ -68,7 +68,7 @@ export class UsersTable extends Component {
     downloadUsers() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/GetUsers', {
+        fetch('api/User/GetUsers', {
             headers: {
                 Authorization: getJWTtoken()
             }

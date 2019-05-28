@@ -48,7 +48,7 @@ export class AddUser extends Component {
         console.log(this.state);
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        await axios.post("api/Register", null,
+        await axios.post("api/Account/Register", null,
             {
                 params: {
                     FirstName: this.state.firstName,

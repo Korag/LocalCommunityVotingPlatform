@@ -44,11 +44,11 @@ export class Login extends Component {
             Email: this.state.email,
             Password: this.state.password
         }).then(res => {
-            if (res.data != "Login attempt failed") {
-                localStorage.setItem('jwt_token', res.data);
-                this.props.callBack();
-            }
-        });
+            localStorage.setItem('jwt_token', res.data);
+            this.props.callBack();
+            }).catch(err => {
+                console.log(err);
+            });
     }
 
     Rerender = () => {

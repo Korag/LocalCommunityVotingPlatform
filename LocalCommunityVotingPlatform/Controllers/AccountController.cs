@@ -78,7 +78,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Register(RegisterViewModel registeredUser)
+        public async Task<IActionResult> Register(RegisterViewModel registeredUser)
         {
             if (ModelState.IsValid)
             {
@@ -110,11 +110,11 @@ namespace LocalCommunityVotingPlatform.Controllers
                         $"<br />" +
                         $"W celach bezpieczeństwa zmień swoje hasło zaraz po udanym logowaniu.");
 
-                    return "Register attempt succesfull";
+                    return Ok();
                 }
             }
 
-            return "Register attempt failed";
+            return BadRequest();
         }
 
         private async Task<string> CreateJwtToken(User loggedUser)

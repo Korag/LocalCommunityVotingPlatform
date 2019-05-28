@@ -18,9 +18,9 @@ namespace LocalCommunityVotingPlatform.Controllers
         private readonly UserManager<User> _userManager;
         private IDbOperations _context;
 
-        public VotingPlatformController(UserManager<User> userManager)
+        public VotingPlatformController(UserManager<User> userManager, IDbOperations context)
         {
-            _context = new DbOperations();
+            _context = context;
             _userManager = userManager;
         }
 

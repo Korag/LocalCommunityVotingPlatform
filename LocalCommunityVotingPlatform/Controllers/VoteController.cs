@@ -16,9 +16,9 @@ namespace LocalCommunityVotingPlatform.Controllers
     {
         private IDbOperations _context;
 
-        public VoteController()
+        public VoteController(IDbOperations context)
         {
-            _context = new DbOperations();
+            _context = context;
         }
 
       

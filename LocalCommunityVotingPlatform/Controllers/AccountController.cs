@@ -18,6 +18,13 @@ using LocalCommunityVotingPlatform.Services;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
+    public enum AvailableRoles
+    {
+        Admin,
+        User
+    }
+
+
     [Authorize(Roles="Admin")]
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
@@ -61,9 +68,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         [HttpGet]
         public ICollection<string> GetAvailableRoles()
         {
-            List<string> AvailableRoles = new List<string>{"User", "Admin"};
-
-            return AvailableRoles;
+            return Enum.GetValues(typeof(AvailableRoles)).Cast<AvailableRoles>().Select(v => v.ToString()).ToList();
         }
 
         [HttpGet]

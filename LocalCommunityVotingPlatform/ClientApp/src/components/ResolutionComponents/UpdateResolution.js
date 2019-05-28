@@ -1,11 +1,13 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
 import { getJWTtoken } from '../../helpers/jwtHandler'
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import pl from 'date-fns/locale/pl';
-registerLocale('pl', pl);
+
+import moment from 'moment';
+import 'moment/locale/pl';
+moment().locale('pl')
 
 const buttonStyle = {
     "marginBottom": '0px',
@@ -31,7 +33,7 @@ export class UpdateResolution extends Component {
         this.state = {
             title: '',
             description: '',
-            activeToVoteBeforeDate: ''
+            activeToVoteBeforeDate: moment(),
         }
     }
 
@@ -53,7 +55,7 @@ export class UpdateResolution extends Component {
             {
                 Title: this.state.title,
                 Description: this.state.description,
-                ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate
+                ActiveToVoteBeforeDate: this.state.activeToVoteBeforeDate.format()
             }).then(res => {
                 this.props.ShowFormEditResolution();
             });
@@ -65,13 +67,14 @@ export class UpdateResolution extends Component {
                 Authorization: getJWTtoken()
             },
             params: {
-                Id: this.props.Id
+                resolutionId: this.props.resolutionId
             }
         }).then(result => {
+            var activeToDate = moment(result.data.activeToVoteBeforeDate, 'DD/MM/YYYY')
             this.setState({
                 title: result.data.title,
                 description: result.data.description,
-                activeToVoteBeforeDate: result.data.activeToVoteBeforeDate
+                activeToVoteBeforeDate: activeToDate
             });
         })
     }
@@ -98,7 +101,7 @@ export class UpdateResolution extends Component {
                                     </label>
                                     <label>Data końca głosowania</label>
                                     <DatePicker
-                                        dateFormat="dd/MM/YYYY"
+                                        dateFormat="DD/MM/YYYY"
                                         locale="pl"
                                         todayButton={"Dzisiaj"}
                                         selected={this.state.activeToVoteBeforeDate}

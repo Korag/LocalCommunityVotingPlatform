@@ -7,6 +7,7 @@ using System.Linq;
 using LocalCommunityVotingPlatform.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using LocalCommunityVotingPlatform.Services;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -15,10 +16,38 @@ namespace LocalCommunityVotingPlatform.Controllers
     public class ResolutionController : ControllerBase
     {
         private IDbOperations _context;
+        private IndexerGenerator _indexer;
 
-        public ResolutionController()
+        public ResolutionController(IDbOperations context)
         {
-            _context = new DbOperations();
+            _context = context;
+            _indexer = new IndexerGenerator();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<Resolution> AddResolution(AddResolutionViewModel newResolution)
+        {
+            if (ModelState.IsValid)
+            {
+                var Resolution = new Resolution
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Date = DateTime.UtcNow.Date,
+                    Indexer = _indexer.GenerateIndexer(),
+
+                    Title = newResolution.Title,
+                    Description = newResolution.Description,
+                    ActiveToVoteBeforeDate = newResolution.ActiveToVoteBeforeDate
+                };
+
+                _context.AddResolution(Resolution);
+                _context.SaveChanges();
+
+                return Ok();
+            }
+
+            return BadRequest(newResolution);
         }
 
         [HttpGet]

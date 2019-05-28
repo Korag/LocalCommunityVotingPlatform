@@ -76,26 +76,33 @@ export class ResolutionsTableAdministrative extends Component {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
+                data.rows = [];
 
-                //data.rows = result;
-                var tmp = result;
-
-                for (let i = 0; i < tmp.length; i++) {
-                    let singleId = tmp[i].id;
-                    let resolutionCredentials = tmp[i].indexer + " " + tmp[i].title;
+                for (let i = 0; i < result.length; i++) {
+                    let singleId = result[i].id;
+                    let resolutionCredentials = result[i].indexer + " " + result[i].title;
 
                     console.log(singleId);
                     console.log(resolutionCredentials);
 
-                    data.rows[i].push(tmp[i].indexer);
-                    data.rows[i].push(tmp[i].title);
-                    data.rows[i].push(tmp[i].description);
-                    data.rows[i].push(tmp[i].activeToVoteBeforeDate);
-                    data.rows[i].push(tmp[i].edit);
-                    data.rows[i].push(tmp[i].delete);
+                    var object = {
+                        indexer: result[i].indexer,
+                        title: result[i].title,
+                        description: result[i].description,
+                        activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
+                        edit: '',
+                        delete: ''
+                    }
+
+                    console.log(result);
+
+                    data.rows.push(object);
+
+                    console.log(data);
 
                     data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
                     data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+  
                 }
 
                 this.setState({ data });

@@ -58,7 +58,10 @@ namespace LocalCommunityVotingPlatform
                     };
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.DateFormatString = "dd/MM/yyyy";
+            }); 
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

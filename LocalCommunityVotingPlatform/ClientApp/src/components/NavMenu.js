@@ -41,7 +41,10 @@ export class NavMenu extends Component {
                         <ul className="dropdown menu" data-dropdown-menu>
                             <li className="menu-text">Społeczność testowa</li>
                             <NavItem>
-                                <NavLink tag={Link} to="/">Uchwały</NavLink>
+                                <NavLink tag={Link} to="/">Uchwały [Aktywne]</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/resolutions">Uchwały [Zarządzanie]</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={Link} to="/users">Użytkownicy</NavLink>

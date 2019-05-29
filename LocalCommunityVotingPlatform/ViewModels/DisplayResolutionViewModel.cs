@@ -14,5 +14,6 @@ namespace LocalCommunityVotingPlatform.ViewModels
 
         public string Edit { get; set; }
         public string Delete { get; set; }
+        public string Vote { get; set; }
     }
 }

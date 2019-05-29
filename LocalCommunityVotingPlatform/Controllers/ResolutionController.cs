@@ -77,6 +77,33 @@ namespace LocalCommunityVotingPlatform.Controllers
             return resolutionsViewModel;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ICollection<DisplayResolutionViewModel> GetActiveResolutions()
+        {
+            var Resolutions = _context.GetActiveResolutions();
+
+            ICollection<DisplayResolutionViewModel> resolutionsViewModel = new List<DisplayResolutionViewModel>();
+
+            foreach (var resolution in Resolutions)
+            {
+                DisplayResolutionViewModel singleResolutionViewModel = new DisplayResolutionViewModel
+                {
+                    Id = resolution.Id,
+                    CreationDate = resolution.Date,
+                    Indexer = resolution.Indexer,
+
+                    Title = resolution.Title,
+                    Description = resolution.Description,
+                    ActiveToVoteBeforeDate = resolution.ActiveToVoteBeforeDate
+                };
+
+                resolutionsViewModel.Add(singleResolutionViewModel);
+            }
+
+            return resolutionsViewModel;
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public IActionResult EditResolution(DisplayResolutionViewModel UpdatedResolution)

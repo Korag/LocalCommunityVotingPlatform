@@ -50,7 +50,7 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<string> Login([FromBody]LoginViewModel loginModel)
+        public async Task<IActionResult> Login([FromBody]LoginViewModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -58,11 +58,11 @@ namespace LocalCommunityVotingPlatform.Controllers
                 if (result.Succeeded)
                 {
                     var LoggedUser = _userManager.Users.SingleOrDefault(z => z.Email == loginModel.Email);
-                    return await CreateJwtToken(LoggedUser);
+                    return Ok(await CreateJwtToken(LoggedUser));
                 }
             }
 
-            return "Login attempt failed";
+            return BadRequest();
         }
 
         [HttpGet]

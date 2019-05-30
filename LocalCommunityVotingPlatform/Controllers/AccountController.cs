@@ -24,8 +24,6 @@ namespace LocalCommunityVotingPlatform.Controllers
         User
     }
 
-
-    [Authorize(Roles="Admin")]
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -66,18 +64,23 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ICollection<string> GetAvailableRoles()
         {
             return Enum.GetValues(typeof(AvailableRoles)).Cast<AvailableRoles>().Select(v => v.ToString()).ToList();
         }
 
         [HttpGet]
-        public string Authorize()
+        [Authorize]
+        public bool Authorize()
         {
-            return "OK";
+            bool SuperUser = User.IsInRole(AvailableRoles.Admin.ToString());
+
+            return SuperUser;
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterViewModel registeredUser)
         {
             if (ModelState.IsValid)

@@ -11,7 +11,6 @@ using LocalCommunityVotingPlatform.Services;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
-    [Authorize]
     [Route("api/[controller]/[action]")]
     public class ResolutionController : ControllerBase
     {
@@ -78,7 +77,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ICollection<DisplayResolutionViewModel> GetActiveResolutions()
         {
             var Resolutions = _context.GetActiveResolutions();
@@ -142,6 +141,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         public ActionResult<Resolution> DeleteResolution(string resolutionId)
         {
             _context.RemoveResolution(resolutionId);
+            _context.SaveChanges();
 
             return Ok();
         }

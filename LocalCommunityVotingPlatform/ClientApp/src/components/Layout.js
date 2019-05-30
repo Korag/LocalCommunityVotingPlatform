@@ -15,16 +15,17 @@ export class Layout extends Component {
     constructor(props) {
         super(props);
 
+        console.log(this.props.SuperUser);
     };
 
     render() {
         return (
             <div>
-                <NavMenu Logout={this.props.Logout} />
+                <NavMenu Logout={this.props.Logout} SuperUser={this.props.SuperUser} />
                 <Container>
                     <Route path='/' exact component={Votes} />
-                    <Route path='/resolutions' exact component={Resolutions} />
-                    <Route path='/users' component={Users} />
+                    {this.props.SuperUser.data ? <Route path='/resolutions' exact component={Resolutions} /> : null}
+                    {this.props.SuperUser.data ? <Route path='/users' component={Users} /> : null}
                     <Route path='/mydata' component={MyData} />
                 </Container>
             </div>

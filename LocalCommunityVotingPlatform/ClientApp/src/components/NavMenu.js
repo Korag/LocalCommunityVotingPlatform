@@ -43,16 +43,22 @@ export class NavMenu extends Component {
                             <NavItem>
                                 <NavLink tag={Link} to="/">Uchwały [Aktywne]</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/resolutions">Uchwały [Zarządzanie]</NavLink>
-                            </NavItem>
+
+                            {this.props.SuperUser.data ?
+                                <NavItem>
+                                    <NavLink tag={Link} to="/resolutions">Uchwały [Zarządzanie]</NavLink>
+                                </NavItem>
+                                : null}
+
+                            {this.props.SuperUser.data ?
                             <NavItem>
                                 <NavLink tag={Link} to="/users">Użytkownicy</NavLink>
-                            </NavItem>
+                                </NavItem>
+                                : null}
+
                             <NavItem>
                                 <NavLink tag={Link} to="/mydata">Moje dane</NavLink>
                             </NavItem>
-
                         </ul>
                     </div>
                     <div className="top-bar-right">

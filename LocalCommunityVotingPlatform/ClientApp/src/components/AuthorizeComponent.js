@@ -12,7 +12,8 @@ class AuthorizeComponent extends Component {
 
         this.state = {
             authorized: null,
-            performedLogin: false
+            performedLogin: false,
+            SuperUser: false
         };
     }
 
@@ -35,13 +36,15 @@ class AuthorizeComponent extends Component {
             }
         }).then(res => {
             this.setState({
-                authorized: true
+                authorized: true,
+                SuperUser: res
             });
         }
         ).catch(err => {
             localStorage.removeItem('jwt_token');
             this.setState({
-                authorized: false
+                authorized: false,
+                SuperUser: false
             });
         });
 
@@ -63,7 +66,7 @@ class AuthorizeComponent extends Component {
     
         if (this.state.authorized == true)
         {
-            return (<Layout Logout={this.Logout}/>);
+            return (<Layout Logout={this.Logout} SuperUser={this.state.SuperUser}/>);
         }
         else {
             return (<Login callBack={this.CheckIfAuthorized} />);

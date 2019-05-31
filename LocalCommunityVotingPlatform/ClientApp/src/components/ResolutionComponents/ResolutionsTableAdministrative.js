@@ -15,7 +15,7 @@ export class ResolutionsTableAdministrative extends Component {
                         label: 'Indeks',
                         field: 'indexer',
                         sort: 'asc',
-                        width: 100
+                        width: 50
                     },
                     {
                         label: 'Tytuł',
@@ -33,7 +33,7 @@ export class ResolutionsTableAdministrative extends Component {
                         label: 'Data ważności',
                         field: 'activeToVoteBeforeDate',
                         sort: 'asc',
-                        width: 100
+                        width: 80
                     },
                     {
                         label: 'Edytuj',
@@ -112,7 +112,7 @@ export class ResolutionsTableAdministrative extends Component {
     render() {
         return (
             <div>
-                <div className="row">
+                <div className="row customToolbar">
                     <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
                 </div>
                 <MDBDataTable

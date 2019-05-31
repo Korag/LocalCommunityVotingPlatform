@@ -22,12 +22,12 @@ export class Layout extends Component {
         return (
             <div>
                 <NavMenu Logout={this.props.Logout} SuperUser={this.props.SuperUser} />
-                <Container>
+                <div className="wrapper">
                     <Route path='/' exact component={Votes} />
                     {this.props.SuperUser.data ? <Route path='/resolutions' exact component={Resolutions} /> : null}
                     {this.props.SuperUser.data ? <Route path='/users' component={Users} /> : null}
                     <Route path='/mydata' component={MyData} />
-                </Container>
+                </div>
             </div>
         );
     }

@@ -103,7 +103,7 @@ export class UsersTable extends Component {
     render() {
         return (
             <div>
-                <div className="row">
+                <div className="row customToolbar">
                     <button className="button float-left" onClick={() => this.props.ShowFormAddUser()}>Dodaj nowego użytkownika</button>
                 </div>
                 <MDBDataTable

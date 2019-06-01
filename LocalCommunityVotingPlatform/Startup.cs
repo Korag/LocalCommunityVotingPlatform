@@ -19,6 +19,8 @@ namespace LocalCommunityVotingPlatform
 {
     public class Startup
     {
+        public static string ConnectionString;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -82,6 +84,7 @@ namespace LocalCommunityVotingPlatform
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, EntityFrameworkContext context, UserManager<User> userManager)
         {
+            ConnectionString = Configuration["ConnectionString"];
             DatabaseInitializer.SeedUsers(userManager);
 
             if (env.IsDevelopment())

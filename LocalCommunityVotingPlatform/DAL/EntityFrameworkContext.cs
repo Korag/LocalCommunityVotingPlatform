@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace LocalCommunityVotingPlatform.DAL
 {
@@ -22,7 +19,8 @@ namespace LocalCommunityVotingPlatform.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Database = LocalCommunityVotingPlatformDb; Integrated Security = True");
+
+            optionsBuilder.UseSqlServer(Startup.ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
 

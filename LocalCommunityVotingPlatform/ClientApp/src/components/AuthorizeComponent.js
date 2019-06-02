@@ -11,6 +11,7 @@ class AuthorizeComponent extends Component {
         super(props);
 
         this.state = {
+            loading: true,
             authorized: null,
             performedLogin: false,
             SuperUser: false
@@ -18,37 +19,40 @@ class AuthorizeComponent extends Component {
     }
 
     componentDidMount = () => {
-        this.CheckIfAuthorized()
+       this.CheckIfAuthorized()
     }
 
-    CheckIfAuthorized = () => {
+    CheckIfAuthorized = async() => {
         const token = getJWTtoken();
 
         if (!token) {
             this.setState({
-                authorized: false
+                authorized: false,
+                loading: false
             });
         }
 
-        axios.get('api/Account/Authorize/', {
+        await axios.get('api/Account/Authorize/', {
             headers: {
                 Authorization: token
             }
         }).then(res => {
             this.setState({
                 authorized: true,
-                SuperUser: res
+                SuperUser: res,
+                loading: false
             });
         }
         ).catch(err => {
             localStorage.removeItem('jwt_token');
             this.setState({
                 authorized: false,
-                SuperUser: false
+                SuperUser: false,
+                loading: false
             });
         });
 
-        console.log(this.state.authorized)
+        await console.log(this.state.authorized)
     }
 
     Logout = () => {
@@ -63,7 +67,6 @@ class AuthorizeComponent extends Component {
     }
 
     resolveAuthorization = () => {
-    
         if (this.state.authorized == true)
         {
             return (<Layout Logout={this.Logout} SuperUser={this.state.SuperUser}/>);
@@ -76,7 +79,9 @@ class AuthorizeComponent extends Component {
     render() {
         return (
             <div>
-                {this.resolveAuthorization()}
+                {this.state.loading ? 
+                 <div><p></p></div>
+                    : this.resolveAuthorization()}
             </div>
         )
     };

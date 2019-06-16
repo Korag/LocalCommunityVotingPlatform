@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { NavMenu } from '../NavigationElements/NavMenu';
+import { NavMenu } from './NavMenu';
 
 import { Route } from 'react-router';
 

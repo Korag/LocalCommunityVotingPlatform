@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
+import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
 

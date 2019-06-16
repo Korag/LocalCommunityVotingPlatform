@@ -4,7 +4,7 @@ import { withRouter, Route, Router } from 'react-router-dom'
 import axios from 'axios'
 
 import { Login } from './Login';
-import { Layout } from '../NavigationElements/Layout';
+import { Layout } from '../NavigationComponents/Layout';
 
 class AuthorizeComponent extends Component {
     constructor(props) {

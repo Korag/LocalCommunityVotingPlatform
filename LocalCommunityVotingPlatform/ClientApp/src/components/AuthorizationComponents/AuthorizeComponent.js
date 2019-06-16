@@ -1,10 +1,10 @@
 ﻿import React, { Component } from 'react';
-import { getJWTtoken } from '../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler'
 import { withRouter, Route, Router } from 'react-router-dom'
 import axios from 'axios'
 
 import { Login } from './Login';
-import { Layout } from './Layout';
+import { Layout } from '../NavigationElements/Layout';
 
 class AuthorizeComponent extends Component {
     constructor(props) {

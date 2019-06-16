@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 
-import AuthorizeComponent from './components/AuthorizeComponent'
+import AuthorizeComponent from './components/AuthorizationComponents/AuthorizeComponent'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

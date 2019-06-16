@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import { NavMenu } from '../NavigationElements/NavMenu';
 
 import { Route } from 'react-router';
 
-import { Users } from './UserComponents/Users';
-import { Resolutions } from './ResolutionComponents/Resolutions';
-import { MyData } from './MyData';
-import { Votes } from './VoteComponents/Votes'
+import { Users } from '../UserComponents/Users';
+import { Resolutions } from '../ResolutionComponents/Resolutions';
+import { UserData } from '../UserComponents/UserData';
+import { Votes } from '../VoteComponents/Votes'
 
 export class Layout extends Component {
     static displayName = Layout.name;
@@ -26,7 +26,7 @@ export class Layout extends Component {
                     <Route path='/' exact component={Votes} />
                     {this.props.SuperUser.data ? <Route path='/resolutions' exact component={Resolutions} /> : null}
                     {this.props.SuperUser.data ? <Route path='/users' component={Users} /> : null}
-                    <Route path='/mydata' component={MyData} />
+                    <Route path='/userdata' component={UserData} />
                 </div>
             </div>
         );

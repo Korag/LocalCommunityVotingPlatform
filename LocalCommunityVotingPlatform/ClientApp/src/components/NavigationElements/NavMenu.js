@@ -57,7 +57,7 @@ export class NavMenu extends Component {
                                 : null}
 
                             <NavItem>
-                                <NavLink tag={Link} to="/mydata">Moje dane</NavLink>
+                                <NavLink tag={Link} to="/userdata">Moje dane</NavLink>
                             </NavItem>
                         </ul>
                     </div>

@@ -15,7 +15,7 @@ namespace LocalCommunityVotingPlatform.ViewModels
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
 
-        [Required(ErrorMessage = "Pole \"Potwierdź nowe hasło\" jest wymagane")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         [Display(Name = "Powtórz nowe hasło")]
         [MinLength(8, ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 8 znaków")]
         [DataType(DataType.Password)]

@@ -101,12 +101,55 @@ namespace LocalCommunityVotingPlatform.Controllers
         [Authorize]
         public UserViewModel GetUserData()
         {
-            var UserIdentity = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> UserClaims = UserIdentity.Claims;
+            string UserEmail = GetUserEmailFromRequest();
 
-            var UserData = GetUserByEmail(UserClaims.ElementAt(0).Value);
+            var UserData = GetUserByEmail(UserEmail);
 
             return UserData;
         }
+
+        [HttpGet]
+        [Authorize]
+        public string GetUserEmailFromRequest()
+        {
+            var UserIdentity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> UserClaims = UserIdentity.Claims;
+
+            var UserEmail = UserClaims.ElementAt(0).Value;
+
+            return UserEmail;
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ChangeUserPassword(ChangePasswordViewModel passwordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var CurrentUser =_userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
+                //PasswordVerificationResult passwordResult = _userManager.PasswordHasher.VerifyHashedPassword(CurrentUser, CurrentUser.PasswordHash, passwordModel.OldPassword);
+
+                //if (CurrentUser.Email == passwordModel.Email && passwordResult == PasswordVerificationResult.Success)
+                //{
+
+                //}
+
+                var result = _userManager.ChangePasswordAsync(CurrentUser, passwordModel.OldPassword, passwordModel.NewPassword);
+                result.Wait();
+
+                if (result.IsCompletedSuccessfully)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        } 
     }
 }

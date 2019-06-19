@@ -2,6 +2,8 @@
 
 import { getJWTtoken } from '../../helpers/jwtHandler'
 import axios from 'axios'
+import { withRouter } from "react-router-dom";
+import { ChangePassword } from '../PasswordManagementComponents/ChangePassword';
 
 const buttonStyle = {
     "marginBottom": '0px',
@@ -28,11 +30,17 @@ export class UserData extends Component {
         this.state = {
             email: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+
+            enabledChangePasswordForm: false
         }
     }
 
     componentDidMount = () => {
+        //localStorage.removeItem('jwt_token');
+        //this.props.history.push('/');
+        console.log(this.props);
+
         axios.get('api/User/GetUserData', {
             headers: {
                 Authorization: getJWTtoken()
@@ -44,6 +52,13 @@ export class UserData extends Component {
                 firstName: result.data.firstName,
                 lastName: result.data.lastName
             });
+        })
+    }
+
+    ShowChangePasswordForm = (e) => {
+        e.preventDefault();
+        this.setState({
+            enabledChangePasswordForm: !this.state.enabledChangePasswordForm
         })
     }
 
@@ -68,14 +83,21 @@ export class UserData extends Component {
                                     <input type="text" name="lastName" value={this.state.lastName} disabled/>
                                 </div>
                                 <div className="row">
-                                    <button className="button secondary float-center" style={buttonStyle} onClick={e=> this.props.ShowChangePasswordForm(e)}>Zmień hasło</button>
+                                    {!this.state.enabledChangePasswordForm ?
+                                        <button className="button secondary float-center" style={buttonStyle} onClick={e => this.ShowChangePasswordForm(e)}>Zmień hasło</button>
+                                        : null}
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
+
+                {this.state.enabledChangePasswordForm ?
+                    <ChangePassword email={this.state.email} ShowChangePasswordForm={this.ShowChangePasswordForm} history={this.props.history}/>
+                : null}
             </div>
         )
     }
 }
+
+export default withRouter(UserData);

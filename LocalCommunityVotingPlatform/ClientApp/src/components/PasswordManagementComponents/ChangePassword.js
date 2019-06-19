@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
+import { getJWTtoken } from '../../helpers/jwtHandler'
 
 const buttonStyle = {
     "marginBottom": '0px',
@@ -37,22 +37,41 @@ export class ChangePassword extends Component {
         });
     }
 
-
     Rerender = () => {
         this.forceUpdate();
     }
 
+    changePassword = async (e) => {
+        e.preventDefault();
+
+        axios.defaults.headers.common['Authorization'] = getJWTtoken();
+        await axios.post("api/User/ChangeUserPassword", null,
+            {
+                params: {
+                    Email: this.props.email,
+                    OldPassword: this.state.oldPassword,
+                    NewPassword: this.state.newPassword,
+                    ConfirmPassword: this.state.confirmNewPassword
+                }
+            }).then(res => {
+                console.log(this.props);
+                localStorage.removeItem('jwt_token');
+                this.ReloadApp();
+            });
+    };
+
+    ReloadApp = () => {
+        window.history.pushState("", "", "/");
+        window.location.reload();
+    }
 
     render() {
         return (
             <div>
-                <div className="text-center" style={h1}>
-                    <h1>Społeczność testowa</h1>
-                </div>
                 <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
                     <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
                         <div className="text-center">
-                            <h2>Zmień hasło</h2>
+                            <h2>Zmiana hasła</h2>
                         </div>
                         <form onSubmit={e => this.changePassword(e)}>
                             <div className="grid-container">
@@ -66,7 +85,7 @@ export class ChangePassword extends Component {
                                 </div>
                                 <div className="row">
                                     <button className="button secondary float-center" style={buttonStyle} type="submit">Zmień hasło</button>
-                                    <button className="button alert float-center" style={buttonStyle} onClick={this.props.ShowFormChangePassword} type="submit">Anuluj</button>
+                                    <button className="button alert float-center" style={buttonStyle} onClick={this.props.ShowChangePasswordForm} type="submit">Anuluj</button>
                                 </div>
                             </div>
                         </form>

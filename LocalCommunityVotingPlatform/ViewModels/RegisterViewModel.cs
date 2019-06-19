@@ -5,31 +5,37 @@ namespace LocalCommunityVotingPlatform.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Pole \"Adres email \" jest wymagane")]
-        [EmailAddress(ErrorMessage = "Pole \"Adres email \" nie zawiera poprawnie wprowadzonego adresu")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Adres email")]
+        [EmailAddress(ErrorMessage = "Pole \"{0}\" nie zawiera poprawnie wprowadzonego adresu")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Pole \"Hasło\" jest wymagane")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Hasło")]
         [MinLength(8, ErrorMessage = "Hasło nie może być krótsze niż 8 znaków")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Pole \"Potwierdź hasło\" jest wymagane")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Potwierdź hasło")]
         [Compare("Password", ErrorMessage = "Wprowadzone hasła różnią się.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Imię powinno zawierać od 3 do 100 znaków.")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Imię")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"{0}\" powinno zawierać od 3 do 100 znaków.")]
         [DataType(DataType.Text)]
         public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"Nazwisko\" powinno zawierać od 3 do 100 znaków.")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Nazwisko")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"{0}\" powinno zawierać od 3 do 100 znaków.")]
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
         public ICollection<string> AvailableRoles { get; set; }
 
-        [Required]
+        [Display(Name = "Rola użytkownika")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         public string SelectedRole { get; set; }
     }
 }

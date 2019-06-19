@@ -5,17 +5,20 @@ namespace LocalCommunityVotingPlatform.ViewModels
 {
     public class AddResolutionViewModel
     {
-        [Required]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"Tytuł\" powinno zawierać minimum 3 znaki")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Tytuł")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"{0}\" powinno zawierać minimum 3 znaki")]
         [DataType(DataType.Text)]
         public string Title { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"Opis\" powinno zawierać minimum 3 znaki")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Opis")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"{0}\" powinno zawierać minimum 3 znaki")]
         [DataType(DataType.Text)]
         public string Description { get; set; }
 
-        [Required]
+        [Display(Name = "Ważna do")]
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         public DateTime ActiveToVoteBeforeDate { get; set; }
     }
 }

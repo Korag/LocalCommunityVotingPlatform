@@ -48,3 +48,7 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+input[disabled] {
+    cursor: default;
+}

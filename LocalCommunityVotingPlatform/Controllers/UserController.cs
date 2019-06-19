@@ -6,6 +6,7 @@ using LocalCommunityVotingPlatform.ViewModels;
 using LocalCommunityVotingPlatform.Models;
 using System.Linq;
 using LocalCommunityVotingPlatform.DAL;
+using System.Security.Claims;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -94,6 +95,18 @@ namespace LocalCommunityVotingPlatform.Controllers
             };
 
             return userViewModel;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public UserViewModel GetUserData()
+        {
+            var UserIdentity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> UserClaims = UserIdentity.Claims;
+
+            var UserData = GetUserByEmail(UserClaims.ElementAt(0).Value);
+
+            return UserData;
         }
     }
 }

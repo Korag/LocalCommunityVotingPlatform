@@ -41,12 +41,22 @@ export class NavMenu extends Component {
                         <ul className="dropdown menu" data-dropdown-menu>
                             <li className="menu-text">Społeczność testowa</li>
                             <NavItem>
-                                <NavLink tag={Link} to="/">Uchwały [Aktywne]</NavLink>
+                                <NavLink tag={Link} to="/">Aktualne głosowania</NavLink>
+                            </NavItem>
+
+                            <NavItem>
+                                <NavLink tag={Link} to="/archiveVotes">Archiwalne głosowania</NavLink>
                             </NavItem>
 
                             {this.props.SuperUser.data ?
                                 <NavItem>
-                                    <NavLink tag={Link} to="/resolutions">Uchwały [Zarządzanie]</NavLink>
+                                    <NavLink tag={Link} to="/resolutions">Aktualne uchwały</NavLink>
+                                </NavItem>
+                                : null}
+
+                            {this.props.SuperUser.data ?
+                                <NavItem>
+                                    <NavLink tag={Link} to="/archiveResolutions">Archiwalne uchwały</NavLink>
                                 </NavItem>
                                 : null}
 

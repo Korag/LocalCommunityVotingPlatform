@@ -14,6 +14,7 @@ class AuthorizeComponent extends Component {
             loading: true,
             authorized: null,
             performedLogin: false,
+
             SuperUser: false
         };
     }

@@ -3,10 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 
-const buttonStyle = {
-    "marginBottom": '0px',
-};
-
 const inlineBlock = {
     "display": 'inline-block',
     "fontSize": "20px"
@@ -88,8 +84,9 @@ export class Login extends Component {
                                     <input type="password" name="password" onChange={e => this.changeValue(e)} value={this.state.password} />
                                 </div>
                                 <div>
-                                    <button className="button secondary float-center" style={buttonStyle} type="submit">Zaloguj</button>
+                                    <button className="button secondary float-center" style={{ marginBottom: 0 }}type="submit">Zaloguj</button>
                                 </div>
+                                <button className="button warning" style={{ marginTop: 10, marginBottom: 0 }} onClick={e=> this.ResetPassword(e)}>Zapomniałem hasła</button>
                             </div>
                         </form>
                     </div>

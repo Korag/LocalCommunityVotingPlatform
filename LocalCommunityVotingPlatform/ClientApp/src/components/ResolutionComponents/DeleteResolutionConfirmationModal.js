@@ -24,7 +24,7 @@ class DeleteResolutionConfirmationModal extends Component {
 
     render() {
         return (
-            <MDBContainer>
+            <MDBContainer className="buttonToLeft">
                 <MDBBtn className="button tiny alert" style={{ marginBottom: 0 }} onClick={this.toggle}>Usuń</MDBBtn>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
                     <MDBModalHeader toggle={this.toggle}>Usuwanie uchwały</MDBModalHeader>

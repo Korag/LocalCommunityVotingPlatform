@@ -76,3 +76,7 @@ body {
 .buttonMargin {
     margin-bottom: 0px,
 }
+
+.buttonToLeft{
+    padding-left: 0px;
+}

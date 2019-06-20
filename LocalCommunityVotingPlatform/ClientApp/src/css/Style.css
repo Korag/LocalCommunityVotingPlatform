@@ -53,6 +53,10 @@ input[disabled] {
     cursor: default;
 }
 
+textarea[disabled] {
+    cursor: default;
+}
+
 label {
     color: white;
 }

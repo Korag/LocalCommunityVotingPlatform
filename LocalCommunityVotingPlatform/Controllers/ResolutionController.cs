@@ -128,6 +128,7 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             DisplayResolutionViewModel resolutionViewModel = new DisplayResolutionViewModel
             {
+                Indexer = resolution.Indexer,
                 Title = resolution.Title,
                 Description = resolution.Description,
                 ActiveToVoteBeforeDate = resolution.ActiveToVoteBeforeDate

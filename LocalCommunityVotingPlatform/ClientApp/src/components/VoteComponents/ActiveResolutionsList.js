@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact';
+import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
 
@@ -92,7 +92,7 @@ export class ActiveResolutionsList extends Component {
 
                     console.log(data);
 
-                    data.rows[i].vote = <MDBBtn label="Vote" className="button tiny success" onClick={() => this.props.VoteForResolution(singleId)} style={{ marginBottom: 0 }}>Głosuj</MDBBtn>
+                    data.rows[i].vote = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
                 }
 
                 this.setState({ data });

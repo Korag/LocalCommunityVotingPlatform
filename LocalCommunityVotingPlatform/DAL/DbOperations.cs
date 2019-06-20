@@ -81,6 +81,11 @@ namespace LocalCommunityVotingPlatform.DAL
             }
         }
 
+        public void AddVote(Vote vote)
+        {
+            _context.Votes.Add(vote);
+        }
+
         #endregion
     }
 }

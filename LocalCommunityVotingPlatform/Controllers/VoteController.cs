@@ -4,9 +4,19 @@ using System.Linq;
 using LocalCommunityVotingPlatform.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using LocalCommunityVotingPlatform.Models;
+using System;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
+    public enum VoteChosenOption {
+        Empty,
+        For,
+        Against,
+        Abstain
+    }
+
+
     [Authorize]
     [Route("api/[controller]/[action]")]
     public class VoteController : ControllerBase
@@ -39,6 +49,35 @@ namespace LocalCommunityVotingPlatform.Controllers
             bool voteExist = _context.CheckIfVoteExist(resolutionId, userId);
 
             return voteExist;
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult<Vote> VoteForResolution(string resolutionId, string chosenOption)
+        {
+            int EnumValue = Int32.Parse(chosenOption);
+
+            if (Enum.GetName(typeof(VoteChosenOption), EnumValue) == Enum.GetName(typeof(VoteChosenOption), 0))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                string userId = _context.GetUserByEmail(GetUserEmailFromRequest()).Id;
+
+                Vote newVote = new Vote
+                {
+                    UserId = userId,
+                    ResolutionId = resolutionId,
+
+                    DateOfVoting = DateTime.Now,
+                    ChosenOption = Enum.GetName(typeof(VoteChosenOption), EnumValue)
+                };
+
+                _context.AddVote(newVote);
+
+                return Ok();
+            }
         }
     }
 }

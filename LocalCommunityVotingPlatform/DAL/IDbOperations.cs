@@ -25,6 +25,7 @@ namespace LocalCommunityVotingPlatform.DAL
 
         #region Votes
         bool CheckIfVoteExist(string resolutionId, string userId);
+        void AddVote(Vote vote);
 
         #endregion
 

@@ -2,6 +2,8 @@
 import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
+import DeleteUserConfirmationModal from './DeleteUserConfirmationModal'
+
 export class UsersTable extends Component {
     static displayName = UsersTable.name;
 
@@ -56,8 +58,8 @@ export class UsersTable extends Component {
 
     componentDidUpdate = async () => {
         if (this.props.refreshNeeded == true) {
-           await this.downloadUsers();
-           await this.props.RefreshComponent();
+            await this.downloadUsers();
+            await this.props.RefreshComponent();
         }
     }
 
@@ -84,7 +86,8 @@ export class UsersTable extends Component {
                     console.log(singleEmail);
                     console.log(userCredentials);
                     data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEdit(singleEmail)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
-                    data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć użytkownika "${userCredentials}" ?`)) this.props.Delete(singleEmail) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                    //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć użytkownika "${userCredentials}" ?`)) this.props.Delete(singleEmail) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                    data.rows[i].delete = <DeleteUserConfirmationModal userCredentials={userCredentials} DeleteUser={() => this.props.Delete(singleEmail)} />
                 }
 
                 //data.rows.push(
@@ -100,6 +103,7 @@ export class UsersTable extends Component {
             })
     }
 
+
     render() {
         return (
             <div>
@@ -114,6 +118,7 @@ export class UsersTable extends Component {
                     data={this.state.data}
                 />
             </div>
+
         );
     }
 }

@@ -33,9 +33,9 @@ export class Votes extends Component {
             <div style={{ marginTop: 30 }}>
                 {!this.state.showResolutionDetails
                     ? <ActiveResolutionsList refreshNeeded={this.state.refreshNeeded} ShowResolutionDetails={this.ShowResolutionDetails} RefreshComponent={this.RefreshComponent} />
-                    : <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} resolutionId={this.state.resolutionId} />
+                    : <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} resolutionId={this.state.resolutionId} />
                 }
-            </div >
+            </div>
         )
     }
 }

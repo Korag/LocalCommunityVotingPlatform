@@ -84,3 +84,12 @@ body {
 .buttonToLeft{
     padding-left: 0px;
 }
+
+.button-group input {
+    display: none;
+}
+
+.button-group input:checked + label,
+.button-group input:checked + label:active {
+    background-color: lawngreen;
+}

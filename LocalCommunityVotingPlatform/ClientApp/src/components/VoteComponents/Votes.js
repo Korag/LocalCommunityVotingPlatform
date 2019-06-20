@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { ActiveResolutionsList } from './ActiveResolutionsList';
+import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
 
 export class Votes extends Component {
     static displayName = Votes.name;
@@ -8,6 +9,8 @@ export class Votes extends Component {
 
         this.state = {
             resolutionId: '',
+            showResolutionDetails: false,
+
             refreshNeeded: false,
         }
     }
@@ -18,14 +21,20 @@ export class Votes extends Component {
         });
     }
 
-    VoteForResolution = (singleId) => {
-
+    ShowResolutionDetails = (singleId) => {
+        this.setState({
+            showResolutionDetails: !this.state.showResolutionDetails,
+            resolutionId: singleId
+        })
     }
 
     render() {
         return (
             <div style={{ marginTop: 30 }}>
-                <ActiveResolutionsList refreshNeeded={this.state.refreshNeeded} VoteForResolution={this.VoteForResolution} RefreshComponent={this.RefreshComponent} />
+                {!this.state.showResolutionDetails
+                    ? <ActiveResolutionsList refreshNeeded={this.state.refreshNeeded} ShowResolutionDetails={this.ShowResolutionDetails} RefreshComponent={this.RefreshComponent} />
+                    : <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} resolutionId={this.state.resolutionId} />
+                }
             </div >
         )
     }

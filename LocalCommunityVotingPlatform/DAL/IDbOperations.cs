@@ -23,6 +23,11 @@ namespace LocalCommunityVotingPlatform.DAL
 
         #endregion
 
+        #region Votes
+        bool CheckIfVoteExist(string resolutionId, string userId);
+
+        #endregion
+
         void SaveChanges();
     }
 }

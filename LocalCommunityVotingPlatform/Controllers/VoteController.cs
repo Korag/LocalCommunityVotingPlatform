@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using LocalCommunityVotingPlatform.ViewModels;
-using LocalCommunityVotingPlatform.Models;
 using System.Linq;
 using LocalCommunityVotingPlatform.DAL;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using System.Security.Claims;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -21,6 +18,27 @@ namespace LocalCommunityVotingPlatform.Controllers
             _context = context;
         }
 
-      
+        [HttpGet]
+        [Authorize]
+        public string GetUserEmailFromRequest()
+        {
+            var UserIdentity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> UserClaims = UserIdentity.Claims;
+
+            var UserEmail = UserClaims.ElementAt(0).Value;
+
+            return UserEmail;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public bool CheckIfAlreadyVotedForResolution(string resolutionId)
+        {
+            string userId = _context.GetUserByEmail(GetUserEmailFromRequest()).Id;
+
+            bool voteExist = _context.CheckIfVoteExist(resolutionId, userId);
+
+            return voteExist;
+        }
     }
 }

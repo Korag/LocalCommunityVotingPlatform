@@ -67,5 +67,20 @@ namespace LocalCommunityVotingPlatform.DAL
 
         #endregion
 
+        #region Votes
+
+        public bool CheckIfVoteExist(string resolutionId, string userId)
+        {
+            if (_context.Votes.Where(z=> z.ResolutionId == resolutionId && z.UserId == userId).Count() != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 }

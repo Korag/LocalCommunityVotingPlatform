@@ -2,6 +2,7 @@
 import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
+import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal'
 
 export class ResolutionsTableAdministrative extends Component {
     static displayName = ResolutionsTableAdministrative.name;
@@ -101,8 +102,9 @@ export class ResolutionsTableAdministrative extends Component {
                     console.log(data);
 
                     data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
-                    data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
-  
+
+                    //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                    data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)}/>
                 }
 
                 this.setState({ data });

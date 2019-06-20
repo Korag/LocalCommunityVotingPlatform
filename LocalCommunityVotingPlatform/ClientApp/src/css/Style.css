@@ -52,3 +52,11 @@
 input[disabled] {
     cursor: default;
 }
+
+label {
+    color: white;
+}
+
+body {
+    color: white;
+}

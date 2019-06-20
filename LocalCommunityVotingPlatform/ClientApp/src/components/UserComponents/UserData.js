@@ -5,22 +5,6 @@ import axios from 'axios'
 import { withRouter } from "react-router-dom";
 import { ChangePassword } from '../PasswordManagementComponents/ChangePassword';
 
-const buttonStyle = {
-    "marginBottom": '0px',
-};
-
-const inlineBlock = {
-    "display": 'inline-block',
-    "fontSize": "20px"
-};
-
-const h1 = {
-    "background": "rgb(9,30,121)",
-    "background": "linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%)",
-    "fontSize": "24px",
-    "color": "white"
-};
-
 export class UserData extends Component {
     static displayName = UserData.name;
 
@@ -65,7 +49,7 @@ export class UserData extends Component {
     render() {
         return (
             <div style={{marginTop: 30}}>
-                <div className="text-center" style={h1}>
+                <div className="text-center headerStyle">
                     <h1>Społeczność testowa</h1>
                 </div>
 
@@ -84,7 +68,7 @@ export class UserData extends Component {
                                 </div>
                                 <div className="row">
                                     {!this.state.enabledChangePasswordForm ?
-                                        <button className="button secondary float-center" style={buttonStyle} onClick={e => this.ShowChangePasswordForm(e)}>Zmień hasło</button>
+                                        <button className="button secondary float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowChangePasswordForm(e)}>Zmień hasło</button>
                                         : null}
                                 </div>
                             </div>

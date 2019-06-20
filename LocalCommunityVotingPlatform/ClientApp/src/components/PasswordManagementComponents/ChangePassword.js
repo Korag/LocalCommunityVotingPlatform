@@ -3,22 +3,6 @@ import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-const buttonStyle = {
-    "marginBottom": '0px',
-};
-
-const inlineBlock = {
-    "display": 'inline-block',
-    "fontSize": "20px"
-};
-
-const h1 = {
-    "background": "rgb(9,30,121)",
-    "background": "linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%)",
-    "fontSize": "24px",
-    "color": "white"
-};
-
 export class ChangePassword extends Component {
     static displayName = ChangePassword.name;
     constructor(props) {
@@ -84,8 +68,8 @@ export class ChangePassword extends Component {
                                     <input type="password" name="confirmNewPassword" onChange={e => this.changeValue(e)} value={this.state.confirmPassword} />
                                 </div>
                                 <div className="row">
-                                    <button className="button secondary float-center" style={buttonStyle} type="submit">Zmień hasło</button>
-                                    <button className="button alert float-center" style={buttonStyle} onClick={this.props.ShowChangePasswordForm} type="submit">Anuluj</button>
+                                    <button className="button secondary float-center" style={{ marginBottom: 0 }} type="submit">Zmień hasło</button>
+                                    <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={this.props.ShowChangePasswordForm} type="submit">Anuluj</button>
                                 </div>
                             </div>
                         </form>

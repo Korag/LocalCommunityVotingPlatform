@@ -60,3 +60,19 @@ label {
 body {
     color: white;
 }
+
+.inlineBlock {
+    display: inline-block;
+    font-size: 20px
+}
+
+.headerStyle {
+    background: rgb(9,30,121);
+    background: linear-gradient(90deg, rgba(9,30,121,0.9023984593837535) 5%, rgba(97,159,237,0.7035189075630253) 50%, rgba(9,30,121,0.8995973389355743) 95%);
+    font-size: 24px;
+    color: white;
+}
+
+.buttonMargin {
+    margin-bottom: 0px,
+}

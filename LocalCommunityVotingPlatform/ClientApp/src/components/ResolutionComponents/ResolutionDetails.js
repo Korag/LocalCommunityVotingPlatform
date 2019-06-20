@@ -18,6 +18,8 @@ export class ResolutionDetails extends Component {
 
             enableVoteForm: false,
             enableResultsDiagram: false,
+
+            alreadyVoted: false
         }
     }
 
@@ -35,6 +37,19 @@ export class ResolutionDetails extends Component {
                 title: result.data.title,
                 description: result.data.description,
                 activeToVoteBeforeDate: result.data.activeToVoteBeforeDate
+            });
+            })
+
+        axios.get('api/Vote/CheckIfAlreadyVotedForResolution', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                resolutionId: this.props.resolutionId
+            }
+        }).then(result => {
+            this.setState({
+                alreadyVoted: result.data.alreadyVoted,
             });
         })
     }
@@ -91,11 +106,11 @@ export class ResolutionDetails extends Component {
                 </div>
 
                 {this.state.enableVoteForm ?
-                    <VoteForResolution singleId={this.props.singleId} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
+                    <VoteForResolution resolutionId={this.props.resolutionId} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
                     : null}
 
                 {this.state.enableResultsDiagram ?
-                    <ResultDiagramWithStatistics singleId={this.props.singleId} ShowResultDiagram={this.ShowResultDiagram} history={this.props.history} />
+                    <ResultDiagramWithStatistics resolutionId={this.props.resolutionId} ShowResultDiagram={this.ShowResultDiagram} history={this.props.history} />
                     : null}
             </div>
         )

@@ -50,6 +50,11 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate > DateTime.Now).ToList();
         }
 
+        public ICollection<Resolution> GetArchiveResolutions()
+        {
+            return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate < DateTime.Now).ToList();
+        }
+
         public Resolution GetResolutionById(string resolutionId)
         {
             return _context.Resolutions.Where(z => z.Id == resolutionId).FirstOrDefault();

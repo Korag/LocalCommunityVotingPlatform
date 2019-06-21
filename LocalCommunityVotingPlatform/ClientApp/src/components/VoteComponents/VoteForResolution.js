@@ -9,8 +9,26 @@ export class VoteForResolution extends Component {
         super(props);
 
         this.state = {
-            selectedOption: ''
+            selectedOption: '',
+            refresh: false
         }
+    }
+
+    componentDidMount = () => {
+            axios.get('api/Vote/GetVoteSelectedOption', {
+                headers: {
+                    Authorization: getJWTtoken()
+                },
+                params: {
+                    resolutionId: this.props.resolutionId
+                }
+            }).then(result => {
+                console.log(result.data)
+                this.setState({
+                    selectedOption: result.data.toString()
+                });
+            })
+        
     }
 
     RefreshComponent = () => {
@@ -36,7 +54,7 @@ export class VoteForResolution extends Component {
                     chosenOption: this.state.selectedOption
                 }
             }).then(res => {
-                this.props.history.push('/');
+                //this.props.history.push('/');
             });
     }
 

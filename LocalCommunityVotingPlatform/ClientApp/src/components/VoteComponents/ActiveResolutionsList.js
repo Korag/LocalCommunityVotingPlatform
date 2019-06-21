@@ -14,7 +14,7 @@ export class ActiveResolutionsList extends Component {
                     {
                         label: 'Indeks',
                         field: 'indexer',
-                        sort: 'asc',
+                        sort: 'desc',
                         width: 100
                     },
                     {

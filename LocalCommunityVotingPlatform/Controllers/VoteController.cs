@@ -9,7 +9,8 @@ using System;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
-    public enum VoteChosenOption {
+    public enum VoteChosenOption
+    {
         Empty,
         For,
         Against,
@@ -68,10 +69,16 @@ namespace LocalCommunityVotingPlatform.Controllers
         {
             Vote vote = GetVote(resolutionId);
 
-            int EnumValue = Int32.Parse(vote.ChosenOption);
-            Enum.GetName(typeof(VoteChosenOption), EnumValue);
-
-            return EnumValue.ToString();
+            if (vote != null)
+            {
+                int EnumValue = Int32.Parse(vote.ChosenOption);
+                Enum.GetName(typeof(VoteChosenOption), EnumValue);
+                return EnumValue.ToString();
+            }
+            else
+            {
+                return "0";
+            }
         }
 
         [HttpPost]

@@ -71,7 +71,7 @@ namespace LocalCommunityVotingPlatform
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
 
-            services.AddSingleton<IDbOperations, DbOperations>();
+            services.AddTransient<IDbOperations, DbOperations>();
             services.AddTransient<IEmailSender, EmailProvider>();
 
             // In production, the React files will be served from this directory

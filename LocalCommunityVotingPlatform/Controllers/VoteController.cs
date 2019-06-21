@@ -51,6 +51,29 @@ namespace LocalCommunityVotingPlatform.Controllers
             return voteExist;
         }
 
+        [HttpGet]
+        [Authorize]
+        public Vote GetVote(string resolutionId)
+        {
+            string userId = _context.GetUserByEmail(GetUserEmailFromRequest()).Id;
+
+            Vote vote = _context.GetVote(resolutionId, userId);
+
+            return vote;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public string GetVoteSelectedOption(string resolutionId)
+        {
+            Vote vote = GetVote(resolutionId);
+
+            int EnumValue = Int32.Parse(vote.ChosenOption);
+            Enum.GetName(typeof(VoteChosenOption), EnumValue);
+
+            return EnumValue.ToString();
+        }
+
         [HttpPost]
         [Authorize]
         public ActionResult<Vote> VoteForResolution(string resolutionId, string chosenOption)
@@ -61,7 +84,7 @@ namespace LocalCommunityVotingPlatform.Controllers
             {
                 return BadRequest();
             }
-            else
+            else if (!CheckIfAlreadyVotedForResolution(resolutionId))
             {
                 string userId = _context.GetUserByEmail(GetUserEmailFromRequest()).Id;
 
@@ -71,13 +94,14 @@ namespace LocalCommunityVotingPlatform.Controllers
                     ResolutionId = resolutionId,
 
                     DateOfVoting = DateTime.Now,
-                    ChosenOption = Enum.GetName(typeof(VoteChosenOption), EnumValue)
+                    ChosenOption = chosenOption
                 };
 
                 _context.AddVote(newVote);
 
                 return Ok();
             }
+            return BadRequest();
         }
     }
 }

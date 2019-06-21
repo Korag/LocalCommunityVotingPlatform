@@ -84,8 +84,15 @@ namespace LocalCommunityVotingPlatform.DAL
         public void AddVote(Vote vote)
         {
             _context.Votes.Add(vote);
+            SaveChanges();
+            var test = _context.Votes.ToList();
         }
 
+        public Vote GetVote(string resolutionId, string userId)
+        {
+            Vote vote = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.UserId == userId).FirstOrDefault();
+            return vote;
+        }
         #endregion
     }
 }

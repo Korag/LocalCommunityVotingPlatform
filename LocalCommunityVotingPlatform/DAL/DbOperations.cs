@@ -93,6 +93,25 @@ namespace LocalCommunityVotingPlatform.DAL
             Vote vote = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.UserId == userId).FirstOrDefault();
             return vote;
         }
+
+        public int GetVotesQuantity(string resolutionId)
+        {
+            int votesQuantity = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
+            return votesQuantity;
+        }
+
+        public int[] GetQuantityOfConcreteOptions(string resolutionId)
+        {
+            int[] arrayWithStatistics = new int[3];
+
+            for (int i = 1; i < 4; i++)
+            {
+                arrayWithStatistics[i - 1] = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count();
+            }
+
+            return arrayWithStatistics;
+        }
+
         #endregion
     }
 }

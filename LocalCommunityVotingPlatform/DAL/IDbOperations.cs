@@ -28,6 +28,8 @@ namespace LocalCommunityVotingPlatform.DAL
         bool CheckIfVoteExist(string resolutionId, string userId);
         void AddVote(Vote vote);
         Vote GetVote(string resolutionId, string userId);
+        int GetVotesQuantity(string resolutionId);
+        int[] GetQuantityOfConcreteOptions(string resolutionId);
 
         #endregion
 

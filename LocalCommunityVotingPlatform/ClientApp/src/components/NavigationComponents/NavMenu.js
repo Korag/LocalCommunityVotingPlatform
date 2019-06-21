@@ -41,7 +41,7 @@ export class NavMenu extends Component {
                         <ul className="dropdown menu" data-dropdown-menu>
                             <li className="menu-text">Społeczność testowa</li>
                             <NavItem>
-                                <NavLink tag={Link} to="/">Aktualne głosowania</NavLink>
+                                <NavLink tag={Link} to="/" >Aktualne głosowania</NavLink>
                             </NavItem>
 
                             <NavItem>

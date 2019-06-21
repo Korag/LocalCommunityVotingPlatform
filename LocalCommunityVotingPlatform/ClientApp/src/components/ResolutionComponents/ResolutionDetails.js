@@ -19,7 +19,8 @@ export class ResolutionDetails extends Component {
             enableVoteForm: false,
             enableResultsDiagram: false,
 
-            alreadyVoted: false
+            alreadyVoted: false,
+            SuperUser: false
         }
     }
 
@@ -50,6 +51,16 @@ export class ResolutionDetails extends Component {
         }).then(result => {
             this.setState({
                 alreadyVoted: result.data,
+            });
+            })
+
+        axios.get('api/Account/Authorize/', {
+            headers: {
+                Authorization: getJWTtoken()
+            }
+        }).then(res => {
+            this.setState({
+                SuperUser: res,
             });
         })
     }
@@ -96,8 +107,8 @@ export class ResolutionDetails extends Component {
                                     {!this.state.alreadyVoted ?
                                         <button className="button success float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowVoteForm(e)}>Głosuj</button>
                                         : null}
-                                    {!this.state.enableResultsDiagram && this.props.superUser ?
-                                        <button className="button secondary float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowResultsDiagram(e)}>Wyniki głosowania</button>
+                                    {!this.state.enableResultsDiagram && this.state.SuperUser ?
+                                        <button className="button secondary float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowResultDiagram(e)}>Wyniki głosowania</button>
                                         : null}
                                 </div>
                             </div>

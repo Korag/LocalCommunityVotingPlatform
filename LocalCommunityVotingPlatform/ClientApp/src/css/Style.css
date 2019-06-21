@@ -93,3 +93,8 @@ body {
 .button-group input:checked + label:active {
     background-color: lawngreen;
 }
+
+#chartdiv {
+    width: 100%;
+    height: 500px;
+}

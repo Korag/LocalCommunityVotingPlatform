@@ -2,7 +2,6 @@
 import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-
 export class ActiveResolutionsList extends Component {
     static displayName = ActiveResolutionsList.name;
     constructor(props) {

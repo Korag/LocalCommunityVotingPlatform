@@ -3,6 +3,9 @@
 import { Bar } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 
+import { getJWTtoken } from '../../helpers/jwtHandler'
+import axios from 'axios'
+
 export class ResultDiagramWithStatistics extends Component {
     static displayName = ResultDiagramWithStatistics.name;
     constructor(props) {
@@ -16,7 +19,7 @@ export class ResultDiagramWithStatistics extends Component {
                 datasets: [
                     {
                         label: "% oddanych głosów",
-                        data: [12, 19, 3],
+                        data: [1],
                         backgroundColor: [
                             "rgba(124, 252, 0, 0.4)",
                             "rgba(255, 134,159,0.4)",
@@ -68,6 +71,24 @@ export class ResultDiagramWithStatistics extends Component {
                 }
             }
         }
+    }
+
+    componentDidMount = () => {
+        axios.get('api/Vote/GetVoteOnResolutionStatistics', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                resolutionId: this.props.resolutionId
+            }
+        }).then(result => {
+            let dataBar = Object.assign({}, this.state.dataBar);
+            dataBar.datasets.data = result.data.arrayWithStatistics;
+            this.setState({
+                voteQuantity: result.data.voteQuantity,
+                dataBar
+            });
+        })
     }
 
     RefreshComponent = () => {

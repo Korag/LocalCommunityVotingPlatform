@@ -15,7 +15,7 @@ export class ResolutionsTableAdministrative extends Component {
                     {
                         label: 'Indeks',
                         field: 'indexer',
-                        sort: 'asc',
+                        sort: 'desc',
                         width: 50
                     },
                     {

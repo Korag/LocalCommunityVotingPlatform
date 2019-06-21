@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using LocalCommunityVotingPlatform.Models;
 using System;
+using LocalCommunityVotingPlatform.ViewModels;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -109,6 +110,20 @@ namespace LocalCommunityVotingPlatform.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public VoteStatisticsViewModel GetVoteOnResolutionStatistics(string resolutionId)
+        {
+            VoteStatisticsViewModel voteStatisticsViewModel = new VoteStatisticsViewModel
+            {
+                VoteQuantity = _context.GetVotesQuantity(resolutionId),
+                ArrayWithStatistics = _context.GetQuantityOfConcreteOptions(resolutionId)
+            };
+
+            return voteStatisticsViewModel;
         }
     }
 }

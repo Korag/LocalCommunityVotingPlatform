@@ -70,7 +70,7 @@ export class AddResolution extends Component {
                                     <input type="text" name="title" onChange={e => this.changeValue(e)} value={this.state.title} />
                                     <label>
                                         Treść uchwały
-                                    <textarea placeholder="None" name="description" onChange={e => this.changeValue(e)} value={this.state.description}></textarea>
+                                    <textarea name="description" onChange={e => this.changeValue(e)} value={this.state.description}></textarea>
                                     </label>
                                     <label>Data końca głosowania</label>
                                     <DatePicker

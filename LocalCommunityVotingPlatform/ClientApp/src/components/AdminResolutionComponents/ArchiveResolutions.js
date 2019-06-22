@@ -1,23 +1,22 @@
 ﻿import React, { Component } from 'react';
-import { ActiveResolutionsList } from './ActiveResolutionsList';
+import { ArchiveResolutionsList } from './ArchiveResolutionsList';
 import { UpdateResolution } from './UpdateResolution';
-import { AddResolution } from './AddResolution'
 import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
 
 import axios from 'axios'
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-export class Resolutions extends Component {
-    static displayName = Resolutions.name;
+export class ArchiveResolutions extends Component {
+    static displayName = ArchiveResolutions.name;
     constructor(props) {
         super(props);
 
         this.state = {
             showList: true,
             resolutionId: '',
-            addResolutionReq: false,
             refreshNeeded: false,
 
+            blockedForVote: true,
             showResolutionDetails: false
         }
     }
@@ -29,13 +28,6 @@ export class Resolutions extends Component {
         })
         console.log(resolutionIdFromButton);
         console.log(this.state.resolutionId)
-    }
-
-    ShowFormAddResolution = () => {
-        console.log("jestem");
-        this.setState({
-            addResolutionReq: !this.state.addResolutionReq,
-        })
     }
 
     ShowResolutionDetails = (singleId) => {
@@ -66,25 +58,20 @@ export class Resolutions extends Component {
     }
 
     render() {
-        if (!this.state.addResolutionReq && !this.state.showResolutionDetails) {
+        if (!this.state.showResolutionDetails) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
-                    ? <ActiveResolutionsList ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                    ? <ArchiveResolutionsList ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} DeleteResolution={this.DeleteResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                     : <UpdateResolution ShowFormEditResolution={this.ShowFormEditResolution} resolutionId={this.state.resolutionId} />
                 }
             </div>
         }
-        else if (this.state.addResolutionReq && !this.state.showResolutionDetail) {
-            return <div style={{ marginTop: 30 }}>
-                <AddResolution ShowFormAddResolution={this.ShowFormAddResolution} />
-            </div>
-        }
         else {
             return <div style={{ marginTop: 30 }}>
-                <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} resolutionId={this.state.resolutionId} />
+                <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} blockedForVote={this.state.blockedForVote} resolutionId={this.state.resolutionId} />
             </div>
         }
     }
 }
 
-export default Resolutions;
+export default ArchiveResolutions;

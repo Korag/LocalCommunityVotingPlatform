@@ -32,8 +32,8 @@ class VoteConfirmationModal extends Component {
         console.log(this.props.selectedOption)
     }
 
-    VoteForResolution = () => {
-        this.props.Vote();
+    VoteForResolution = (e) => {
+        this.props.Vote(e);
         this.toggle();
     }
 

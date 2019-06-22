@@ -75,18 +75,18 @@ export class VoteForResolution extends Component {
 
                                 <div className="row" style={{ marginTop: 20 }}>
                                     <div className="button-group round toggle float-center">
-                                        <input type="radio" id="for" name="chosenOption" value="1" onChange={this.handleOptionChange} checked={this.state.selectedOption === '1'} disabled={this.props.alreadyVoted ? "disabled" : null}/>
+                                        <input type="radio" id="for" name="chosenOption" value="1" onChange={this.handleOptionChange} checked={this.state.selectedOption === '1'} disabled={this.props.alreadyVoted || this.props.blockedForVote ? "disabled" : null}/>
                                         <label className="button" for="for">Za</label>
 
-                                        <input type="radio" id="against" name="chosenOption" value="2" onChange={this.handleOptionChange} checked={this.state.selectedOption === '2'} disabled={this.props.alreadyVoted ? "disabled" : null}/>
+                                        <input type="radio" id="against" name="chosenOption" value="2" onChange={this.handleOptionChange} checked={this.state.selectedOption === '2'} disabled={this.props.alreadyVoted || this.props.blockedForVote ? "disabled" : null}/>
                                         <label className="button" for="against">Przeciw</label>
 
-                                        <input type="radio" id="abstain" name="chosenOption" value="3" onChange={this.handleOptionChange} checked={this.state.selectedOption === '3'} disabled={this.props.alreadyVoted ? "disabled" : null}/>
+                                        <input type="radio" id="abstain" name="chosenOption" value="3" onChange={this.handleOptionChange} checked={this.state.selectedOption === '3'} disabled={this.props.alreadyVoted || this.props.blockedForVote ? "disabled" : null}/>
                                         <label className="button" for="abstain">Wstrzymaj się</label>
                                     </div>
                                 </div>
 
-                                {!this.props.alreadyVoted || this.props.blockedForVote ?
+                                {!this.props.alreadyVoted && !this.props.blockedForVote ?
                                     <div className="row" style={{ marginTop: 10 }}>
                                         <VoteConfirmationModal selectedOption={this.state.selectedOption} Vote={(e) => this.Vote(e)} />
                                         <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={this.props.ShowVoteForm} type="submit">Anuluj</button>

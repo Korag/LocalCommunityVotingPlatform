@@ -40,7 +40,7 @@ class AuthorizeComponent extends Component {
         }).then(res => {
             this.setState({
                 authorized: true,
-                SuperUser: res,
+                SuperUser: res.data,
                 loading: false
             });
         }

@@ -2,8 +2,8 @@
 import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-export class ArchiveResolutionList_User extends Component {
-    static displayName = ArchiveResolutionList_User.name;
+export class ArchiveResolutionsList_User extends Component {
+    static displayName = ArchiveResolutionsList_User.name;
     constructor(props) {
         super(props);
 
@@ -125,6 +125,6 @@ export class ArchiveResolutionList_User extends Component {
     }
 }
 
-export default ArchiveResolutionList_User;
+export default ArchiveResolutionsList_User;
 
 

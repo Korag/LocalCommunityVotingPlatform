@@ -49,7 +49,7 @@ export class NavMenu extends Component {
                                 <NavLink tag={Link} to="/archive">Archiwalne uchwały</NavLink>
                             </NavItem>
 
-                            {this.props.SuperUser.data ?
+                            {this.props.SuperUser ?
                                 <NavItem>
                                     <NavLink tag={Link} to="/users">Użytkownicy</NavLink>
                                 </NavItem>

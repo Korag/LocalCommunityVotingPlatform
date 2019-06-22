@@ -50,7 +50,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ICollection<DisplayResolutionViewModel> GetResolutions()
         {
             var Resolutions = _context.GetResolutions();
@@ -154,7 +154,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public DisplayResolutionViewModel GetResolutionById(string resolutionId)
         {
             Resolution resolution = _context.GetResolutionById(resolutionId);

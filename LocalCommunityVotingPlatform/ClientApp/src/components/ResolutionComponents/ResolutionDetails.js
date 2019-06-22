@@ -60,7 +60,7 @@ export class ResolutionDetails extends Component {
             }
         }).then(res => {
             this.setState({
-                SuperUser: res,
+                SuperUser: res.data,
             });
         })
     }
@@ -104,7 +104,7 @@ export class ResolutionDetails extends Component {
                                     <input type="text" name="title" value={this.state.activeToVoteBeforeDate} disabled />
                                 </div>
                                 <div className="row">
-                                    {!this.state.alreadyVoted && !this.state.enableVoteForm ?
+                                    {!this.state.alreadyVoted && !this.state.enableVoteForm && !this.props.blockedForVote ?
                                         <button className="button success float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowVoteForm(e)}>Głosuj</button>
                                         : null}
                                     {!this.state.enableResultsDiagram && this.state.SuperUser ?

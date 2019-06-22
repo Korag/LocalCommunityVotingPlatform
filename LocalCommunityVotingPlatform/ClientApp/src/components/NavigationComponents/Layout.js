@@ -9,10 +9,10 @@ import { Users } from '../UserComponents/Users';
 import { UserData } from '../UserComponents/UserData';
 
 import { Resolutions } from '../AdminResolutionComponents/Resolutions';
-import { ArchiveResolutionsList } from '../AdminResolutionComponents/ArchiveResolutionsList'
+import { ArchiveResolutions } from '../AdminResolutionComponents/ArchiveResolutions'
 
 import { Resolutions_User } from '../UserResolutionComponents/Resolutions_User'
-import { ArchiveResolutionList_User } from '../UserResolutionComponents/ArchiveResolutionList_User'
+import { ArchiveResolutions_User } from '../UserResolutionComponents/ArchiveResolutions_User'
 
 
 export class Layout extends Component {
@@ -30,19 +30,19 @@ export class Layout extends Component {
                 <NavMenu Logout={this.props.Logout} SuperUser={this.props.SuperUser} />
                 <div className="wrapper">
 
-                    {this.props.SuperUser.data ?
+                    {this.props.SuperUser ?
                         <Route path='/' exact component={Resolutions} />
                         :
                         <Route path='/' exact component={Resolutions_User} />
                     }
 
-                    {this.props.SuperUser.data ?
-                        <Route path='/archive' exact component={ArchiveResolutionsList} />
+                    {this.props.SuperUser ?
+                        <Route path='/archive'  component={ArchiveResolutions} />
                         :
-                        <Route path='/archive' exact component={ArchiveResolutionList_User}/>
+                        <Route path='/archive'  component={ArchiveResolutions_User}/>
                     }
 
-                    {this.props.SuperUser.data ?
+                    {this.props.SuperUser ?
                         <Route path='/users' component={Users} />
                         :
                         null

@@ -2,8 +2,8 @@
 import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-export class ArchiveVotes extends Component {
-    static displayName = ArchiveVotes.name;
+export class ActiveResolutionsList_User extends Component {
+    static displayName = ActiveResolutionsList_User.name;
     constructor(props) {
         super(props);
 
@@ -60,7 +60,7 @@ export class ArchiveVotes extends Component {
     downloadActiveResolutions() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/Resolution/GetArchiveResolutions', {
+        fetch('api/Resolution/GetActiveResolutions', {
             headers: {
                 Authorization: getJWTtoken()
             }
@@ -113,6 +113,4 @@ export class ArchiveVotes extends Component {
     }
 }
 
-export default ArchiveVotes;
-
-
+export default ActiveResolutionsList_User;

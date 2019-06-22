@@ -2,10 +2,8 @@
 import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal'
-
-export class ArchiveResolutions extends Component {
-    static displayName = ArchiveResolutions.name;
+export class ArchiveResolutionList_User extends Component {
+    static displayName = ArchiveResolutionList_User.name;
     constructor(props) {
         super(props);
 
@@ -16,7 +14,7 @@ export class ArchiveResolutions extends Component {
                         label: 'Indeks',
                         field: 'indexer',
                         sort: 'desc',
-                        width: 50
+                        width: 100
                     },
                     {
                         label: 'Tytuł',
@@ -34,18 +32,11 @@ export class ArchiveResolutions extends Component {
                         label: 'Data ważności',
                         field: 'activeToVoteBeforeDate',
                         sort: 'asc',
-                        width: 80
+                        width: 100
                     },
                     {
-                        label: 'Edytuj',
-                        field: 'edit',
-                        sort: 'asc',
-                        width: 100
-                    }
-                    ,
-                    {
-                        label: 'Usuń',
-                        field: 'delete',
+                        label: 'Głosuj',
+                        field: 'vote',
                         sort: 'asc',
                         width: 100
                     }
@@ -57,16 +48,16 @@ export class ArchiveResolutions extends Component {
 
     componentDidUpdate = async () => {
         if (this.props.refreshNeeded == true) {
-            await this.downloadResolutions();
+            await this.downloadActiveResolutions();
             await this.props.RefreshComponent();
         }
     }
 
     componentDidMount = () => {
-        this.downloadResolutions();
+        this.downloadArchiveResolutions();
     }
 
-    downloadResolutions() {
+    downloadArchiveResolutions() {
         let data = Object.assign({}, this.state.data);
 
         fetch('api/Resolution/GetArchiveResolutions', {
@@ -91,8 +82,7 @@ export class ArchiveResolutions extends Component {
                         title: result[i].title,
                         description: result[i].description,
                         activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
-                        edit: '',
-                        delete: ''
+                        vote: '',
                     }
 
                     console.log(result);
@@ -101,10 +91,7 @@ export class ArchiveResolutions extends Component {
 
                     console.log(data);
 
-                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
-
-                    //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
-                    data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)} />
+                    data.rows[i].vote = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
                 }
 
                 this.setState({ data });
@@ -114,9 +101,6 @@ export class ArchiveResolutions extends Component {
     render() {
         return (
             <div>
-                <div className="row customToolbar">
-                    <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
-                </div>
                 <MDBDataTable
                     responsive
                     striped
@@ -129,4 +113,6 @@ export class ArchiveResolutions extends Component {
     }
 }
 
-export default ArchiveResolutions;
+export default ArchiveResolutionList_User;
+
+

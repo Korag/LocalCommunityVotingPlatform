@@ -2,8 +2,10 @@
 import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-export class ActiveResolutionsList extends Component {
-    static displayName = ActiveResolutionsList.name;
+import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal'
+
+export class ArchiveResolutionsList extends Component {
+    static displayName = ArchiveResolutionsList.name;
     constructor(props) {
         super(props);
 
@@ -14,7 +16,7 @@ export class ActiveResolutionsList extends Component {
                         label: 'Indeks',
                         field: 'indexer',
                         sort: 'desc',
-                        width: 100
+                        width: 50
                     },
                     {
                         label: 'Tytuł',
@@ -32,11 +34,18 @@ export class ActiveResolutionsList extends Component {
                         label: 'Data ważności',
                         field: 'activeToVoteBeforeDate',
                         sort: 'asc',
-                        width: 100
+                        width: 80
                     },
                     {
-                        label: 'Głosuj',
-                        field: 'vote',
+                        label: 'Edytuj',
+                        field: 'edit',
+                        sort: 'asc',
+                        width: 100
+                    }
+                    ,
+                    {
+                        label: 'Usuń',
+                        field: 'delete',
                         sort: 'asc',
                         width: 100
                     }
@@ -48,19 +57,19 @@ export class ActiveResolutionsList extends Component {
 
     componentDidUpdate = async () => {
         if (this.props.refreshNeeded == true) {
-            await this.downloadActiveResolutions();
+            await this.downloadResolutions();
             await this.props.RefreshComponent();
         }
     }
 
     componentDidMount = () => {
-        this.downloadActiveResolutions();
+        this.downloadResolutions();
     }
 
-    downloadActiveResolutions() {
+    downloadResolutions() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/Resolution/GetActiveResolutions', {
+        fetch('api/Resolution/GetArchiveResolutions', {
             headers: {
                 Authorization: getJWTtoken()
             }
@@ -82,7 +91,8 @@ export class ActiveResolutionsList extends Component {
                         title: result[i].title,
                         description: result[i].description,
                         activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
-                        vote: '',
+                        edit: '',
+                        delete: ''
                     }
 
                     console.log(result);
@@ -91,7 +101,10 @@ export class ActiveResolutionsList extends Component {
 
                     console.log(data);
 
-                    data.rows[i].vote = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
+                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
+
+                    //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                    data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)} />
                 }
 
                 this.setState({ data });
@@ -100,7 +113,7 @@ export class ActiveResolutionsList extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginTop:30}}>
                 <MDBDataTable
                     responsive
                     striped
@@ -113,4 +126,4 @@ export class ActiveResolutionsList extends Component {
     }
 }
 
-export default ActiveResolutionsList;
+export default ArchiveResolutionsList;

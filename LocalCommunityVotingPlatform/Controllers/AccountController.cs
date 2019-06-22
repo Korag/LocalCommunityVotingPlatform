@@ -60,7 +60,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 }
             }
 
-            return BadRequest();
+            return BadRequest(ModelState);
         }
 
         [HttpGet]

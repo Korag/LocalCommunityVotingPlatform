@@ -31,7 +31,7 @@ export class Login extends Component {
             localStorage.setItem('jwt_token', res.data);
             this.props.callBack();
             }).catch(err => {
-                console.log(err);
+                console.log(err.response.data);
             });
     }
 

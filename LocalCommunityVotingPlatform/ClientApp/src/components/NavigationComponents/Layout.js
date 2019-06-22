@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
+
 import { NavMenu } from './NavMenu';
 
 import { Route } from 'react-router';
@@ -7,11 +8,11 @@ import { Route } from 'react-router';
 import { Users } from '../UserComponents/Users';
 import { UserData } from '../UserComponents/UserData';
 
-import { Resolutions } from '../ResolutionComponents/Resolutions';
-import { ArchiveResolutions } from '../ResolutionComponents/ArchiveResolutions'
+import { Resolutions } from '../AdminResolutionComponents/Resolutions';
+import { ArchiveResolutionsList } from '../AdminResolutionComponents/ArchiveResolutionsList'
 
-import { ArchiveVotes } from '../VoteComponents/ArchiveVotes'
-import { Votes } from '../VoteComponents/Votes'
+import { Resolutions_User } from '../UserResolutionComponents/Resolutions_User'
+import { ArchiveResolutionList_User } from '../UserResolutionComponents/ArchiveResolutionList_User'
 
 
 export class Layout extends Component {
@@ -28,11 +29,25 @@ export class Layout extends Component {
             <div>
                 <NavMenu Logout={this.props.Logout} SuperUser={this.props.SuperUser} />
                 <div className="wrapper">
-                    <Route path='/' exact component={Votes} />
-                    {this.props.SuperUser.data ? <Route path='/resolutions' exact component={Resolutions} /> : null}
-                    {this.props.SuperUser.data ? <Route path='/archiveResolutions' exact component={ArchiveResolutions} /> : null}
-                    {this.props.SuperUser.data ? <Route path='/archiveVotes' exact component={ArchiveVotes} /> : null}
-                    {this.props.SuperUser.data ? <Route path='/users' component={Users} /> : null}
+
+                    {this.props.SuperUser.data ?
+                        <Route path='/' exact component={Resolutions} />
+                        :
+                        <Route path='/' exact component={Resolutions_User} />
+                    }
+
+                    {this.props.SuperUser.data ?
+                        <Route path='/archive' exact component={ArchiveResolutionsList} />
+                        :
+                        <Route path='/archive' exact component={ArchiveResolutionList_User}/>
+                    }
+
+                    {this.props.SuperUser.data ?
+                        <Route path='/users' component={Users} />
+                        :
+                        null
+                    }
+
                     <Route path='/userdata' component={UserData} />
                 </div>
             </div>

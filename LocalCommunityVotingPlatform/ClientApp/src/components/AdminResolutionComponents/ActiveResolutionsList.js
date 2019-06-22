@@ -4,8 +4,8 @@ import { getJWTtoken } from '../../helpers/jwtHandler'
 
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal'
 
-export class ResolutionsTableAdministrative extends Component {
-    static displayName = ResolutionsTableAdministrative.name;
+export class ActiveResolutionsList extends Component {
+    static displayName = ActiveResolutionsList.name;
     constructor(props) {
         super(props);
 
@@ -129,4 +129,4 @@ export class ResolutionsTableAdministrative extends Component {
     }
 }
 
-export default ResolutionsTableAdministrative;
+export default ActiveResolutionsList;

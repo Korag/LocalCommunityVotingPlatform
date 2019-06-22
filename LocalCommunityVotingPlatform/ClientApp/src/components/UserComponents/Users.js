@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 //import { UsersTable } from './UsersTable';
-import { UsersTable } from './UsersTable';
+import { UsersTable } from './UsersList';
 import { UpdateUser } from './UpdateUser';
 import { AddUser } from './AddUser'
 

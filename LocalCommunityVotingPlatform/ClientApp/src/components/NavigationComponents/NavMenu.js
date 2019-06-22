@@ -40,35 +40,25 @@ export class NavMenu extends Component {
                     <div className="top-bar-left">
                         <ul className="dropdown menu" data-dropdown-menu>
                             <li className="menu-text">Społeczność testowa</li>
+
                             <NavItem>
-                                <NavLink tag={Link} to="/" >Aktualne głosowania</NavLink>
+                                <NavLink tag={Link} to="/">Aktualne uchwały</NavLink>
                             </NavItem>
 
                             <NavItem>
-                                <NavLink tag={Link} to="/archiveVotes">Archiwalne głosowania</NavLink>
+                                <NavLink tag={Link} to="/archive">Archiwalne uchwały</NavLink>
                             </NavItem>
 
                             {this.props.SuperUser.data ?
                                 <NavItem>
-                                    <NavLink tag={Link} to="/resolutions">Aktualne uchwały</NavLink>
-                                </NavItem>
-                                : null}
-
-                            {this.props.SuperUser.data ?
-                                <NavItem>
-                                    <NavLink tag={Link} to="/archiveResolutions">Archiwalne uchwały</NavLink>
-                                </NavItem>
-                                : null}
-
-                            {this.props.SuperUser.data ?
-                            <NavItem>
-                                <NavLink tag={Link} to="/users">Użytkownicy</NavLink>
+                                    <NavLink tag={Link} to="/users">Użytkownicy</NavLink>
                                 </NavItem>
                                 : null}
 
                             <NavItem>
                                 <NavLink tag={Link} to="/userdata">Moje dane</NavLink>
                             </NavItem>
+
                         </ul>
                     </div>
                     <div className="top-bar-right">

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { ResolutionsTableAdministrative } from './ResolutionsTableAdministrative';
+import { ActiveResolutionsList } from './ActiveResolutionsList';
 import { UpdateResolution } from './UpdateResolution';
 import { AddResolution } from './AddResolution'
 
@@ -59,7 +59,7 @@ export class Resolutions extends Component {
         if (this.state.addResolutionReq == false) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
-                    ? <ResolutionsTableAdministrative ShowFormEditResolution={this.ShowFormEditResolution} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                    ? <ActiveResolutionsList ShowFormEditResolution={this.ShowFormEditResolution} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                     : <UpdateResolution ShowFormEditResolution={this.ShowFormEditResolution} resolutionId={this.state.resolutionId} />
                 }
             </div>

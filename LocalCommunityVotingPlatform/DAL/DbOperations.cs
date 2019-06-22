@@ -67,7 +67,7 @@ namespace LocalCommunityVotingPlatform.DAL
         }
         public int GetResolutionsCountByMonth(int month)
         {
-           return  _context.Resolutions.Where(z => z.Date.Month == month).Count();
+            return _context.Resolutions.Where(z => z.Date.Month == month).Count();
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public bool CheckIfVoteExist(string resolutionId, string userId)
         {
-            if (_context.Votes.Where(z=> z.ResolutionId == resolutionId && z.UserId == userId).Count() != 0)
+            if (_context.Votes.Where(z => z.ResolutionId == resolutionId && z.UserId == userId).Count() != 0)
             {
                 return true;
             }
@@ -107,34 +107,40 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public int GetNoVotesQuantity(int voteQuantity)
         {
-            return _context.Users.Count() - voteQuantity; 
+            return _context.Users.Count() - voteQuantity;
         }
 
         public int[] GetQuantityOfConcreteOptions(string resolutionId)
         {
             int[] arrayWithStatistics = new int[3];
-
-            for (int i = 1; i < 4; i++)
-            {
-                arrayWithStatistics[i - 1] = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count();
-            }
-
-            return arrayWithStatistics;
-        }
-
-        public int[] GetPercentageQuantityOfConcreteOptions(string resolutionId)
-        {
-            int[] arrayWithStatistics = new int[3];
             int totalNumberOfVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
 
-            for (int i = 1; i < 4; i++)
+            if (totalNumberOfVotes != 0)
             {
-                arrayWithStatistics[i - 1] = (_context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count() / totalNumberOfVotes) * 100;
+                for (int i = 1; i < 4; i++)
+                {
+                    arrayWithStatistics[i - 1] = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count();
+                }
+            }
+                return arrayWithStatistics;
             }
 
-            return arrayWithStatistics;
-        }
+            public int[] GetPercentageQuantityOfConcreteOptions(string resolutionId)
+            {
+                int[] arrayWithStatistics = new int[3];
+                int totalNumberOfVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
 
-        #endregion
+                if (totalNumberOfVotes != 0)
+                {
+                    for (int i = 1; i < 4; i++)
+                    {
+                        arrayWithStatistics[i - 1] = (_context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count() / totalNumberOfVotes) * 100;
+                    }
+                }
+
+                return arrayWithStatistics;
+            }
+
+            #endregion
+        }
     }
-}

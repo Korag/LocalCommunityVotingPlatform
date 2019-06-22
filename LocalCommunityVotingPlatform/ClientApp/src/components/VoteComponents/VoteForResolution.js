@@ -11,7 +11,7 @@ export class VoteForResolution extends Component {
         super(props);
 
         this.state = {
-            selectedOption: '',
+            selectedOption: '0',
             refresh: false
         }
     }

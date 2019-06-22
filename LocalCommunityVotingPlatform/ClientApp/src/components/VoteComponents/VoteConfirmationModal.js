@@ -15,23 +15,25 @@ class VoteConfirmationModal extends Component {
         modal: false
     }
 
-    componentDidMount = () => {
+    toggle = () => {
         if (this.props.selectedOption === '0') {
             this.setState({
                 disabled: true
             });
         }
-    }
-
-    toggle = () => {
+        else {
+            this.setState({
+                disabled: false
+            });  
+        }
         this.setState({
             modal: !this.state.modal
         });
         console.log(this.props.selectedOption)
     }
 
-    VoteForResolution = (e) => {
-        this.props.Vote(e);
+    VoteForResolution = () => {
+        this.props.Vote();
         this.toggle();
     }
 
@@ -53,8 +55,12 @@ class VoteConfirmationModal extends Component {
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
                     <MDBModalHeader toggle={this.toggle} className="text-dark">Głosowanie nad uchwałą</MDBModalHeader>
                     <MDBModalBody className="text-dark">
-                        <p>Czy na pewno chcesz oddać swój głos o treści "{this.GetChosenOptionName()}" ? </p>
-        </MDBModalBody>
+                        {!this.state.disabled ?
+                            <p>Czy na pewno chcesz oddać swój głos o treści "{this.GetChosenOptionName()}" ? </p>
+                            :
+                            <p>Nie wybrano żadnej z dostępnych opcji. Powróć do panelu głosowania</p>
+                        }
+                    </MDBModalBody>
                     <MDBModalFooter>
                         <MDBBtn color="secondary" onClick={this.toggle}>Anuluj</MDBBtn>
                         <MDBBtn color="primary" onClick={(e) => this.VoteForResolution(e)} disabled={this.state.disabled ? "disabled" : null}>Oddaj głos</MDBBtn>

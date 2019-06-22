@@ -116,7 +116,7 @@ export class ResultDiagramWithStatistics extends Component {
 
                         <form>
                             <div className="grid-container">
-                                <div className="row" style={{ marginTop: 20 }}>
+                                <div style={{ marginTop: 20 }}>
                                     <label>Liczba oddanych głosów</label>
                                     <input type="text" name="voteQuantity" value={this.state.voteQuantity} disabled />
 

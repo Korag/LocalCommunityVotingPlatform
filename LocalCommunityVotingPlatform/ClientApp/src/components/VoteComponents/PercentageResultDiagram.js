@@ -16,7 +16,7 @@ export class PercentageResultDiagram extends Component {
                 labels: ["Za", "Przeciw", "Wstrzymaj się"],
                 datasets: [
                     {
-                        label: "% oddanych głosów",
+                        label: "Procent oddanych głosów",
                         data: [0, 0, 0],
                         backgroundColor: [
                             "rgba(124, 252, 0, 0.4)",

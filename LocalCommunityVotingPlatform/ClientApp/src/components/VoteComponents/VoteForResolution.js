@@ -3,6 +3,8 @@
 import { getJWTtoken } from '../../helpers/jwtHandler'
 import axios from 'axios';
 
+import VoteConfirmationModal from './VoteConfirmationModal'
+
 export class VoteForResolution extends Component {
     static displayName = VoteForResolution.name;
     constructor(props) {
@@ -68,7 +70,7 @@ export class VoteForResolution extends Component {
                             <h2>Głosowanie nad uchwałą</h2>
                         </div>
 
-                        <form onSubmit={e => this.Vote(e)}>
+                        <form>
                             <div className="grid-container">
 
                                 <div className="row" style={{ marginTop: 20 }}>
@@ -86,7 +88,7 @@ export class VoteForResolution extends Component {
 
                                 {!this.props.alreadyVoted ?
                                     <div className="row" style={{ marginTop: 10 }}>
-                                        <button className="button secondary float-center" style={{ marginBottom: 0 }} type="submit" >Głosuj</button>
+                                        <VoteConfirmationModal selectedOption={this.state.selectedOption} Vote={(e) => this.Vote(e)} />
                                         <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={this.props.ShowVoteForm} type="submit">Anuluj</button>
                                     </div>
                                     : null}

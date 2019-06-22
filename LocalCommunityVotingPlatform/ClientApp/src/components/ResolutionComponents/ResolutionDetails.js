@@ -104,12 +104,13 @@ export class ResolutionDetails extends Component {
                                     <input type="text" name="title" value={this.state.activeToVoteBeforeDate} disabled />
                                 </div>
                                 <div className="row">
-                                    {!this.state.alreadyVoted ?
+                                    {!this.state.alreadyVoted && !this.state.enableVoteForm ?
                                         <button className="button success float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowVoteForm(e)}>Głosuj</button>
                                         : null}
                                     {!this.state.enableResultsDiagram && this.state.SuperUser ?
                                         <button className="button secondary float-center" style={{ marginBottom: 0 }} onClick={e => this.ShowResultDiagram(e)}>Wyniki głosowania</button>
                                         : null}
+                                    <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={e => this.props.ShowResolutionDetails(e)}>Anuluj</button>
                                 </div>
                             </div>
                         </form>

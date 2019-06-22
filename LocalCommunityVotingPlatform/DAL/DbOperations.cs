@@ -105,6 +105,11 @@ namespace LocalCommunityVotingPlatform.DAL
             return votesQuantity;
         }
 
+        public int GetNoVotesQuantity(int voteQuantity)
+        {
+            return _context.Users.Count() - voteQuantity; 
+        }
+
         public int[] GetQuantityOfConcreteOptions(string resolutionId)
         {
             int[] arrayWithStatistics = new int[3];
@@ -112,6 +117,19 @@ namespace LocalCommunityVotingPlatform.DAL
             for (int i = 1; i < 4; i++)
             {
                 arrayWithStatistics[i - 1] = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count();
+            }
+
+            return arrayWithStatistics;
+        }
+
+        public int[] GetPercentageQuantityOfConcreteOptions(string resolutionId)
+        {
+            int[] arrayWithStatistics = new int[3];
+            int totalNumberOfVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
+
+            for (int i = 1; i < 4; i++)
+            {
+                arrayWithStatistics[i - 1] = (_context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count() / totalNumberOfVotes) * 100;
             }
 
             return arrayWithStatistics;

@@ -122,6 +122,21 @@ namespace LocalCommunityVotingPlatform.Controllers
                 VoteQuantity = _context.GetVotesQuantity(resolutionId),
                 ArrayWithStatistics = _context.GetQuantityOfConcreteOptions(resolutionId)
             };
+            voteStatisticsViewModel.NoVoteQuantity = _context.GetNoVotesQuantity(voteStatisticsViewModel.VoteQuantity);
+
+            return voteStatisticsViewModel;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public VoteStatisticsViewModel GetVoteOnResolutionStatisticsPercentage(string resolutionId)
+        {
+            VoteStatisticsViewModel voteStatisticsViewModel = new VoteStatisticsViewModel
+            {
+                VoteQuantity = _context.GetVotesQuantity(resolutionId),
+                ArrayWithStatistics = _context.GetPercentageQuantityOfConcreteOptions(resolutionId)
+            };
+            voteStatisticsViewModel.NoVoteQuantity = _context.GetNoVotesQuantity(voteStatisticsViewModel.VoteQuantity);
 
             return voteStatisticsViewModel;
         }

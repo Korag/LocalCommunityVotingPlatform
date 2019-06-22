@@ -30,8 +30,9 @@ namespace LocalCommunityVotingPlatform.DAL
         void AddVote(Vote vote);
         Vote GetVote(string resolutionId, string userId);
         int GetVotesQuantity(string resolutionId);
+        int GetNoVotesQuantity(int voteQuantity);
         int[] GetQuantityOfConcreteOptions(string resolutionId);
-
+        int[] GetPercentageQuantityOfConcreteOptions(string resolutionId);
         #endregion
 
         void SaveChanges();

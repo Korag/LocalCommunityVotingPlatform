@@ -6,23 +6,18 @@ import { MDBContainer } from "mdbreact";
 import { getJWTtoken } from '../../helpers/jwtHandler'
 import axios from 'axios'
 
-import PercentageResultDiagram from './PercentageResultDiagram'
-
-export class ResultDiagramWithStatistics extends Component {
-    static displayName = ResultDiagramWithStatistics.name;
+export class PercentageResultDiagram extends Component {
+    static displayName = PercentageResultDiagram.name;
     constructor(props) {
         super(props);
 
         this.state = {
-            voteQuantity: 0,
-            noVoteQuantity: 0,
-
             dataBar: {
                 labels: ["Za", "Przeciw", "Wstrzymaj się"],
                 datasets: [
                     {
-                        label: "Liczba oddanych głosów",
-                        data: [0,0,0],
+                        label: "% oddanych głosów",
+                        data: [0, 0, 0],
                         backgroundColor: [
                             "rgba(124, 252, 0, 0.4)",
                             "rgba(255, 134,159,0.4)",
@@ -77,7 +72,7 @@ export class ResultDiagramWithStatistics extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('api/Vote/GetVoteOnResolutionStatistics', {
+        axios.get('api/Vote/GetVoteOnResolutionStatisticsPercentage', {
             headers: {
                 Authorization: getJWTtoken()
             },
@@ -88,10 +83,6 @@ export class ResultDiagramWithStatistics extends Component {
             let databar = Object.assign({}, this.state.dataBar);
             databar.datasets[0].data = result.data.arrayWithStatistics;
 
-            this.setState({
-                voteQuantity: result.data.voteQuantity,
-                noVoteQuantity: result.data.noVoteQuantity
-            });
             this.setState({
                 databar
             });
@@ -106,53 +97,14 @@ export class ResultDiagramWithStatistics extends Component {
 
     render() {
         return (
-            <div>
-                <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
-                    <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
-
-                        <div className="text-center">
-                            <h2>Wyniki głosowania</h2>
-                        </div>
-
-                        <form>
-                            <div className="grid-container">
-                                <div className="row" style={{ marginTop: 20 }}>
-                                    <label>Liczba oddanych głosów</label>
-                                    <input type="text" name="voteQuantity" value={this.state.voteQuantity} disabled />
-
-                                    <label>Liczba członków społeczności, którzy nie oddali głosu</label>
-                                    <input type="text" name="noVoteQuantity" value={this.state.noVoteQuantity} disabled />
-
-                                    <div className="text-center">
-                                        <h2>Udział liczbowy</h2>
-                                    </div>
-
-                                    <MDBContainer>
-                                        <Bar data={this.state.dataBar} options={this.state.barChartOptions} className="text-white" />
-                                    </MDBContainer>
-
-
-                                    <div className="text-center">
-                                        <h2>Udział procentowy</h2>
-                                    </div>
-
-                                    <PercentageResultDiagram resolutionId={this.props.resolutionId} />
-
-                                </div>
-
-                                <div className="row" style={{ marginTop: 10 }}>
-                                    <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={this.props.ShowResultDiagram}>Anuluj</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <MDBContainer>
+                <Bar data={this.state.dataBar} options={this.state.barChartOptions} className="text-white" />
+            </MDBContainer>
         )
     }
 }
 
-export default ResultDiagramWithStatistics;
+export default PercentageResultDiagram;
 
 
 

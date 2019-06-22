@@ -86,7 +86,7 @@ export class VoteForResolution extends Component {
                                     </div>
                                 </div>
 
-                                {!this.props.alreadyVoted ?
+                                {!this.props.alreadyVoted || this.props.blockedForVote ?
                                     <div className="row" style={{ marginTop: 10 }}>
                                         <VoteConfirmationModal selectedOption={this.state.selectedOption} Vote={(e) => this.Vote(e)} />
                                         <button className="button alert float-center" style={{ marginBottom: 0 }} onClick={this.props.ShowVoteForm} type="submit">Anuluj</button>

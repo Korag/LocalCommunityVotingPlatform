@@ -47,7 +47,7 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public ICollection<Resolution> GetActiveResolutions()
         {
-            return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate > DateTime.Now).ToList();
+            return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate >= DateTime.Now.Date).ToList();
         }
 
         public ICollection<Resolution> GetArchiveResolutions()

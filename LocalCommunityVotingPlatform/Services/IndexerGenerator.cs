@@ -14,12 +14,25 @@ namespace LocalCommunityVotingPlatform.Services
 
         public string GenerateIndexer()
         {
-            var Month = DateTime.UtcNow.Month;
-            var Year = DateTime.UtcNow.Year;
+            var Month = DateTime.UtcNow.Month.ToString();
+            var Year = DateTime.UtcNow.Year.ToString();
 
-            var Quantity = _context.GetResolutionsCountByMonth(Month);
+            var Quantity = _context.GetResolutionsCountByMonth((Int32.Parse(Month)));
+            Quantity++;
 
-            string Indexer = $"{Quantity + 1}/{Month}/{Year}";
+            if (Month.Length == 1)
+            {
+                Month = "0" + Month;
+            }
+
+            string QuantityString = "";
+
+            if (Quantity < 10)
+            {
+                QuantityString = "0" + Quantity.ToString();
+            }
+
+            string Indexer = $"{Quantity}/{Month}/{Year}";
 
             return Indexer;
         }

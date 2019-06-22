@@ -117,8 +117,8 @@ export class ResolutionDetails extends Component {
                     </div>
                 </div>
 
-                {this.state.enableVoteForm || this.state.alreadyVoted ?
-                    <VoteForResolution resolutionId={this.props.resolutionId} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
+                {this.state.enableVoteForm || this.state.alreadyVoted || this.props.blockedForVote ?
+                    <VoteForResolution resolutionId={this.props.resolutionId} blockedForVote={this.props.blockedForVote} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
                     : null}
 
                 {this.state.enableResultsDiagram ?

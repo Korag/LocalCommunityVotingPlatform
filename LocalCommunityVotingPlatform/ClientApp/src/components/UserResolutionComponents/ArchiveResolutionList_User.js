@@ -35,8 +35,8 @@ export class ArchiveResolutionList_User extends Component {
                         width: 100
                     },
                     {
-                        label: 'Głosuj',
-                        field: 'vote',
+                        label: 'Szczegóły',
+                        field: 'details',
                         sort: 'asc',
                         width: 100
                     }
@@ -74,15 +74,27 @@ export class ArchiveResolutionList_User extends Component {
                     let singleId = result[i].id;
                     let resolutionCredentials = result[i].indexer + " " + result[i].title;
 
+                    let title = result[i].title.substr(0, 180);
+
+                    if (result[i].title.length > 180) {
+                        title = title + "(...)";
+                    }
+
+                    let description = result[i].description.substr(0, 300);
+
+                    if (result[i].description.length > 300) {
+                        description = description + "(...)";
+                    }
+
                     console.log(singleId);
                     console.log(resolutionCredentials);
 
                     var object = {
                         indexer: result[i].indexer,
-                        title: result[i].title,
-                        description: result[i].description,
+                        title: title,
+                        description: description,
                         activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
-                        vote: '',
+                        details: '',
                     }
 
                     console.log(result);
@@ -91,7 +103,7 @@ export class ArchiveResolutionList_User extends Component {
 
                     console.log(data);
 
-                    data.rows[i].vote = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
+                    data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
                 }
 
                 this.setState({ data });

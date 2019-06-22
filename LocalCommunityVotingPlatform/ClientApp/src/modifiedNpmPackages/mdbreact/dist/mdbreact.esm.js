@@ -3735,7 +3735,7 @@ DataTable.defaultProps = {
   fixed: false,
   hover: false,
   info: true,
-  infoLabel: ["Pozycje", "do", "z", "łącznie"],
+  infoLabel: ["Pozycje:", "do", "z", "łącznie"],
   order: [],
   pagesAmount: 8,
   paging: true,

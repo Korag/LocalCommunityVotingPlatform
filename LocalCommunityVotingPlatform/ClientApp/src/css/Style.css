@@ -102,3 +102,12 @@ body {
 .modal-open {
     overflow: visible;
 }
+
+.dataTables_info{
+    color: white;
+}
+
+.page-item{
+    color: black;
+}
+ 

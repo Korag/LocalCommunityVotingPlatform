@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler';
 
-import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal'
+import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
 
 export class ActiveResolutionsList extends Component {
     static displayName = ActiveResolutionsList.name;
@@ -37,12 +37,17 @@ export class ActiveResolutionsList extends Component {
                         width: 80
                     },
                     {
+                        label: 'Szczegóły/Głosuj',
+                        field: 'details',
+                        sort: 'asc',
+                        width: 100
+                    },
+                    {
                         label: 'Edytuj',
                         field: 'edit',
                         sort: 'asc',
                         width: 100
-                    }
-                    ,
+                    },
                     {
                         label: 'Usuń',
                         field: 'delete',
@@ -91,6 +96,7 @@ export class ActiveResolutionsList extends Component {
                         title: result[i].title,
                         description: result[i].description,
                         activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
+                        details: '',
                         edit: '',
                         delete: ''
                     }
@@ -101,7 +107,9 @@ export class ActiveResolutionsList extends Component {
 
                     console.log(data);
 
-                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny success" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
+                    data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły/Głosuj</MDBBtn>
+
+                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny warning" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
 
                     //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
                     data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)}/>

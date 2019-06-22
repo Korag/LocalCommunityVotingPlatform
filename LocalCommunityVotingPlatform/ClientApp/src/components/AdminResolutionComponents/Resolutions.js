@@ -2,6 +2,7 @@
 import { ActiveResolutionsList } from './ActiveResolutionsList';
 import { UpdateResolution } from './UpdateResolution';
 import { AddResolution } from './AddResolution'
+import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
 
 import axios from 'axios'
 import { getJWTtoken } from '../../helpers/jwtHandler'
@@ -16,6 +17,8 @@ export class Resolutions extends Component {
             resolutionId: '',
             addResolutionReq: false,
             refreshNeeded: false,
+
+            showResolutionDetails: false
         }
     }
 
@@ -32,6 +35,13 @@ export class Resolutions extends Component {
         console.log("jestem");
         this.setState({
             addResolutionReq: !this.state.addResolutionReq,
+        })
+    }
+
+    ShowResolutionDetails = (singleId) => {
+        this.setState({
+            showResolutionDetails: !this.state.showResolutionDetails,
+            resolutionId: singleId
         })
     }
 
@@ -56,17 +66,22 @@ export class Resolutions extends Component {
     }
 
     render() {
-        if (this.state.addResolutionReq == false) {
+        if (!this.state.addResolutionReq && !this.state.showResolutionDetails) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
-                    ? <ActiveResolutionsList ShowFormEditResolution={this.ShowFormEditResolution} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                    ? <ActiveResolutionsList ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} DeleteResolution={this.DeleteResolution} ShowFormAddResolution={this.ShowFormAddResolution} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                     : <UpdateResolution ShowFormEditResolution={this.ShowFormEditResolution} resolutionId={this.state.resolutionId} />
                 }
             </div>
         }
-        else {
+        else if (this.state.addResolutionReq && !this.state.showResolutionDetail) {
             return <div style={{ marginTop: 30 }}>
                 <AddResolution ShowFormAddResolution={this.ShowFormAddResolution} />
+            </div>
+        }
+        else {
+            return <div style={{ marginTop: 30 }}>
+                <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} resolutionId={this.state.resolutionId} />
             </div>
         }
     }

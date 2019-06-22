@@ -35,8 +35,8 @@ export class ActiveResolutionsList_User extends Component {
                         width: 100
                     },
                     {
-                        label: 'Głosuj',
-                        field: 'vote',
+                        label: 'Szczegóły/Głosuj',
+                        field: 'details',
                         sort: 'asc',
                         width: 100
                     }
@@ -91,7 +91,7 @@ export class ActiveResolutionsList_User extends Component {
 
                     console.log(data);
 
-                    data.rows[i].vote = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
+                    data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły/Głosuj</MDBBtn>
                 }
 
                 this.setState({ data });

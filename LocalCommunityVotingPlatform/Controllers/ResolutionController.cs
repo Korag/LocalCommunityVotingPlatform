@@ -73,7 +73,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                 resolutionsViewModel.Add(singleResolutionViewModel);
             }
 
-            return resolutionsViewModel;
+            ICollection<DisplayResolutionViewModel> orderedResolutionsViewModel = resolutionsViewModel.OrderByDescending(z => z.Indexer).ToList();
+
+            return orderedResolutionsViewModel;
         }
 
         [HttpGet]
@@ -100,7 +102,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                 resolutionsViewModel.Add(singleResolutionViewModel);
             }
 
-            return resolutionsViewModel;
+            ICollection<DisplayResolutionViewModel> orderedResolutionsViewModel = resolutionsViewModel.OrderByDescending(z => z.Indexer).ToList();
+
+            return orderedResolutionsViewModel;
         }
 
         [HttpGet]
@@ -127,7 +131,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                 resolutionsViewModel.Add(singleResolutionViewModel);
             }
 
-            return resolutionsViewModel;
+            ICollection<DisplayResolutionViewModel> orderedResolutionsViewModel = resolutionsViewModel.OrderByDescending(z => z.Indexer).ToList();
+
+            return orderedResolutionsViewModel;
         }
        
         [HttpPost]

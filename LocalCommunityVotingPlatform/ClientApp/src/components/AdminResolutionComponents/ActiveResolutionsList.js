@@ -69,7 +69,7 @@ export class ActiveResolutionsList extends Component {
     downloadResolutions() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/Resolution/GetResolutions', {
+        fetch('api/Resolution/GetActiveResolutions', {
             headers: {
                 Authorization: getJWTtoken()
             }

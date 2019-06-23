@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
+import { ValidationHandler } from "../../helpers/ValidationHandler"
+
 export class AddUser extends Component {
     static displayName = AddUser.name;
     constructor(props) {
@@ -13,7 +15,10 @@ export class AddUser extends Component {
             confirmPassword: '',
             firstName: '',
             lastName: '',
-            role: 'User'
+            role: 'User',
+
+            formNotValid: false,
+            validationErrors: []
         }
     }
 
@@ -44,8 +49,14 @@ export class AddUser extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormAddUser();
-            });
-    };
+            }).catch(err => {
+                this.setState({
+                    formNotValid: true,
+                    validationErrors: err.response.data
+                })
+            })
+    }
+    
 
     render() {
         return (
@@ -85,6 +96,27 @@ export class AddUser extends Component {
                         </form>
                     </div>
                 </div>
+
+                {this.state.formNotValid ?
+                    <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                            <h4 className="text-center">Wprowadzono błędne dane</h4>
+                            <div className="grid-container">
+                                <div className="alertValidation">
+                                    <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Password'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'ConfirmPassword'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'LastName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Role'} validationErrors={this.state.validationErrors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null}
+
             </div>
         );
     }

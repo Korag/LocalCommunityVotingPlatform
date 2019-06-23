@@ -16,7 +16,6 @@ export class Login extends Component {
 
             formNotValid: false,
             validationErrors: []
-
         }
     }
 
@@ -39,75 +38,13 @@ export class Login extends Component {
             this.setState({
                 formNotValid: true,
                 validationErrors: err.response.data
-                //validationMessage: err.response.data
-            }),
-                console.log(err.response);
-                console.log(this.state.validationErrors);
-        });
+            })
+        })
     }
 
     Rerender = () => {
         this.forceUpdate();
     }
-
-    //validateForm = (e) => {
-    //    if (this.state.password.length >= 6
-    //        && this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-    //        this.setState({ formNotValid: false })
-    //        this.login(e);
-    //    }
-    //    else {
-    //        this.setState({ formNotValid: true }),
-    //            console.log(this.state.formNotValid)
-    //    }
-    //}
-
-    //ResolveValidationErrors = () => {
-    //    //Get the keys in data.content. This will return ['people', 'pets']
-    //    var contentKeys = Object.keys(this.state.validationMessage);
-
-    //    //Now start iterating through these keys and use those keys to
-    //    //retrieve the underlying arrays and then extract the name field
-    //    var allNames = contentKeys.map((t) =>
-    //        this.state.validationMessage[t].map((e) => (<div>{e}</div>))
-    //    );
-
-    //    return (<div>{allNames}</div>)
-    //}
-
-    //ResolveValidationErrors3 = () => {
-    //    let string = [];
-    //    for (var key in this.state.validationErrors) {
-
-    //            console.log(this.state.validationErrors);
-       
-    //    for (let error in this.state.validationErrors.key) {
-    //        console.log(this.state.validationErrors.key[error]);
-    //    }
-    //    }
-
-
-    //}
-
-    //ResolveValidationErrors2 = () => {
-
-    //    let validationErrors = this.state.validationErrors;
-    //    let fieldName = 'Email';
-
-    //    if (!validationErrors) {
-    //        return null
-    //    }
-
-    //    if (!validationErrors[fieldName]) {
-    //        return null
-    //    }
-
-    //    return (<div className='errors-container'>
-    //        <ul>
-    //            {validationErrors[fieldName].map(error => <li>{error}</li>)}
-    //        </ul>
-    //    </div>)
-    //}
 
     render() {
         return (
@@ -152,9 +89,9 @@ export class Login extends Component {
                         </div>
                     </div>
                     :
-                    null};
+                    null}
 
-                </div>
+           </div>
         );
     }
 }

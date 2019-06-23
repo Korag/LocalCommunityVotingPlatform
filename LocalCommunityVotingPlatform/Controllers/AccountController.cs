@@ -117,8 +117,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                     return Ok();
                 }
             }
+            ModelState.AddModelError("Overall", "Niepoprawnie wprowadzono dane nowego użytkownika");
 
-            return BadRequest();
+            return BadRequest(ModelState);
         }
 
         private async Task<string> CreateJwtToken(User loggedUser)

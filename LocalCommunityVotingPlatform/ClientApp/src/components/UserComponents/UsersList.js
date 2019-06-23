@@ -42,8 +42,7 @@ export class UsersTable extends Component {
                         field: 'edit',
                         sort: 'asc',
                         width: 150
-                    }
-                    ,
+                    },
                     {
                         label: 'Usuń',
                         field: 'delete',

@@ -9,19 +9,19 @@ namespace LocalCommunityVotingPlatform.ViewModels
 
         [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         [Display(Name = "Stare hasło")]
-        [MinLength(8, ErrorMessage = "Stare hasło nie może być krótsze niż 8 znaków")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$", ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 6 znaków, musi zawierać conajmniej: 1 dużą literę, 1 małą literę, 1 cyfrę oraz 1 znak specjalny (np.: !@#$%^&*)")]
         [DataType(DataType.Password)]
         public string OldPassword { get; set; }
 
         [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         [Display(Name = "Nowe hasło")]
-        [MinLength(8, ErrorMessage = "Nowe hasło nie może być krótsze niż 8 znaków")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$", ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 6 znaków, musi zawierać conajmniej: 1 dużą literę, 1 małą literę, 1 cyfrę oraz 1 znak specjalny (np.: !@#$%^&*)")]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
 
         [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
         [Display(Name = "Powtórz nowe hasło")]
-        [MinLength(8, ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 8 znaków")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$", ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 6 znaków, musi zawierać conajmniej: 1 dużą literę, 1 małą literę, 1 cyfrę oraz 1 znak specjalny (np.: !@#$%^&*)")]
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "Wprowadzone nowe hasła różnią się - \"Nowe hasło\" i \"Powtórz nowe hasło\"")]
         public string ConfirmPassword { get; set; }

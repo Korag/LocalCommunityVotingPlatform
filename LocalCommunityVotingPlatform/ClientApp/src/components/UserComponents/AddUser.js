@@ -11,8 +11,6 @@ export class AddUser extends Component {
 
         this.state = {
             email: '',
-            password: '',
-            confirmPassword: '',
             firstName: '',
             lastName: '',
             role: 'User',
@@ -43,9 +41,7 @@ export class AddUser extends Component {
                     FirstName: this.state.firstName,
                     LastName: this.state.lastName,
                     Email: this.state.email,
-                    SelectedRole: this.state.role,
-                    Password: this.state.password,
-                    ConfirmPassword: this.state.confirmPassword
+                    SelectedRole: this.state.role
                 }
             }).then(res => {
                 this.props.ShowFormAddUser();
@@ -78,10 +74,6 @@ export class AddUser extends Component {
                                     <input type="text" name="firstName" onChange={e => this.changeValue(e)} value={this.state.firstName} />
                                     <label>Nazwisko</label>
                                     <input type="text" name="lastName" onChange={e => this.changeValue(e)} value={this.state.lastName} />
-                                    <label>Hasło</label>
-                                    <input type="text" name="password" onChange={e => this.changeValue(e)} value={this.state.password} />
-                                    <label>Potwierdź hasło</label>
-                                    <input type="text" name="confirmPassword" onChange={e => this.changeValue(e)} value={this.state.confirmPassword} />
                                     <label>Rola</label>
                                     <select value={this.state.role} onChange={this.handleChange}>
                                         <option value="User">Użytkownik</option>
@@ -105,9 +97,7 @@ export class AddUser extends Component {
                                 <div className="alertValidation">
                                     <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
-                                    <ValidationHandler fieldName={'Password'} validationErrors={this.state.validationErrors} />
-                                    <ValidationHandler fieldName={'ConfirmPassword'} validationErrors={this.state.validationErrors} />
-                                    <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
+                                     <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'LastName'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'Role'} validationErrors={this.state.validationErrors} />
                                 </div>

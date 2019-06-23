@@ -33,6 +33,8 @@ namespace LocalCommunityVotingPlatform.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
 
+        private readonly PasswordGenerator _passwordGenerator;
+
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
@@ -44,6 +46,8 @@ namespace LocalCommunityVotingPlatform.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
             _emailSender = new EmailProvider(_configuration);
+
+            _passwordGenerator = new PasswordGenerator();
         }
 
         [HttpPost]
@@ -94,7 +98,9 @@ namespace LocalCommunityVotingPlatform.Controllers
                     LastName = registeredUser.LastName
                 };
 
-                var result = await _userManager.CreateAsync(newUser, registeredUser.Password);
+                var password = _passwordGenerator.GeneratePassword();
+
+                var result = await _userManager.CreateAsync(newUser, password);
 
                 if (!await _roleManager.RoleExistsAsync(registeredUser.SelectedRole))
                 {
@@ -110,7 +116,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                         $"<br />" +
                         $"Twoje dane logowania: <br />" +
                         $"email: {newUser.Email} <br />" +
-                        $"hasło: {registeredUser.Password} <br />" +
+                        $"hasło: {password} <br />" +
                         $"<br />" +
                         $"W celach bezpieczeństwa zmień swoje hasło zaraz po udanym logowaniu.");
 

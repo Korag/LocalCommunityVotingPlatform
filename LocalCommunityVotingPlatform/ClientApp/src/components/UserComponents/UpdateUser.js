@@ -10,6 +10,8 @@ export class UpdateUser extends Component {
         super(props);
 
         this.state = {
+            emailBeforeEdit: '',
+
             email: '',
             firstName: '',
             lastName: '',
@@ -42,6 +44,8 @@ export class UpdateUser extends Component {
         axios.post("api/User/EditUser", null,
             {
                 params: {
+                    EmailBeforeEdit: this.state.emailBeforeEdit,
+
                     FirstName: this.state.firstName,
                     LastName: this.state.lastName,
                     Email: this.state.email,
@@ -67,6 +71,7 @@ export class UpdateUser extends Component {
             }
         }).then(result => {
             this.setState({
+                emailBeforeEdit: result.data.email,
                 email: result.data.email,
                 password: result.data.password,
                 firstName: result.data.firstName,

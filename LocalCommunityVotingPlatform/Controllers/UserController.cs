@@ -43,6 +43,15 @@ namespace LocalCommunityVotingPlatform.Controllers
                     Role = UserRoles.FirstOrDefault()
                 };
 
+                if (singleUserView.Role == "User")
+                {
+                    singleUserView.Role = "Użytkownik";
+                }
+                else
+                {
+                    singleUserView.Role = "Administrator";
+                }
+
                 usersView.Add(singleUserView);
             }
 
@@ -51,19 +60,34 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult EditUser(UserViewModel UpdatedUser)
+        public IActionResult EditUser(EditUserViewModel updatedUser)
         {
             if (ModelState.IsValid)
             {
-                User LegacyUser = _context.GetUserByEmail(UpdatedUser.Email);
+                User LegacyUser = _context.GetUserByEmail(updatedUser.EmailBeforeEdit);
 
-                LegacyUser.FirstName = UpdatedUser.FirstName;
-                LegacyUser.LastName = UpdatedUser.LastName;
-                LegacyUser.Email = UpdatedUser.Email;
+                LegacyUser.FirstName = updatedUser.FirstName;
+                LegacyUser.LastName = updatedUser.LastName;
+                LegacyUser.Email = updatedUser.Email;
 
-                var Roles = _userManager.GetRolesAsync(LegacyUser).Result;
-                _userManager.RemoveFromRoleAsync(LegacyUser, Roles.FirstOrDefault());
-                _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
+                _context.SaveChanges();
+
+                var role = _userManager.GetRolesAsync(LegacyUser).Result.FirstOrDefault();
+
+                if (role != updatedUser.Role)
+                {
+                    _userManager.UpdateAsync(LegacyUser);
+                    _context.SaveChanges();
+
+                    _userManager.RemoveFromRoleAsync(LegacyUser, role).Wait();
+
+                    _userManager.UpdateAsync(LegacyUser);
+                    _context.SaveChanges();
+
+                    _userManager.AddToRoleAsync(LegacyUser, updatedUser.Role).Wait();
+                    _userManager.UpdateAsync(LegacyUser);
+                    _context.SaveChanges();
+                }
 
                 _context.SaveChanges();
 

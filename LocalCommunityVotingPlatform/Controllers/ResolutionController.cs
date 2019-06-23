@@ -45,8 +45,9 @@ namespace LocalCommunityVotingPlatform.Controllers
 
                 return Ok();
             }
+            ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone dane uchwały");
 
-            return BadRequest(newResolution);
+            return BadRequest(ModelState);
         }
 
         [HttpGet]

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 import DatePicker from 'react-datepicker';
+import { ValidationHandler } from "../../helpers/ValidationHandler"
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -17,7 +18,10 @@ export class AddResolution extends Component {
         this.state = {
             title: '',
             description: '',
-            activeToVoteBeforeDate: moment()
+            activeToVoteBeforeDate: moment(),
+
+            formNotValid: false,
+            validationErrors: []
         }
     }
 
@@ -49,7 +53,12 @@ export class AddResolution extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormAddResolution();
-            });
+            }).catch(err => {
+                this.setState({
+                    formNotValid: true,
+                    validationErrors: err.response.data
+                })
+            })
     };
 
     render() {
@@ -90,6 +99,24 @@ export class AddResolution extends Component {
                         </form>
                     </div>
                 </div>
+
+                {this.state.formNotValid ?
+                    <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                            <h4 className="text-center">Wprowadzono błędne dane</h4>
+                            <div className="grid-container">
+                                <div className="alertValidation">
+                                    <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Title'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Description'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'ActiveToVoteBeforeDate'} validationErrors={this.state.validationErrors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null}
+
             </div>
         );
     }

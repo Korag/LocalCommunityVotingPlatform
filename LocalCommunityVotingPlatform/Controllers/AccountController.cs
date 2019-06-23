@@ -59,6 +59,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                     return Ok(await CreateJwtToken(LoggedUser));
                 }
             }
+            ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone hasło lub adres email");
 
             return BadRequest(ModelState);
         }
@@ -92,7 +93,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                     FirstName = registeredUser.FirstName,
                     LastName = registeredUser.LastName
                 };
-               
+
                 var result = await _userManager.CreateAsync(newUser, registeredUser.Password);
 
                 if (!await _roleManager.RoleExistsAsync(registeredUser.SelectedRole))
@@ -106,7 +107,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 {
                     await _emailSender.SendEmail(newUser.Email, "Rejestracja LocalCommunityVotingApp",
                         $"Utworzono konto dla: {newUser.FirstName} {newUser.LastName}. <br />" +
-                        $"<br />" + 
+                        $"<br />" +
                         $"Twoje dane logowania: <br />" +
                         $"email: {newUser.Email} <br />" +
                         $"hasło: {registeredUser.Password} <br />" +

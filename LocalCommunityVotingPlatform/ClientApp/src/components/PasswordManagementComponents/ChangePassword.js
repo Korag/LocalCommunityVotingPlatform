@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { getJWTtoken } from '../../helpers/jwtHandler'
+import { ValidationHandler } from "../../helpers/ValidationHandler"
 
 export class ChangePassword extends Component {
     static displayName = ChangePassword.name;
@@ -12,6 +13,9 @@ export class ChangePassword extends Component {
             oldPassword: '',
             newPassword: '',
             confirmNewPassword: '',
+
+            formNotValid: false,
+            validationErrors: []
         }
     }
 
@@ -41,7 +45,12 @@ export class ChangePassword extends Component {
                 console.log(this.props);
                 localStorage.removeItem('jwt_token');
                 this.ReloadApp();
-            });
+            }).catch(err => {
+                this.setState({
+                    formNotValid: true,
+                    validationErrors: err.response.data
+                })
+            })
     };
 
     ReloadApp = () => {
@@ -75,6 +84,25 @@ export class ChangePassword extends Component {
                         </form>
                     </div>
                 </div>
+
+                {this.state.formNotValid ?
+                    <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                            <h4 className="text-center">Wprowadzono błędne dane</h4>
+                            <div className="grid-container">
+                                <div className="alertValidation">
+                                    <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'OldPassword'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'NewPassword'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'ConfirmPassword'} validationErrors={this.state.validationErrors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null}
+
             </div>
         );
     }

@@ -157,6 +157,7 @@ namespace LocalCommunityVotingPlatform.Controllers
             }
             else
             {
+                ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone hasła");
                 return BadRequest(ModelState);
             }
         }

@@ -136,22 +136,30 @@ namespace LocalCommunityVotingPlatform.Controllers
 
             return orderedResolutionsViewModel;
         }
-       
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult EditResolution(DisplayResolutionViewModel UpdatedResolution)
+        public IActionResult EditResolution(EditResolutionViewModel UpdatedResolution)
         {
-            Resolution LegacyResolution = _context.GetResolutionById(UpdatedResolution.Id);
+            if (ModelState.IsValid)
+            {
+                Resolution LegacyResolution = _context.GetResolutionById(UpdatedResolution.ResolutionId);
 
-            LegacyResolution.Title = UpdatedResolution.Title;
-            LegacyResolution.Description = UpdatedResolution.Description;
-            LegacyResolution.ActiveToVoteBeforeDate = UpdatedResolution.ActiveToVoteBeforeDate;
+                LegacyResolution.Title = UpdatedResolution.Title;
+                LegacyResolution.Description = UpdatedResolution.Description;
+                LegacyResolution.ActiveToVoteBeforeDate = UpdatedResolution.ActiveToVoteBeforeDate;
 
-            LegacyResolution.Date = DateTime.UtcNow.Date;
+                LegacyResolution.Date = DateTime.UtcNow.Date;
 
-            _context.SaveChanges();
+                _context.SaveChanges();
 
-            return Ok();
+                return Ok();
+            }
+            else
+            {
+                ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone dane uchwały");
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpGet]

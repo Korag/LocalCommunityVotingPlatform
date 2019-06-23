@@ -1,11 +1,10 @@
 ﻿import React, { Component } from 'react';
-//import { UsersTable } from './UsersTable';
 import { UsersTable } from './UsersList';
 import { UpdateUser } from './UpdateUser';
-import { AddUser } from './AddUser'
-
-import axios from 'axios'
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { AddUser } from './AddUser';
+import { NotificationManager } from 'react-notifications';
+import axios from 'axios';
+import { getJWTtoken } from '../../helpers/jwtHandler';
 
 
 export class Users extends Component {
@@ -55,6 +54,7 @@ export class Users extends Component {
                 }
             }).then(res => {
                 this.RefreshComponent()
+                NotificationManager.success('Użytkownik został pomyślnie usunięty', 'Usuwanie użytkownika');
             });
     }
 

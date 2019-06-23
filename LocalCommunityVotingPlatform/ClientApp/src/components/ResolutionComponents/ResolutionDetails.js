@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../../helpers/jwtHandler'
-
-import { VoteForResolution } from '../VoteComponents/VoteForResolution'
-import { ResultDiagramWithStatistics } from '../VoteComponents/ResultDiagramWithStatistics'
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import { NotificationManager } from 'react-notifications';
+import { VoteForResolution } from '../VoteComponents/VoteForResolution';
+import { ResultDiagramWithStatistics } from '../VoteComponents/ResultDiagramWithStatistics';
 
 export class ResolutionDetails extends Component {
     static displayName = ResolutionDetails.name;
@@ -39,7 +39,7 @@ export class ResolutionDetails extends Component {
                 description: result.data.description,
                 activeToVoteBeforeDate: result.data.activeToVoteBeforeDate
             });
-            })
+        })
 
         axios.get('api/Vote/CheckIfAlreadyVotedForResolution', {
             headers: {
@@ -52,7 +52,10 @@ export class ResolutionDetails extends Component {
             this.setState({
                 alreadyVoted: result.data,
             });
-            })
+            if (this.state.alreadyVoted === true) {
+                NotificationManager.info('Głosowałeś już nad tą uchwałą', 'Głosowanie');
+            }
+        })
 
         axios.get('api/Account/Authorize/', {
             headers: {
@@ -78,7 +81,7 @@ export class ResolutionDetails extends Component {
             enableResultsDiagram: !this.state.enableResultsDiagram
         })
     }
-  
+
     render() {
         return (
             <div style={{ marginTop: 30 }}>
@@ -95,7 +98,7 @@ export class ResolutionDetails extends Component {
                                     <label>Indeks uchwały</label>
                                     <input type="text" name="indexer" value={this.state.indexer} disabled />
                                     <label>Tytuł uchwały</label>
-                                    <input type="text" name="title" value={this.state.title} disabled/>
+                                    <input type="text" name="title" value={this.state.title} disabled />
                                     <label>
                                         Treść uchwały
                                     <textarea name="description" value={this.state.description} disabled></textarea>

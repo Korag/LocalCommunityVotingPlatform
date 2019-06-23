@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
-
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { NotificationManager } from 'react-notifications';
+import { getJWTtoken } from '../../helpers/jwtHandler';
 import axios from 'axios';
-
-import VoteConfirmationModal from './VoteConfirmationModal'
+import VoteConfirmationModal from './VoteConfirmationModal';
 
 export class VoteForResolution extends Component {
     static displayName = VoteForResolution.name;
@@ -56,6 +55,7 @@ export class VoteForResolution extends Component {
                     chosenOption: this.state.selectedOption
                 }
             }).then(res => {
+                NotificationManager.success('Pomyślnie oddano swój głos', 'Głosowanie');
                 //this.props.history.push('/');
             });
     }

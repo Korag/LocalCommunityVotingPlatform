@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler';
 import DatePicker from 'react-datepicker';
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { ValidationHandler } from "../../helpers/ValidationHandler";
+import { NotificationManager } from 'react-notifications';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -53,11 +54,13 @@ export class AddResolution extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormAddResolution();
+                NotificationManager.success('Dodano nową uchwałę', 'Dodanie uchwały');
             }).catch(err => {
                 this.setState({
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
+                NotificationManager.error('Nieudana próba dodania uchwały', 'Dodanie uchwały');
             })
     };
 

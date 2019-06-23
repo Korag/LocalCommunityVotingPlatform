@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../../helpers/jwtHandler'
-
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import { NotificationManager } from 'react-notifications';
+import { ValidationHandler } from "../../helpers/ValidationHandler";
 
 export class UpdateUser extends Component {
     static displayName = UpdateUser.name;
@@ -53,11 +53,14 @@ export class UpdateUser extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormEdit();
+                NotificationManager.success('Dane użytkownika zostały zaktualizowane', 'Edycja użytkownika');
+
             }).catch(err => {
                 this.setState({
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
+                NotificationManager.error('Nieudana próba edycji użytkownika', 'Edycja użytkownika');
             })
     };
 

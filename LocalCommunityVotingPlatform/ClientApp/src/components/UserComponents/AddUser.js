@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../../helpers/jwtHandler'
-
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import { NotificationManager } from 'react-notifications';
+import { ValidationHandler } from "../../helpers/ValidationHandler";
 
 export class AddUser extends Component {
     static displayName = AddUser.name;
@@ -45,11 +45,13 @@ export class AddUser extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormAddUser();
+                NotificationManager.success('Użytkownik został pomyślnie dodany', 'Dodanie użytkownika');
             }).catch(err => {
                 this.setState({
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
+                NotificationManager.error('Nieudana próba dodania użytkownika', 'Dodanie użytkownika');
             })
     }
     

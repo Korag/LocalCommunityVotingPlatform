@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-import { getJWTtoken } from '../../helpers/jwtHandler'
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import { ValidationHandler } from "../../helpers/ValidationHandler";
+import { NotificationManager } from 'react-notifications';
 
 export class ChangePassword extends Component {
     static displayName = ChangePassword.name;
@@ -50,12 +51,14 @@ export class ChangePassword extends Component {
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
+                NotificationManager.error('Nieudana próba zmiany hasła', 'Zmiana hasła');
             })
     };
 
     ReloadApp = () => {
         window.history.pushState("", "", "/");
         window.location.reload();
+        NotificationManager.success('Hasło zostało zmienione', 'Zmiana hasła');
     }
 
     render() {

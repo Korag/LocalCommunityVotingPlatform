@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-
+import { NotificationManager } from 'react-notifications';
 import { ValidationHandler } from "../../helpers/ValidationHandler"
 
 export class Login extends Component {
@@ -34,11 +34,13 @@ export class Login extends Component {
         }).then(res => {
             localStorage.setItem('jwt_token', res.data);
             this.props.callBack();
+            NotificationManager.success('Pomyślnie zalogowano', 'Logowanie');
         }).catch(err => {
             this.setState({
                 formNotValid: true,
                 validationErrors: err.response.data
             })
+            NotificationManager.error('Nieudana próba logowania', 'Logowanie');
         })
     }
 

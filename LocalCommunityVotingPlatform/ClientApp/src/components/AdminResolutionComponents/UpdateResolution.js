@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler';
 import DatePicker from 'react-datepicker';
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { ValidationHandler } from "../../helpers/ValidationHandler";
+import { NotificationManager } from 'react-notifications';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -49,13 +50,14 @@ export class UpdateResolution extends Component {
                 }
             }).then(res => {
                 this.props.ShowFormEditResolution();
+                NotificationManager.success('Dokonano pomyślnej edycji uchwały', 'Edycja uchwały');
             }).catch(err => {
                 console.log(err.response)
                 this.setState({
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
-               
+                NotificationManager.error('Nieudana próba edycji uchwały', 'Edycja uchwały');
             })
     };
 

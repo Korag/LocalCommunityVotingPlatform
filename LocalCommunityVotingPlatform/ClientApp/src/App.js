@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 
-import AuthorizeComponent from './components/AuthorizationComponents/AuthorizeComponent'
+import AuthorizeComponent from './components/AuthorizationComponents/AuthorizeComponent';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -17,6 +18,9 @@ export default class App extends Component {
         return (
             <div>
                 <Route path='/' render={() => (<AuthorizeComponent />)} />
+                <div style={{ marginTop: 30 }}>
+                    <NotificationContainer />
+                </div>
             </div>
         );
     }

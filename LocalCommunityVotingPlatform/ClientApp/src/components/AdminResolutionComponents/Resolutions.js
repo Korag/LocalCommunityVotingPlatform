@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { ActiveResolutionsList } from './ActiveResolutionsList';
 import { UpdateResolution } from './UpdateResolution';
-import { AddResolution } from './AddResolution'
+import { AddResolution } from './AddResolution';
 import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
+import { NotificationManager } from 'react-notifications';
 
 import axios from 'axios'
 import { getJWTtoken } from '../../helpers/jwtHandler'
@@ -61,7 +62,8 @@ export class Resolutions extends Component {
                     resolutionId: resolutionIdFromButton
                 }
             }).then(res => {
-                this.RefreshComponent()
+                this.RefreshComponent();
+                NotificationManager.success('Uchwała została usunięta', 'Usuwanie uchwały');
             });
     }
 

@@ -110,4 +110,7 @@ body {
 .page-item{
     color: black;
 }
- 
+
+.alertValidation{
+    color:wheat;
+}

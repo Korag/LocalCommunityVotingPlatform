@@ -6,7 +6,7 @@ import { MDBContainer } from "mdbreact";
 import { getJWTtoken } from '../../helpers/jwtHandler'
 import axios from 'axios'
 
-import PercentageResultDiagram from './PercentageResultDiagram'
+import PercentageResultDiagram from './PercentageResultDiagram';
 
 export class ResultDiagramWithStatistics extends Component {
     static displayName = ResultDiagramWithStatistics.name;

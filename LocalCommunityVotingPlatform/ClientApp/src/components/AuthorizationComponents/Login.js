@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 
+import { ValidationHandler } from "../../helpers/ValidationHandler"
+
 export class Login extends Component {
     static displayName = Login.name;
     constructor(props) {
@@ -11,7 +13,10 @@ export class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            formNotValid: 'false'
+
+            formNotValid: false,
+            validationErrors: []
+
         }
     }
 
@@ -30,26 +35,79 @@ export class Login extends Component {
         }).then(res => {
             localStorage.setItem('jwt_token', res.data);
             this.props.callBack();
-            }).catch(err => {
-                console.log(err.response.data);
-            });
+        }).catch(err => {
+            this.setState({
+                formNotValid: true,
+                validationErrors: err.response.data
+                //validationMessage: err.response.data
+            }),
+                console.log(err.response);
+                console.log(this.state.validationErrors);
+        });
     }
 
     Rerender = () => {
         this.forceUpdate();
     }
 
-    validateForm = (e) => {
-        if (this.state.password.length >= 6
-            && this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-            this.setState({ formNotValid: false })
-            this.login(e);
-        }
-        else {
-            this.setState({ formNotValid: true }),
-                console.log(this.state.formNotValid)
-        }
-    }
+    //validateForm = (e) => {
+    //    if (this.state.password.length >= 6
+    //        && this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+    //        this.setState({ formNotValid: false })
+    //        this.login(e);
+    //    }
+    //    else {
+    //        this.setState({ formNotValid: true }),
+    //            console.log(this.state.formNotValid)
+    //    }
+    //}
+
+    //ResolveValidationErrors = () => {
+    //    //Get the keys in data.content. This will return ['people', 'pets']
+    //    var contentKeys = Object.keys(this.state.validationMessage);
+
+    //    //Now start iterating through these keys and use those keys to
+    //    //retrieve the underlying arrays and then extract the name field
+    //    var allNames = contentKeys.map((t) =>
+    //        this.state.validationMessage[t].map((e) => (<div>{e}</div>))
+    //    );
+
+    //    return (<div>{allNames}</div>)
+    //}
+
+    //ResolveValidationErrors3 = () => {
+    //    let string = [];
+    //    for (var key in this.state.validationErrors) {
+
+    //            console.log(this.state.validationErrors);
+       
+    //    for (let error in this.state.validationErrors.key) {
+    //        console.log(this.state.validationErrors.key[error]);
+    //    }
+    //    }
+
+
+    //}
+
+    //ResolveValidationErrors2 = () => {
+
+    //    let validationErrors = this.state.validationErrors;
+    //    let fieldName = 'Email';
+
+    //    if (!validationErrors) {
+    //        return null
+    //    }
+
+    //    if (!validationErrors[fieldName]) {
+    //        return null
+    //    }
+
+    //    return (<div className='errors-container'>
+    //        <ul>
+    //            {validationErrors[fieldName].map(error => <li>{error}</li>)}
+    //        </ul>
+    //    </div>)
+    //}
 
     render() {
         return (
@@ -72,14 +130,31 @@ export class Login extends Component {
                                     <input type="password" name="password" onChange={e => this.changeValue(e)} value={this.state.password} />
                                 </div>
                                 <div>
-                                    <button className="button secondary float-center" style={{ marginBottom: 0 }}type="submit">Zaloguj</button>
+                                    <button className="button secondary float-center" style={{ marginBottom: 0 }} type="submit">Zaloguj</button>
                                 </div>
-                                <button className="button warning" style={{ marginTop: 10, marginBottom: 0 }} onClick={e=> this.ResetPassword(e)}>Zapomniałem hasła</button>
+                                <button className="button warning" style={{ marginTop: 10, marginBottom: 0 }} onClick={e => this.ResetPassword(e)}>Zapomniałem hasła</button>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
+
+                {this.state.formNotValid ?
+                    <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                            <h4 className="text-center">Wprowadzono błędne dane</h4>
+                            <div className="grid-container">
+                                <div className="alertValidation">
+                                    <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Password'} validationErrors={this.state.validationErrors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null};
+
+                </div>
         );
     }
 }

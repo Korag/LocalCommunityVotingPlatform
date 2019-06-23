@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
-import { ActiveResolutionsList_User } from './ActiveResolutionsList_User';
+import { ActiveResolutionsListUser } from './ActiveResolutionsListUser';
 import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
 
-export class Resolutions_User extends Component {
-    static displayName = Resolutions_User.name;
+export class ResolutionsUser extends Component {
+    static displayName = ResolutionsUser.name;
     constructor(props) {
         super(props);
 
@@ -32,7 +32,7 @@ export class Resolutions_User extends Component {
         return (
             <div style={{ marginTop: 30 }}>
                 {!this.state.showResolutionDetails
-                    ? <ActiveResolutionsList_User refreshNeeded={this.state.refreshNeeded} ShowResolutionDetails={this.ShowResolutionDetails} RefreshComponent={this.RefreshComponent} />
+                    ? <ActiveResolutionsListUser refreshNeeded={this.state.refreshNeeded} ShowResolutionDetails={this.ShowResolutionDetails} RefreshComponent={this.RefreshComponent} />
                     : <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} resolutionId={this.state.resolutionId} />
                 }
             </div>

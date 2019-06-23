@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
@@ -62,7 +62,7 @@ export class NavMenu extends Component {
                         </ul>
                     </div>
                     <div className="top-bar-right">
-                        <ul className="menu">
+                        <ul className="menu align-right">
                             <li><button className="button alert" onClick={this.props.Logout}>Wyloguj</button></li>
                         </ul>
                     </div>

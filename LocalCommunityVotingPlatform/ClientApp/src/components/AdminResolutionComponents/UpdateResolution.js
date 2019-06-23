@@ -50,10 +50,12 @@ export class UpdateResolution extends Component {
             }).then(res => {
                 this.props.ShowFormEditResolution();
             }).catch(err => {
+                console.log(err.response)
                 this.setState({
                     formNotValid: true,
                     validationErrors: err.response.data
                 })
+               
             })
     };
 
@@ -93,7 +95,7 @@ export class UpdateResolution extends Component {
                                     <input type="text" name="title" onChange={e => this.changeValue(e)} value={this.state.title} />
                                     <label>
                                         Treść uchwały
-                                    <textarea placeholder="None" name="description" onChange={e => this.changeValue(e)} value={this.state.description}></textarea>
+                                    <textarea name="description" onChange={e => this.changeValue(e)} value={this.state.description}></textarea>
                                     </label>
                                     <label>Data końca głosowania</label>
                                     <DatePicker

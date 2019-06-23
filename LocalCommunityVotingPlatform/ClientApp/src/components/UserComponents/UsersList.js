@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBInput, MDBBtn } from 'mdbreact';
+import { MDBDataTable, MDBBtn } from 'mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
 import DeleteUserConfirmationModal from './DeleteUserConfirmationModal'
@@ -57,7 +57,7 @@ export class UsersTable extends Component {
     }
 
     componentDidUpdate = async () => {
-        if (this.props.refreshNeeded == true) {
+        if (this.props.refreshNeeded === true) {
             await this.downloadUsers();
             await this.props.RefreshComponent();
         }

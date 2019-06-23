@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
-import { ArchiveResolutionsList_User } from './ArchiveResolutionsList_User';
+import { ArchiveResolutionsListUser } from './ArchiveResolutionsListUser';
 import { ResolutionDetails } from '../ResolutionComponents/ResolutionDetails';
 
-export class ArchiveResolutions_User extends Component {
-    static displayName = ArchiveResolutions_User.name;
+export class ArchiveResolutionsUser extends Component {
+    static displayName = ArchiveResolutionsUser.name;
     constructor(props) {
         super(props);
 
@@ -34,7 +34,7 @@ export class ArchiveResolutions_User extends Component {
         if (this.state.showList && !this.state.showResolutionDetails) {
             return (
             <div>
-                <ArchiveResolutionsList_User ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                <ArchiveResolutionsListUser ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                 </div>
                 )
         }
@@ -48,4 +48,4 @@ export class ArchiveResolutions_User extends Component {
     }
 }
 
-export default ArchiveResolutions_User;
+export default ArchiveResolutionsUser;

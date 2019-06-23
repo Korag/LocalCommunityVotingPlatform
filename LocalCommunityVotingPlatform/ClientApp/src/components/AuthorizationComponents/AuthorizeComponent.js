@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { getJWTtoken } from '../../helpers/jwtHandler'
-import { withRouter, Route, Router } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 
 import { Login } from './Login';
@@ -68,7 +68,7 @@ class AuthorizeComponent extends Component {
     }
 
     resolveAuthorization = () => {
-        if (this.state.authorized == true)
+        if (this.state.authorized === true)
         {
             return (<Layout Logout={this.Logout} SuperUser={this.state.SuperUser}/>);
         }

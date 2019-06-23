@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 
 class VoteConfirmationModal extends Component {
     static displayName = VoteConfirmationModal.name;
@@ -45,6 +45,8 @@ class VoteConfirmationModal extends Component {
                 return "Przeciw"
             case '3':
                 return "Wstrzymaj się"
+            default:
+                return null
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
+import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler';
 
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
@@ -61,7 +61,7 @@ export class ArchiveResolutionsList extends Component {
     }
 
     componentDidUpdate = async () => {
-        if (this.props.refreshNeeded == true) {
+        if (this.props.refreshNeeded === true) {
             await this.downloadResolutions();
             await this.props.RefreshComponent();
         }

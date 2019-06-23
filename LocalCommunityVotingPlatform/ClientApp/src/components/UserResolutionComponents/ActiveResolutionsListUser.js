@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBInput, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
+import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
-export class ActiveResolutionsList_User extends Component {
-    static displayName = ActiveResolutionsList_User.name;
+export class ActiveResolutionsListUser extends Component {
+    static displayName = ActiveResolutionsListUser.name;
     constructor(props) {
         super(props);
 
@@ -47,7 +47,7 @@ export class ActiveResolutionsList_User extends Component {
     }
 
     componentDidUpdate = async () => {
-        if (this.props.refreshNeeded == true) {
+        if (this.props.refreshNeeded === true) {
             await this.downloadActiveResolutions();
             await this.props.RefreshComponent();
         }
@@ -125,4 +125,4 @@ export class ActiveResolutionsList_User extends Component {
     }
 }
 
-export default ActiveResolutionsList_User;
+export default ActiveResolutionsListUser;

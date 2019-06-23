@@ -59,7 +59,7 @@ export class Users extends Component {
     }
 
     render() {
-        if (this.state.addUserReq == false) {
+        if (this.state.addUserReq === false) {
             return <div style={{ marginTop: 30 }}>
                 {this.state.showList
                     ? <UsersTable ShowFormEdit={this.ShowFormEdit} Delete={this.Delete} ShowFormAddUser={this.ShowFormAddUser} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />

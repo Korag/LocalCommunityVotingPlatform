@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-
 import { NavMenu } from './NavMenu';
-
 import { Route } from 'react-router';
 
 import { Users } from '../UserComponents/Users';
@@ -11,8 +8,8 @@ import { UserData } from '../UserComponents/UserData';
 import { Resolutions } from '../AdminResolutionComponents/Resolutions';
 import { ArchiveResolutions } from '../AdminResolutionComponents/ArchiveResolutions'
 
-import { Resolutions_User } from '../UserResolutionComponents/Resolutions_User'
-import { ArchiveResolutions_User } from '../UserResolutionComponents/ArchiveResolutions_User'
+import { ResolutionsUser } from '../UserResolutionComponents/ResolutionsUser'
+import { ArchiveResolutionsUser } from '../UserResolutionComponents/ArchiveResolutionsUser'
 
 
 export class Layout extends Component {
@@ -33,13 +30,13 @@ export class Layout extends Component {
                     {this.props.SuperUser ?
                         <Route path='/' exact component={Resolutions} />
                         :
-                        <Route path='/' exact component={Resolutions_User} />
+                        <Route path='/' exact component={ResolutionsUser} />
                     }
 
                     {this.props.SuperUser ?
                         <Route path='/archive'  component={ArchiveResolutions} />
                         :
-                        <Route path='/archive'  component={ArchiveResolutions_User}/>
+                        <Route path='/archive'  component={ArchiveResolutionsUser}/>
                     }
 
                     {this.props.SuperUser ?

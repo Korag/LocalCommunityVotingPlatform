@@ -98,7 +98,7 @@ export class ResolutionDetails extends Component {
                                     <input type="text" name="title" value={this.state.title} disabled/>
                                     <label>
                                         Treść uchwały
-                                    <textarea placeholder="None" name="description" value={this.state.description} disabled></textarea>
+                                    <textarea name="description" value={this.state.description} disabled></textarea>
                                     </label>
                                     <label>Data końca głosowania</label>
                                     <input type="text" name="title" value={this.state.activeToVoteBeforeDate} disabled />

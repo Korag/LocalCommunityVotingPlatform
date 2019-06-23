@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { getJWTtoken } from '../../helpers/jwtHandler'
 
+import { ValidationHandler } from "../../helpers/ValidationHandler"
+
 export class UpdateUser extends Component {
     static displayName = UpdateUser.name;
     constructor(props) {
@@ -9,11 +11,13 @@ export class UpdateUser extends Component {
 
         this.state = {
             email: '',
-            password: '',
             firstName: '',
             lastName: '',
             role: '',
-            availableRoles: []
+            availableRoles: [],
+
+            formNotValid: false,
+            validationErrors: []
         }
     }
 
@@ -35,15 +39,22 @@ export class UpdateUser extends Component {
         e.preventDefault();
 
         axios.defaults.headers.common['Authorization'] = getJWTtoken();
-        axios.post("api/User/EditUser",
+        axios.post("api/User/EditUser", null,
             {
-                FirstName: this.state.firstName,
-                LastName: this.state.lastName,
-                Email: this.state.email,
-                Role: this.state.role
+                params: {
+                    FirstName: this.state.firstName,
+                    LastName: this.state.lastName,
+                    Email: this.state.email,
+                    Role: this.state.role
+                }
             }).then(res => {
                 this.props.ShowFormEdit();
-            });
+            }).catch(err => {
+                this.setState({
+                    formNotValid: true,
+                    validationErrors: err.response.data
+                })
+            })
     };
 
     DownloadUserData = () => {
@@ -52,17 +63,17 @@ export class UpdateUser extends Component {
                 Authorization: getJWTtoken()
             },
             params: {
-                email: this.props.userEmail 
+                email: this.props.userEmail
             }
         }).then(result => {
-                    this.setState({
-                    email: result.data.email,
-                    password: result.data.password,
-                    firstName: result.data.firstName,
-                    lastName: result.data.lastName,
-                    role: result.data.role,     
-                });
-            })
+            this.setState({
+                email: result.data.email,
+                password: result.data.password,
+                firstName: result.data.firstName,
+                lastName: result.data.lastName,
+                role: result.data.role,
+            });
+        })
     }
 
     render() {
@@ -99,6 +110,25 @@ export class UpdateUser extends Component {
                         </form>
                     </div>
                 </div>
+
+                {this.state.formNotValid ?
+                    <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                            <h4 className="text-center">Wprowadzono błędne dane</h4>
+                            <div className="grid-container">
+                                <div className="alertValidation">
+                                    <ValidationHandler fieldName={'Overall'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'LastName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Role'} validationErrors={this.state.validationErrors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null}
+
             </div>
         );
     }

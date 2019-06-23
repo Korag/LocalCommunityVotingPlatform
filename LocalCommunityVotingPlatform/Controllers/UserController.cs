@@ -53,19 +53,28 @@ namespace LocalCommunityVotingPlatform.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult EditUser(UserViewModel UpdatedUser)
         {
-            User LegacyUser = _context.GetUserByEmail(UpdatedUser.Email);
+            if (ModelState.IsValid)
+            {
+                User LegacyUser = _context.GetUserByEmail(UpdatedUser.Email);
 
-            LegacyUser.FirstName = UpdatedUser.FirstName;
-            LegacyUser.LastName = UpdatedUser.LastName;
-            LegacyUser.Email = UpdatedUser.Email;
+                LegacyUser.FirstName = UpdatedUser.FirstName;
+                LegacyUser.LastName = UpdatedUser.LastName;
+                LegacyUser.Email = UpdatedUser.Email;
 
-            var Roles = _userManager.GetRolesAsync(LegacyUser).Result;
-            _userManager.RemoveFromRoleAsync(LegacyUser, Roles.FirstOrDefault());
-            _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
+                var Roles = _userManager.GetRolesAsync(LegacyUser).Result;
+                _userManager.RemoveFromRoleAsync(LegacyUser, Roles.FirstOrDefault());
+                _userManager.AddToRoleAsync(LegacyUser, UpdatedUser.Role);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
 
-            return Ok();
+                return Ok();
+            }
+
+            else
+            {
+                ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone dane użytkownika");
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpPost]
@@ -126,7 +135,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var CurrentUser =_userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
+                var CurrentUser = _userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
                 //PasswordVerificationResult passwordResult = _userManager.PasswordHasher.VerifyHashedPassword(CurrentUser, CurrentUser.PasswordHash, passwordModel.OldPassword);
 
                 //if (CurrentUser.Email == passwordModel.Email && passwordResult == PasswordVerificationResult.Success)
@@ -148,8 +157,8 @@ namespace LocalCommunityVotingPlatform.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-        } 
+        }
     }
 }

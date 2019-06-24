@@ -10,8 +10,7 @@ export class VoteForResolution extends Component {
         super(props);
 
         this.state = {
-            selectedOption: '0',
-            refresh: false
+            selectedOption: '0'
         }
     }
 
@@ -32,12 +31,6 @@ export class VoteForResolution extends Component {
         
     }
 
-    RefreshComponent = () => {
-        this.setState({
-            refreshNeeded: !this.state.refreshNeeded
-        });
-    }
-
     handleOptionChange = (changeEvent) => {
         this.setState({
             selectedOption: changeEvent.target.value
@@ -56,7 +49,7 @@ export class VoteForResolution extends Component {
                 }
             }).then(res => {
                 NotificationManager.success('Pomyślnie oddano swój głos', 'Głosowanie');
-                //this.props.history.push('/');
+                this.props.RefreshComponent();
             });
     }
 

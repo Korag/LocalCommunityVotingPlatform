@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { NotificationManager } from 'react-notifications';
-import { ValidationHandler } from "../../helpers/ValidationHandler"
+import { ValidationHandler } from "../../helpers/ValidationHandler";
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -15,7 +15,9 @@ export class Login extends Component {
             password: '',
 
             formNotValid: false,
-            validationErrors: []
+            validationErrors: [],
+
+            showResetPassword: false
         }
     }
 
@@ -46,6 +48,10 @@ export class Login extends Component {
 
     Rerender = () => {
         this.forceUpdate();
+    }
+
+    ResetPassword = () => {
+        this.props.history.push('/resetpassword');
     }
 
     render() {

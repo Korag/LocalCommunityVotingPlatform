@@ -20,7 +20,9 @@ export class ResolutionDetails extends Component {
             enableResultsDiagram: false,
 
             alreadyVoted: false,
-            SuperUser: false
+            SuperUser: false,
+
+            refresh: false
         }
     }
 
@@ -82,6 +84,10 @@ export class ResolutionDetails extends Component {
         })
     }
 
+    RefreshComponent = () => {
+        this.componentDidMount();
+    }
+
     render() {
         return (
             <div style={{ marginTop: 30 }}>
@@ -121,7 +127,7 @@ export class ResolutionDetails extends Component {
                 </div>
 
                 {this.state.enableVoteForm || this.state.alreadyVoted || this.props.blockedForVote ?
-                    <VoteForResolution resolutionId={this.props.resolutionId} blockedForVote={this.props.blockedForVote} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
+                    <VoteForResolution RefreshComponent={this.RefreshComponent} resolutionId={this.props.resolutionId} blockedForVote={this.props.blockedForVote} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
                     : null}
 
                 {this.state.enableResultsDiagram ?

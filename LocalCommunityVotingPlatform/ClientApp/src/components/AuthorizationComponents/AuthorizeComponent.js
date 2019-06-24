@@ -73,7 +73,7 @@ class AuthorizeComponent extends Component {
             return (<Layout Logout={this.Logout} SuperUser={this.state.SuperUser}/>);
         }
         else {
-            return (<Login callBack={this.CheckIfAuthorized} />);
+            return (<Login callBack={this.CheckIfAuthorized} history={this.props.history} />);
         }
     }
 

@@ -7,6 +7,9 @@ using LocalCommunityVotingPlatform.Models;
 using System.Linq;
 using LocalCommunityVotingPlatform.DAL;
 using System.Security.Claims;
+using LocalCommunityVotingPlatform.Services;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -16,11 +19,18 @@ namespace LocalCommunityVotingPlatform.Controllers
     {
         private readonly UserManager<User> _userManager;
         private IDbOperations _context;
+        private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
+        private readonly PasswordGenerator _passwordGenerator;
 
-        public UserController(UserManager<User> userManager, IDbOperations context)
+        public UserController(UserManager<User> userManager, IDbOperations context, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _passwordGenerator = new PasswordGenerator();
+
+            _configuration = configuration;
+            _emailSender = new EmailProvider(_configuration);
         }
 
         [HttpGet]
@@ -182,6 +192,63 @@ namespace LocalCommunityVotingPlatform.Controllers
             else
             {
                 ModelState.AddModelError("Overall", "Niepoprawnie wprowadzone hasła");
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetResetPasswordCode(SendEmailWithResetPasswordCodeViewModel resetPasswordMessage)
+        {
+            if (ModelState.IsValid)
+            {
+                if (GetUserByEmail(resetPasswordMessage.Email) != null)
+                {
+                    resetPasswordMessage.ExpectedCode = _userManager.GeneratePasswordResetTokenAsync(_userManager.Users.Where(z => z.Email == resetPasswordMessage.Email).FirstOrDefault()).Result;
+
+                    await _emailSender.SendEmail(resetPasswordMessage.Email, "Resetowanie hasła LocalCommunityVotingApp",
+                                $"Twój kod dla zresetowania hasła do konta o adresie: {resetPasswordMessage.Email}: <br />" +
+                                $"<br />" +
+                                $"{resetPasswordMessage.ExpectedCode}");
+
+                    return Ok(resetPasswordMessage);
+                }
+                else
+                {
+                    ModelState.AddModelError("Overall", "Nie istnieje użytkownik systemu wykorzystujący wprowadzony adres email");
+                    return BadRequest(ModelState);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Overall", "Błędny format adresu email");
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ResetUserPassword(ResetPasswordViewModel passwordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var User = _userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
+
+                var result = _userManager.ResetPasswordAsync(User, passwordModel.Code, passwordModel.NewPassword);
+                result.Wait();
+
+                if (result.IsCompletedSuccessfully)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Overall", "Wprowadzony kod jest niepoprawny lub hasła nie zostały wprowadzonej we właściwej postaci");
                 return BadRequest(ModelState);
             }
         }

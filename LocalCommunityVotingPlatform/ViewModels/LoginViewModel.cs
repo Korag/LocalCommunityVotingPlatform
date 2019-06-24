@@ -10,7 +10,8 @@ namespace LocalCommunityVotingPlatform.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
-        [MinLength(8, ErrorMessage ="Hasło nie może być krótsze niż 8 znaków")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$", ErrorMessage = "Pole \"{0}\" nie może być krótsze niż 6 znaków, musi zawierać conajmniej: 1 dużą literę, 1 małą literę, 1 cyfrę oraz 1 znak specjalny (np.: !@#$%^&*)")]
+        [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
     }

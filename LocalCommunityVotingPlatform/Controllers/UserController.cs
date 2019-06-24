@@ -204,7 +204,9 @@ namespace LocalCommunityVotingPlatform.Controllers
             {
                 if (GetUserByEmail(resetPasswordMessage.Email) != null)
                 {
-                    resetPasswordMessage.ExpectedCode = _userManager.GeneratePasswordResetTokenAsync(_userManager.Users.Where(z => z.Email == resetPasswordMessage.Email).FirstOrDefault()).Result;
+                    resetPasswordMessage.ExpectedCode = _passwordGenerator.GeneratePassword();
+                        
+                    //_userManager.GeneratePasswordResetTokenAsync(_userManager.Users.Where(z => z.Email == resetPasswordMessage.Email).FirstOrDefault()).Result;
 
                     await _emailSender.SendEmail(resetPasswordMessage.Email, "Resetowanie hasła LocalCommunityVotingApp",
                                 $"Twój kod dla zresetowania hasła do konta o adresie: {resetPasswordMessage.Email}: <br />" +
@@ -234,7 +236,8 @@ namespace LocalCommunityVotingPlatform.Controllers
             {
                 var User = _userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
 
-                var result = _userManager.ResetPasswordAsync(User, passwordModel.Code, passwordModel.NewPassword);
+                var token = _userManager.GeneratePasswordResetTokenAsync(_userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault()).Result;
+                var result = _userManager.ResetPasswordAsync(User, token, passwordModel.NewPassword);
                 result.Wait();
 
                 if (result.IsCompletedSuccessfully)

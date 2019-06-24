@@ -56,8 +56,8 @@ export class VoteForResolution extends Component {
     render() {
         return (
             <div>
-                <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
-                    <div className="grid-container fluid callout translucent-form-overlay small-10 medium-6 large-4 cell">
+                <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
+                    <div className="grid-container fluid callout translucent-form-overlay small-12 medium-6 large-4 cell">
 
                         <div className="text-center">
                             <h2>Głosowanie nad uchwałą</h2>

@@ -141,7 +141,7 @@ class ResetPassword extends Component {
 
                 {this.state.formNotValid ?
                     <div className="grid-x grid-padding-x" style={{ marginTop: 20 }}>
-                        <div className="grid-container fluid alert translucent-form-overlay small-10 medium-6 large-4 cell">
+                        <div className="grid-container fluid alert translucent-form-overlay small-12 medium-6 large-4 cell">
                             <h4 className="text-center">Wprowadzono błędne dane</h4>
                             <div className="grid-container">
                                 <div className="alertValidation">

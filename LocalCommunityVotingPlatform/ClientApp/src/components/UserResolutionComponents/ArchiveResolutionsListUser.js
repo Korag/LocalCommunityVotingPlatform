@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
-import { getJWTtoken } from '../../helpers/jwtHandler'
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import PrintResolutions from '../ResolutionComponents/PrintResolutions';
+import qs from 'qs';
+import axios from 'axios';
 
 export class ArchiveResolutionsListUser extends Component {
     static displayName = ArchiveResolutionsListUser.name;
@@ -8,6 +11,9 @@ export class ArchiveResolutionsListUser extends Component {
         super(props);
 
         this.state = {
+            ResolutionsList: [],
+            ResolutionsData: [],
+
             data: {
                 columns: [
                     {
@@ -39,6 +45,12 @@ export class ArchiveResolutionsListUser extends Component {
                         field: 'details',
                         sort: 'asc',
                         width: 100
+                    },
+                    {
+                        label: 'Druk',
+                        field: 'print',
+                        sort: 'asc',
+                        width: 20
                     }
                 ],
                 rows: []
@@ -55,6 +67,46 @@ export class ArchiveResolutionsListUser extends Component {
 
     componentDidMount = () => {
         this.downloadArchiveResolutions();
+    }
+
+    PrepareArrayOfObjects = () => {
+        axios.get('api/Resolution/GetResolutionsById', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                resolutionsId: this.state.ResolutionsList
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params)
+            }
+        }).then(result => {
+            console.log(result.data)
+            this.setState({
+                ResolutionsData: result.data
+            });
+        })
+        console.log(this.state.ResolutionsData);
+    }
+
+    handleOptionChange = (singleId) => {
+        let checkboxData = Object.assign([], this.state.ResolutionsList);
+
+        var exist = checkboxData.includes(singleId);
+        if (exist) {
+            var index = checkboxData.indexOf(singleId);
+            if (index > -1) {
+                checkboxData.splice(index, 1);
+            }
+        }
+        else {
+            checkboxData.push(singleId);
+        }
+        this.setState({
+            ResolutionsList: checkboxData
+        }, () => {
+            this.PrepareArrayOfObjects()
+        })
     }
 
     downloadArchiveResolutions() {
@@ -104,6 +156,8 @@ export class ArchiveResolutionsListUser extends Component {
                     console.log(data);
 
                     data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły</MDBBtn>
+
+                    data.rows[i].print = <input type="checkbox" value={singleId} name={singleId} onChange={() => this.handleOptionChange(singleId)} />
                 }
 
                 this.setState({ data });
@@ -113,6 +167,9 @@ export class ArchiveResolutionsListUser extends Component {
     render() {
         return (
             <div>
+                <div className="row customToolbar">
+                    <PrintResolutions ResolutionsData={this.state.ResolutionsData} />
+                </div>
                 <MDBDataTable
                     responsive
                     striped

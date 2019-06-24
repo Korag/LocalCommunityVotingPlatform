@@ -47,6 +47,7 @@
     width: 100%;
     margin-right: auto;
     margin-left: auto;
+    padding: auto;
 }
 
 input[disabled] {
@@ -118,4 +119,13 @@ body {
 textarea {
     color: #8a8a8a;
     min-height: 300px
+}
+
+hidden {
+    display: none;
+}
+
+.pdf {
+    font-size: 14px;
+    margin: 80px 80px 80px 80px;
 }

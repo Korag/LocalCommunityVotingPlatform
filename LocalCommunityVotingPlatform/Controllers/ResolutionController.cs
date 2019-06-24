@@ -179,6 +179,21 @@ namespace LocalCommunityVotingPlatform.Controllers
             return resolutionViewModel;
         }
 
+        [HttpGet]
+        [Authorize]
+        public ICollection<DisplayResolutionViewModel> GetResolutionsById(ICollection<string> resolutionsId)
+        {
+            List<DisplayResolutionViewModel> Resolutions = new List<DisplayResolutionViewModel>();
+
+            foreach (var id in resolutionsId)
+            {
+                DisplayResolutionViewModel resolutionViewModel = GetResolutionById(id);
+                Resolutions.Add(resolutionViewModel);
+            }
+
+            return Resolutions;
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult<Resolution> DeleteResolution(string resolutionId)

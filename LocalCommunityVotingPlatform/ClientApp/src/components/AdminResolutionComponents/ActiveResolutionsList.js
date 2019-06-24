@@ -2,6 +2,9 @@
 import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler';
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
+import PrintResolutions from '../ResolutionComponents/PrintResolutions';
+import qs from 'qs';
+import axios from 'axios';
 
 export class ActiveResolutionsList extends Component {
     static displayName = ActiveResolutionsList.name;
@@ -9,6 +12,9 @@ export class ActiveResolutionsList extends Component {
         super(props);
 
         this.state = {
+            ResolutionsList: [],
+            ResolutionsData: [],
+
             data: {
                 columns: [
                     {
@@ -52,6 +58,12 @@ export class ActiveResolutionsList extends Component {
                         field: 'delete',
                         sort: 'asc',
                         width: 100
+                    },
+                    {
+                        label: 'Druk',
+                        field: 'print',
+                        sort: 'asc',
+                        width: 20
                     }
                 ],
                 rows: []
@@ -68,6 +80,46 @@ export class ActiveResolutionsList extends Component {
 
     componentDidMount = () => {
         this.downloadResolutions();
+    }
+
+    PrepareArrayOfObjects = () => {
+        axios.get('api/Resolution/GetResolutionsById', {
+            headers: {
+                Authorization: getJWTtoken()
+            },
+            params: {
+                resolutionsId: this.state.ResolutionsList
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params)
+            }
+        }).then(result => {
+            console.log(result.data)
+            this.setState({
+                ResolutionsData: result.data
+            });
+        })
+        console.log(this.state.ResolutionsData);
+    }
+
+    handleOptionChange = (singleId) => {
+        let checkboxData = Object.assign([], this.state.ResolutionsList);
+
+        var exist = checkboxData.includes(singleId);
+        if (exist) {
+            var index = checkboxData.indexOf(singleId);
+            if (index > -1) {
+                checkboxData.splice(index, 1);
+            }
+        }
+        else {
+            checkboxData.push(singleId);
+        }
+        this.setState({
+            ResolutionsList: checkboxData
+        }, () => {
+            this.PrepareArrayOfObjects()
+        })
     }
 
     downloadResolutions() {
@@ -124,6 +176,8 @@ export class ActiveResolutionsList extends Component {
 
                     //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
                     data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)}/>
+
+                    data.rows[i].print = <input type="checkbox" value={singleId} name={singleId} onChange={() => this.handleOptionChange(singleId)}/>
                 }
                 this.setState({ data });
             })
@@ -134,6 +188,7 @@ export class ActiveResolutionsList extends Component {
             <div>
                 <div className="row customToolbar">
                     <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
+                    <PrintResolutions ResolutionsData={this.state.ResolutionsData}/>
                 </div>
                 <MDBDataTable
                     responsive

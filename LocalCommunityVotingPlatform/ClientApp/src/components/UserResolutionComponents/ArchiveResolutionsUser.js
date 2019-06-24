@@ -33,15 +33,15 @@ export class ArchiveResolutionsUser extends Component {
     render() {
         if (this.state.showList && !this.state.showResolutionDetails) {
             return (
-            <div>
-                <ArchiveResolutionsListUser ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
+                <div style={{ marginTop: 30 }}>
+                    <ArchiveResolutionsListUser ShowFormEditResolution={this.ShowFormEditResolution} ShowResolutionDetails={this.ShowResolutionDetails} refreshNeeded={this.state.refreshNeeded} RefreshComponent={this.RefreshComponent} />
                 </div>
-                )
+            )
         }
         else {
             return (
                 <div style={{ marginTop: 30 }}>
-                <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} blockedForVote={this.state.blockedForVote} resolutionId={this.state.resolutionId} />
+                    <ResolutionDetails ShowResolutionDetails={this.ShowResolutionDetails} history={this.props.history} blockedForVote={this.state.blockedForVote} resolutionId={this.state.resolutionId} />
                 </div>
             )
         }

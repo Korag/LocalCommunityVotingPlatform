@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable, MDBBtn } from 'mdbreact';
+import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler';
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
 

@@ -73,6 +73,8 @@ namespace LocalCommunityVotingPlatform
 
             services.AddTransient<IDbOperations, DbOperations>();
             services.AddTransient<IEmailSender, EmailProvider>();
+            services.AddTransient<PasswordGenerator>();
+            services.AddTransient<IndexerGenerator>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

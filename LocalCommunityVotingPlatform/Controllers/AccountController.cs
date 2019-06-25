@@ -39,15 +39,16 @@ namespace LocalCommunityVotingPlatform.Controllers
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            PasswordGenerator passwordGenerator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
-            _emailSender = new EmailProvider(_configuration);
+            _passwordGenerator = passwordGenerator;
 
-            _passwordGenerator = new PasswordGenerator();
+            _emailSender = new EmailProvider(_configuration);
         }
 
         [HttpPost]

@@ -10,6 +10,7 @@ using System.Security.Claims;
 using LocalCommunityVotingPlatform.Services;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using System;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -23,13 +24,13 @@ namespace LocalCommunityVotingPlatform.Controllers
         private readonly IConfiguration _configuration;
         private readonly PasswordGenerator _passwordGenerator;
 
-        public UserController(UserManager<User> userManager, IDbOperations context, IConfiguration configuration)
+        public UserController(UserManager<User> userManager, IDbOperations context, IConfiguration configuration, PasswordGenerator passwordGenerator)
         {
             _context = context;
             _userManager = userManager;
-            _passwordGenerator = new PasswordGenerator();
-
+            _passwordGenerator = passwordGenerator;
             _configuration = configuration;
+
             _emailSender = new EmailProvider(_configuration);
         }
 
@@ -53,7 +54,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                     Role = UserRoles.FirstOrDefault()
                 };
 
-                if (singleUserView.Role == "User")
+                if (singleUserView.Role == Enum.GetName(typeof(AvailableRoles), 1))
                 {
                     singleUserView.Role = "Użytkownik";
                 }
@@ -170,12 +171,6 @@ namespace LocalCommunityVotingPlatform.Controllers
             if (ModelState.IsValid)
             {
                 var CurrentUser = _userManager.Users.Where(z => z.Email == passwordModel.Email).FirstOrDefault();
-                //PasswordVerificationResult passwordResult = _userManager.PasswordHasher.VerifyHashedPassword(CurrentUser, CurrentUser.PasswordHash, passwordModel.OldPassword);
-
-                //if (CurrentUser.Email == passwordModel.Email && passwordResult == PasswordVerificationResult.Success)
-                //{
-
-                //}
 
                 var result = _userManager.ChangePasswordAsync(CurrentUser, passwordModel.OldPassword, passwordModel.NewPassword);
                 result.Wait();
@@ -206,8 +201,6 @@ namespace LocalCommunityVotingPlatform.Controllers
                 {
                     resetPasswordMessage.ExpectedCode = _passwordGenerator.GeneratePassword();
                         
-                    //_userManager.GeneratePasswordResetTokenAsync(_userManager.Users.Where(z => z.Email == resetPasswordMessage.Email).FirstOrDefault()).Result;
-
                     await _emailSender.SendEmail(resetPasswordMessage.Email, "Resetowanie hasła LocalCommunityVotingApp",
                                 $"Twój kod dla zresetowania hasła do konta o adresie: {resetPasswordMessage.Email}: <br />" +
                                 $"<br />" +

@@ -17,10 +17,10 @@ namespace LocalCommunityVotingPlatform.Controllers
         private IDbOperations _context;
         private IndexerGenerator _indexer;
 
-        public ResolutionController(IDbOperations context)
+        public ResolutionController(IDbOperations context, IndexerGenerator indexer)
         {
             _context = context;
-            _indexer = new IndexerGenerator();
+            _indexer = indexer;
         }
 
         [HttpPost]

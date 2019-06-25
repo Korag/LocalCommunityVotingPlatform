@@ -29,10 +29,9 @@ namespace LocalCommunityVotingPlatform.Services
 
             string[] randomChars = new[] {
         "ABCDEFGHJKLMNOPQRSTUVWXYZ",
-        "ABCDEFGHJKLMNOPQRSTUVWXYZ",
         "abcdefghijkmnopqrstuvwxyz",
         "0123456789",
-        "!@$?_-"
+        "!@$?_-#%^&*"
     };
 
             Random rand = new Random(Environment.TickCount);

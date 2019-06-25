@@ -122,6 +122,11 @@ namespace LocalCommunityVotingPlatform.Controllers
 
                     return Ok();
                 }
+                else
+                {
+                    ModelState.AddModelError("Overall", "Użytkownik o podanym adresie email już istnieje w systemie");
+                    return BadRequest(ModelState);
+                }
             }
             ModelState.AddModelError("Overall", "Niepoprawnie wprowadzono dane nowego użytkownika");
 

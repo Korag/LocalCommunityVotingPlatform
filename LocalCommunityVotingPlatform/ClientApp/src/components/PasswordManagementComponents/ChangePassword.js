@@ -56,8 +56,10 @@ export class ChangePassword extends Component {
     };
 
     ReloadApp = () => {
-        window.history.pushState("", "", "/");
-        window.location.reload();
+        localStorage.removeItem('jwt_token');
+        //window.history.pushState("", "", "/");
+        //window.location.reload();
+        this.props.history.push('/');
         NotificationManager.success('Hasło zostało zmienione', 'Zmiana hasła');
     }
 

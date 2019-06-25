@@ -3448,7 +3448,7 @@ function (_Component) {
           return false;
         });
         if (filteredRows.length === 0) filteredRows.push({
-          message: 'No matching records found',
+          message: 'Nie znaleziono pasujących rekordów',
           colspan: prevState.columns.length
         });
         return {

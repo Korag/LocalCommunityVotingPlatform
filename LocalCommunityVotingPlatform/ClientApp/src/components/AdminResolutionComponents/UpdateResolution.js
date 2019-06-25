@@ -32,6 +32,13 @@ export class UpdateResolution extends Component {
         });
     }
 
+    handleChange = (date) => {
+        console.log(this.state.activeToVoteBeforeDate)
+        this.setState({
+            activeToVoteBeforeDate: date
+        });
+    }
+
     componentDidMount = () => {
         this.DownloadResolutionData();
     }
@@ -105,7 +112,7 @@ export class UpdateResolution extends Component {
                                         locale="pl"
                                         todayButton={"Dzisiaj"}
                                         selected={this.state.activeToVoteBeforeDate}
-                                        onChange={this.changeValue}
+                                        onChange={this.handleChange}
                                     />
                                 </div>
                                 <div className="row">

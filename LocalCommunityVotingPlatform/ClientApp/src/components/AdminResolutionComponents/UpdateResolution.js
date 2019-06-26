@@ -20,6 +20,7 @@ export class UpdateResolution extends Component {
             title: '',
             description: '',
             activeToVoteBeforeDate: moment(),
+            dateOfUpdatingResolution: moment(),
 
             formNotValid: false,
             validationErrors: []
@@ -108,6 +109,7 @@ export class UpdateResolution extends Component {
                                         dateFormat="DD/MM/YYYY"
                                         locale="pl"
                                         todayButton={"Dzisiaj"}
+                                        minDate={this.state.dateOfUpdatingResolution}
                                         selected={this.state.activeToVoteBeforeDate}
                                         onChange={this.handleChange}
                                     />

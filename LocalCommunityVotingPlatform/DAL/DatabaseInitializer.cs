@@ -9,6 +9,8 @@ namespace LocalCommunityVotingPlatform.DAL
 {
     public class DatabaseInitializer
     {
+        private static IDbOperations _context;
+
         public static void SeedUsers(UserManager<User> userManager)
         {
             if (userManager.FindByEmailAsync("vertisio.com@gmail.com").Result == null)
@@ -28,6 +30,12 @@ namespace LocalCommunityVotingPlatform.DAL
                     userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
+        }
+
+        public static void SetCommunityName()
+        {
+            _context = new DbOperations();
+            _context.SetCommunityName("Społeczność testowa");
         }
     }
 }

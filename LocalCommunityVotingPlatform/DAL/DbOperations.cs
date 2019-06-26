@@ -21,6 +21,38 @@ namespace LocalCommunityVotingPlatform.DAL
             _context.SaveChanges();
         }
 
+        public string GetCommunityName()
+        {
+            string communityName = "";
+
+            if (_context.CommunityName.ToList().Count != 0)
+            {
+                communityName = _context.CommunityName.FirstOrDefault().NameOfLocalCommunity.ToString();
+            }
+            return communityName;
+        }
+
+        public void SetCommunityName(string name)
+        {
+            string communityName = GetCommunityName();
+
+            if (communityName == "")
+            {
+                _context.CommunityName.Add
+                (
+                    new CommunityName
+                    {
+                        NameOfLocalCommunity = name
+                    }
+                 );
+            }
+            else
+            {
+                _context.CommunityName.FirstOrDefault().NameOfLocalCommunity = name;
+            }
+            SaveChanges();
+        }
+
         #region Users
         public ICollection<User> GetUsers()
         {

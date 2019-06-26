@@ -31,7 +31,6 @@ namespace LocalCommunityVotingPlatform
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<EntityFrameworkContext>();
 
             services.AddIdentity<User, IdentityRole>()
@@ -86,8 +85,10 @@ namespace LocalCommunityVotingPlatform
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, EntityFrameworkContext context, UserManager<User> userManager)
         {
-            ConnectionString = Configuration["ConnectionString"];
+            ConnectionString = Configuration["Data Source = (localdb)\\MSSQLLocalDB; Database = LocalCommunityVotingPlatformDb; Integrated Security = True"];
+            context.Database.EnsureCreated();
             DatabaseInitializer.SeedUsers(userManager);
+            DatabaseInitializer.SetCommunityName();
 
             if (env.IsDevelopment())
             {

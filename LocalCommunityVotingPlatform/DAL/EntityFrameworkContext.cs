@@ -11,6 +11,7 @@ namespace LocalCommunityVotingPlatform.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Resolution> Resolutions { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<CommunityName> CommunityName { get; set; }
 
         public EntityFrameworkContext() : base()
         {
@@ -19,8 +20,7 @@ namespace LocalCommunityVotingPlatform.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.UseSqlServer(Startup.ConnectionString);
+            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Database = LocalCommunityVotingPlatformDb; Integrated Security = True");
             base.OnConfiguring(optionsBuilder);
         }
 

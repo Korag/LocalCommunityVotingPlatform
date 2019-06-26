@@ -7,6 +7,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <UserSecretsId>7b2c2f77-8e13-4785-b884-e5aeb4a46169</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
 
   <ItemGroup>
     <Compile Remove="%2a%2a/%2a.cs" />
+    <Compile Remove="Migrations\20190626171908_Added CommunityName entity.cs" />
   </ItemGroup>
 
   <ItemGroup>

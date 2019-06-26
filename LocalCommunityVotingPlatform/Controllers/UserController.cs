@@ -35,6 +35,15 @@ namespace LocalCommunityVotingPlatform.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public string GetCommunityName()
+        {
+            string communityName = _context.GetCommunityName();
+
+            return communityName;
+        }
+
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public ICollection<UserViewModel> GetUsers()
         {

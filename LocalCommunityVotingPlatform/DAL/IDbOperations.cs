@@ -5,6 +5,9 @@ namespace LocalCommunityVotingPlatform.DAL
 {
     public interface IDbOperations
     {
+        string GetCommunityName();
+        void SetCommunityName(string name);
+
         #region Users
 
         ICollection<User> GetUsers();

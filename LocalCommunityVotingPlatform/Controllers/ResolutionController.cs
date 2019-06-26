@@ -199,6 +199,7 @@ namespace LocalCommunityVotingPlatform.Controllers
         public ActionResult<Resolution> DeleteResolution(string resolutionId)
         {
             _context.RemoveResolution(resolutionId);
+            _context.RemoveRelatedResolutionVotes(resolutionId);
             _context.SaveChanges();
 
             return Ok();

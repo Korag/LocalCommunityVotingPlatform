@@ -15,12 +15,27 @@ class AuthorizeComponent extends Component {
             authorized: null,
             performedLogin: false,
 
-            SuperUser: false
+            SuperUser: false,
+            communityName: ''
         };
     }
 
     componentDidMount = () => {
+       this.GetCommunityName();
        this.CheckIfAuthorized()
+    }
+
+    GetCommunityName = () => {
+        axios.get('api/User/GetCommunityName', {
+            headers: {
+            },
+            params: {
+            }
+        }).then(result => {
+            this.setState({
+                communityName: result.data,
+            });
+        })
     }
 
     CheckIfAuthorized = async() => {
@@ -70,10 +85,10 @@ class AuthorizeComponent extends Component {
     resolveAuthorization = () => {
         if (this.state.authorized === true)
         {
-            return (<Layout Logout={this.Logout} SuperUser={this.state.SuperUser}/>);
+            return (<Layout Logout={this.Logout} CommunityName={this.state.communityName} SuperUser={this.state.SuperUser}/>);
         }
         else {
-            return (<Login callBack={this.CheckIfAuthorized} history={this.props.history} />);
+            return (<Login callBack={this.CheckIfAuthorized} CommunityName={this.state.communityName} history={this.props.history} />);
         }
     }
 

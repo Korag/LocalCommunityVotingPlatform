@@ -39,7 +39,7 @@ export class NavMenu extends Component {
                 <div className="top-bar" id="example-menu">
                     <div className="top-bar-left">
                         <ul className="dropdown menu" data-dropdown-menu>
-                            <li className="menu-text">Społeczność testowa</li>
+                            <li className="menu-text">{this.props.CommunityName}</li>
 
                             <NavItem>
                                 <NavLink tag={Link} to="/">Aktualne uchwały</NavLink>

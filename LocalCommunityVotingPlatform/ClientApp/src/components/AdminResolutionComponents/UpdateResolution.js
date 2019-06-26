@@ -89,9 +89,6 @@ export class UpdateResolution extends Component {
     render() {
         return (
             <div>
-                <div className="text-center headerStyle">
-                    <h1>Społeczność testowa</h1>
-                </div>
                 <div className="grid-x grid-padding-x" style={{ marginTop: 30 }}>
                     <div className="grid-container fluid callout translucent-form-overlay small-12 medium-6 large-4 cell">
                         <div className="text-center">

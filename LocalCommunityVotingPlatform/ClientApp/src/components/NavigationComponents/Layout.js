@@ -24,7 +24,7 @@ export class Layout extends Component {
     render() {
         return (
             <div>
-                <NavMenu Logout={this.props.Logout} SuperUser={this.props.SuperUser} />
+                <NavMenu Logout={this.props.Logout} CommunityName={this.props.CommunityName} SuperUser={this.props.SuperUser} />
                 <div className="wrapper">
 
                     {this.props.SuperUser ?

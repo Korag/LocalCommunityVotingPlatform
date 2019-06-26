@@ -3,6 +3,7 @@ import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/md
 import { getJWTtoken } from '../../helpers/jwtHandler';
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
 import PrintResolutions from '../ResolutionComponents/PrintResolutions';
+import { trackPromise } from 'react-promise-tracker';
 import qs from 'qs';
 import axios from 'axios';
 
@@ -83,22 +84,22 @@ export class ActiveResolutionsList extends Component {
     }
 
     PrepareArrayOfObjects = () => {
-        axios.get('api/Resolution/GetResolutionsById', {
-            headers: {
-                Authorization: getJWTtoken()
-            },
-            params: {
-                resolutionsId: this.state.ResolutionsList
-            },
-            paramsSerializer: params => {
-                return qs.stringify(params)
-            }
-        }).then(result => {
-            console.log(result.data)
-            this.setState({
-                ResolutionsData: result.data
-            });
-        })
+            axios.get('api/Resolution/GetResolutionsById', {
+                headers: {
+                    Authorization: getJWTtoken()
+                },
+                params: {
+                    resolutionsId: this.state.ResolutionsList
+                },
+                paramsSerializer: params => {
+                    return qs.stringify(params)
+                }
+            }).then(result => {
+                console.log(result.data)
+                this.setState({
+                    ResolutionsData: result.data
+                });
+            })
         console.log(this.state.ResolutionsData);
     }
 
@@ -125,62 +126,63 @@ export class ActiveResolutionsList extends Component {
     downloadResolutions() {
         let data = Object.assign({}, this.state.data);
 
-        fetch('api/Resolution/GetActiveResolutions', {
-            headers: {
-                Authorization: getJWTtoken()
-            }
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
-                data.rows = [];
-
-                for (let i = 0; i < result.length; i++) {
-                    let singleId = result[i].id;
-                    let resolutionCredentials = result[i].indexer + " " + result[i].title;
-
-                    let title = result[i].title.substr(0, 180); 
-
-                    if (result[i].title.length > 180) {
-                        title = title + "(...)";
-                    }
-
-                    let description = result[i].description.substr(0, 300);
-
-                    if (result[i].description.length > 300) {
-                        description = description + "(...)";
-                    }
-
-                    console.log(singleId);
-                    console.log(resolutionCredentials);
-
-                    var object = {
-                        indexer: result[i].indexer,
-                        title: title,
-                        description: description,
-                        activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
-                        details: '',
-                        edit: '',
-                        delete: ''
-                    }
-
-                    console.log(result);
-
-                    data.rows.push(object);
-
-                    console.log(data);
-
-                    data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły/Głosuj</MDBBtn>
-
-                    data.rows[i].edit = <MDBBtn label="Update" className="button tiny warning" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
-
-                    //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
-                    data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)}/>
-
-                    data.rows[i].print = <input type="checkbox" value={singleId} name={singleId} onChange={() => this.handleOptionChange(singleId)}/>
+        trackPromise(
+            fetch('api/Resolution/GetActiveResolutions', {
+                headers: {
+                    Authorization: getJWTtoken()
                 }
-                this.setState({ data });
             })
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    data.rows = [];
+
+                    for (let i = 0; i < result.length; i++) {
+                        let singleId = result[i].id;
+                        let resolutionCredentials = result[i].indexer + " " + result[i].title;
+
+                        let title = result[i].title.substr(0, 180);
+
+                        if (result[i].title.length > 180) {
+                            title = title + "(...)";
+                        }
+
+                        let description = result[i].description.substr(0, 300);
+
+                        if (result[i].description.length > 300) {
+                            description = description + "(...)";
+                        }
+
+                        console.log(singleId);
+                        console.log(resolutionCredentials);
+
+                        var object = {
+                            indexer: result[i].indexer,
+                            title: title,
+                            description: description,
+                            activeToVoteBeforeDate: result[i].activeToVoteBeforeDate,
+                            details: '',
+                            edit: '',
+                            delete: ''
+                        }
+
+                        console.log(result);
+
+                        data.rows.push(object);
+
+                        console.log(data);
+
+                        data.rows[i].details = <MDBBtn label="Details" className="button tiny success" onClick={() => this.props.ShowResolutionDetails(singleId)} style={{ marginBottom: 0 }}>Szczegóły/Głosuj</MDBBtn>
+
+                        data.rows[i].edit = <MDBBtn label="Update" className="button tiny warning" onClick={() => this.props.ShowFormEditResolution(singleId)} style={{ marginBottom: 0 }}>Edytuj</MDBBtn>
+
+                        //data.rows[i].delete = <MDBBtn label="Delete" className="button tiny alert" onClick={() => { if (window.confirm(`Czy na pewno chcesz usunąć uchwałę "${resolutionCredentials}" ?`)) this.props.DeleteResolution(singleId) }} style={{ marginBottom: 0 }}>Usuń</MDBBtn>
+                        data.rows[i].delete = <DeleteResolutionConfirmationModal resolutionCredentials={result[i].indexer} DeleteResolution={() => this.props.DeleteResolution(singleId)} />
+
+                        data.rows[i].print = <input type="checkbox" value={singleId} name={singleId} onChange={() => this.handleOptionChange(singleId)} />
+                    }
+                    this.setState({ data });
+                }))
     }
 
     render() {
@@ -188,7 +190,7 @@ export class ActiveResolutionsList extends Component {
             <div>
                 <div className="row customToolbar">
                     <button className="button float-left" onClick={() => this.props.ShowFormAddResolution()}>Dodaj nową uchwałę</button>
-                    <PrintResolutions ResolutionsData={this.state.ResolutionsData}/>
+                    <PrintResolutions ResolutionsData={this.state.ResolutionsData} />
                 </div>
                 <MDBDataTable
                     responsive

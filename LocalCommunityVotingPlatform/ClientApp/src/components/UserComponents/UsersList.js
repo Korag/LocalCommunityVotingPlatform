@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
-import { getJWTtoken } from '../../helpers/jwtHandler'
-
-import DeleteUserConfirmationModal from './DeleteUserConfirmationModal'
+import { getJWTtoken } from '../../helpers/jwtHandler';
+import { trackPromise } from 'react-promise-tracker';
+import DeleteUserConfirmationModal from './DeleteUserConfirmationModal';
 
 export class UsersTable extends Component {
     static displayName = UsersTable.name;
@@ -68,7 +68,7 @@ export class UsersTable extends Component {
 
     downloadUsers() {
         let data = Object.assign({}, this.state.data);
-
+        trackPromise(
         fetch('api/User/GetUsers', {
             headers: {
                 Authorization: getJWTtoken()
@@ -89,17 +89,8 @@ export class UsersTable extends Component {
                     data.rows[i].delete = <DeleteUserConfirmationModal userCredentials={userCredentials} DeleteUser={() => this.props.Delete(singleEmail)} />
                 }
 
-                //data.rows.push(
-                //    {
-                //        email: "l.czepielik@gmail.com",
-                //        firstName: "Łukasz",
-                //        lastName: "Czepielik",
-                //        role: "Admin",
-                //        edit: <MDBBtn label="Check" className="button tiny success" style={{ marginBottom: 0}}>Edytuj</MDBBtn>
-                //    });
-
                 this.setState({ data });
-            })
+            }))
     }
 
 

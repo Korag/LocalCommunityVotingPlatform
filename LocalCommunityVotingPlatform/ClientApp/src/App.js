@@ -3,6 +3,7 @@ import { Route } from 'react-router';
 
 import AuthorizeComponent from './components/AuthorizationComponents/AuthorizeComponent';
 import { NotificationContainer } from 'react-notifications';
+import LoadingIndicator from './helpers/LoadingIndicator';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -20,12 +21,13 @@ export default class App extends Component {
             <div>
                 <Route path='/' exact render={() => (<AuthorizeComponent />)} />
                 <Route path='/resetpassword' render={() => (<ResetPassword />)} />
-                <Route path='/archive' render={() => (<AuthorizeComponent />)}  />
-                <Route path='/users' render={() => (<AuthorizeComponent />)}  />
-                <Route path='/userdata' render={() => (<AuthorizeComponent />)}  />
+                <Route path='/archive' render={() => (<AuthorizeComponent />)} />
+                <Route path='/users' render={() => (<AuthorizeComponent />)} />
+                <Route path='/userdata' render={() => (<AuthorizeComponent />)} />
 
                 <div style={{ marginTop: 30 }}>
                     <NotificationContainer />
+                    <LoadingIndicator />
                 </div>
             </div>
         );

@@ -2,6 +2,7 @@
 import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler';
 import PrintResolutions from '../ResolutionComponents/PrintResolutions';
+import { trackPromise } from 'react-promise-tracker';
 import qs from 'qs';
 import axios from 'axios';
 import DeleteResolutionConfirmationModal from './DeleteResolutionConfirmationModal';
@@ -124,7 +125,7 @@ export class ArchiveResolutionsList extends Component {
 
     downloadResolutions() {
         let data = Object.assign({}, this.state.data);
-
+        trackPromise(
         fetch('api/Resolution/GetArchiveResolutions', {
             headers: {
                 Authorization: getJWTtoken()
@@ -181,7 +182,7 @@ export class ArchiveResolutionsList extends Component {
                     data.rows[i].print = <input type="checkbox" value={singleId} name={singleId} onChange={() => this.handleOptionChange(singleId)} />
                 }
                 this.setState({ data });
-            })
+            }))
     }
 
     render() {

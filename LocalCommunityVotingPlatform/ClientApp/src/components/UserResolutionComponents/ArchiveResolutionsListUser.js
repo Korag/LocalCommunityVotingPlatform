@@ -2,6 +2,7 @@
 import { MDBDataTable, MDBBtn } from '../../modifiedNpmPackages/mdbreact/dist/mdbreact';
 import { getJWTtoken } from '../../helpers/jwtHandler';
 import PrintResolutions from '../ResolutionComponents/PrintResolutions';
+import { trackPromise } from 'react-promise-tracker';
 import qs from 'qs';
 import axios from 'axios';
 
@@ -111,7 +112,7 @@ export class ArchiveResolutionsListUser extends Component {
 
     downloadArchiveResolutions() {
         let data = Object.assign({}, this.state.data);
-
+        trackPromise(
         fetch('api/Resolution/GetArchiveResolutions', {
             headers: {
                 Authorization: getJWTtoken()
@@ -161,7 +162,7 @@ export class ArchiveResolutionsListUser extends Component {
                 }
 
                 this.setState({ data });
-            })
+            }))
     }
 
     render() {

@@ -102,7 +102,7 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Resolutions.Where(z => z.Date.Month == month).Count();
         }
 
-        void RemoveRelatedResolutionVotes(string resolutionId)
+        public void RemoveRelatedResolutionVotes(string resolutionId)
         {
             List<Vote> relatedVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).ToList();
             _context.Votes.RemoveRange(relatedVotes);

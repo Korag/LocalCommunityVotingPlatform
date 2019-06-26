@@ -31,8 +31,12 @@ namespace LocalCommunityVotingPlatform.Services
             {
                 QuantityString = "0" + Quantity.ToString();
             }
+            else
+            {
+                QuantityString = Quantity.ToString();
+            }
 
-            string Indexer = $"{Quantity}/{Month}/{Year}";
+            string Indexer = $"{QuantityString}/{Month}/{Year}";
 
             return Indexer;
         }

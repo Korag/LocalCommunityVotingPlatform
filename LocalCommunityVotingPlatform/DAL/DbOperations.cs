@@ -200,6 +200,7 @@ namespace LocalCommunityVotingPlatform.DAL
             {
                 DisplayUserCredentials userViewModel = new DisplayUserCredentials
                 {
+                    UserId = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 };

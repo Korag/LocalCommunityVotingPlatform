@@ -60,7 +60,23 @@ export class VoteForResolution extends Component {
                     <div className="grid-container fluid callout translucent-form-overlay small-12 medium-6 large-4 cell">
 
                         <div className="text-center">
-                            <h2>Głosowanie nad uchwałą</h2>
+                            {this.props.blockedForVote ? 
+                                <h2>Głosowanie zostało zakończone</h2>
+                                :
+                                <h2>Głosowanie nad uchwałą</h2>
+                            }
+                                
+                            {(this.state.selectedOption === '0') && this.props.blockedForVote ?
+                                        <p>Nie głosowałeś nad tą uchwałą</p>
+                                        :
+                                        null
+                                    }      
+
+                            {(this.state.selectedOption != '0') && this.props.alreadyVoted ?
+                                        <p>Oddałeś następujący głos:</p>
+                                        :
+                                        null
+                                    }    
                         </div>
 
                         <form>

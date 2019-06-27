@@ -4,6 +4,7 @@ import { getJWTtoken } from '../../helpers/jwtHandler';
 import { NotificationManager } from 'react-notifications';
 import { VoteForResolution } from '../VoteComponents/VoteForResolution';
 import { ResultDiagramWithStatistics } from '../VoteComponents/ResultDiagramWithStatistics';
+import { VoteForResolutionAdmin } from '../VoteComponents/VoteForResolutionAdmin';
 
 export class ResolutionDetails extends Component {
     static displayName = ResolutionDetails.name;
@@ -126,8 +127,12 @@ export class ResolutionDetails extends Component {
                     </div>
                 </div>
 
-                {this.state.enableVoteForm || this.state.alreadyVoted || this.props.blockedForVote ?
+                {(this.state.enableVoteForm || this.state.alreadyVoted || this.props.blockedForVote) && !this.state.SuperUser ?
                     <VoteForResolution RefreshComponent={this.RefreshComponent} resolutionId={this.props.resolutionId} blockedForVote={this.props.blockedForVote} alreadyVoted={this.state.alreadyVoted} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
+                    : null}
+
+                {(this.state.enableVoteForm || this.state.alreadyVoted || this.props.blockedForVote) && this.state.SuperUser ?
+                    <VoteForResolutionAdmin RefreshComponent={this.RefreshComponent} resolutionId={this.props.resolutionId} blockedForVote={this.props.blockedForVote} ShowVoteForm={this.ShowVoteForm} history={this.props.history} />
                     : null}
 
                 {this.state.enableResultsDiagram ?

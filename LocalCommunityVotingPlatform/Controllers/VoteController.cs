@@ -55,6 +55,15 @@ namespace LocalCommunityVotingPlatform.Controllers
 
         [HttpGet]
         [Authorize]
+        public bool CheckIfAlreadyAdminVotedForResolution(string resolutionId, string userId)
+        {
+            bool voteExist = _context.CheckIfVoteExist(resolutionId, userId);
+
+            return voteExist;
+        }
+
+        [HttpGet]
+        [Authorize]
         public Vote GetVote(string resolutionId)
         {
             string userId = _context.GetUserByEmail(GetUserEmailFromRequest()).Id;
@@ -112,6 +121,34 @@ namespace LocalCommunityVotingPlatform.Controllers
             return BadRequest();
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<Vote> VoteForResolutionAsAdmin(string resolutionId, string userId, string chosenOption)
+        {
+            int EnumValue = Int32.Parse(chosenOption);
+
+            if (Enum.GetName(typeof(VoteChosenOption), EnumValue) == Enum.GetName(typeof(VoteChosenOption), 0))
+            {
+                return BadRequest();
+            }
+            else if (!CheckIfAlreadyAdminVotedForResolution(resolutionId, userId))
+            {
+                Vote newVote = new Vote
+                {
+                    UserId = userId,
+                    ResolutionId = resolutionId,
+
+                    DateOfVoting = DateTime.Now,
+                    ChosenOption = chosenOption
+                };
+
+                _context.AddVote(newVote);
+
+                return Ok();
+            }
+            return BadRequest();
+        }
+
 
         [HttpGet]
         [Authorize]
@@ -140,6 +177,15 @@ namespace LocalCommunityVotingPlatform.Controllers
             voteStatisticsViewModel.NoVoteQuantity = _context.GetNoVotesQuantity(voteStatisticsViewModel.VoteQuantity);
 
             return voteStatisticsViewModel;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public List<DisplayUserCredentials> GetUsersCredentialsWithoutVote(string resolutionId)
+        {
+            List<DisplayUserCredentials> UsersWithoutVote = _context.GetUsersWithLackOfVoteBasicCredentials(resolutionId);
+
+            return UsersWithoutVote;
         }
     }
 }

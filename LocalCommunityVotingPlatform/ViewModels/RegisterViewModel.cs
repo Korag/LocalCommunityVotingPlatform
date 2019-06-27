@@ -32,6 +32,12 @@ namespace LocalCommunityVotingPlatform.ViewModels
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Pole \"{0}\" jest wymagane")]
+        [Display(Name = "Adres zamieszkania")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Pole \"{0}\" powinno zawierać od 3 do 100 znaków.")]
+        [DataType(DataType.Text)]
+        public string Address { get; set; }
+
         public ICollection<string> AvailableRoles { get; set; }
 
         [Display(Name = "Rola użytkownika")]

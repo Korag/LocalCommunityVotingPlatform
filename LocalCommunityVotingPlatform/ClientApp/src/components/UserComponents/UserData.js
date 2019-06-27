@@ -15,6 +15,7 @@ export class UserData extends Component {
             email: '',
             firstName: '',
             lastName: '',
+            address: '',
 
             enabledChangePasswordForm: false
         }
@@ -34,7 +35,8 @@ export class UserData extends Component {
                 this.setState({
                     email: result.data.email,
                     firstName: result.data.firstName,
-                    lastName: result.data.lastName
+                    lastName: result.data.lastName,
+                    address: result.data.address
                 });
             })
     }
@@ -63,6 +65,8 @@ export class UserData extends Component {
                                     <input type="text" name="firstName" value={this.state.firstName} disabled />
                                     <label>Nazwisko</label>
                                     <input type="text" name="lastName" value={this.state.lastName} disabled />
+                                    <label>Adres zamieszkania</label>
+                                    <input type="text" name="address" value={this.state.address} disabled />
                                 </div>
                                 <div className="row">
                                     {!this.state.enabledChangePasswordForm ?

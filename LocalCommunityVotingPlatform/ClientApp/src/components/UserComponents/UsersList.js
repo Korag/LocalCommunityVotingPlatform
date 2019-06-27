@@ -32,6 +32,12 @@ export class UsersTable extends Component {
                         width: 200
                     },
                     {
+                        label: 'Adres',
+                        field: 'address',
+                        sort: 'asc',
+                        width: 200
+                    },
+                    {
                         label: 'Rola',
                         field: 'role',
                         sort: 'asc',

@@ -96,7 +96,8 @@ namespace LocalCommunityVotingPlatform.Controllers
                     UserName = registeredUser.Email,
                     Email = registeredUser.Email,
                     FirstName = registeredUser.FirstName,
-                    LastName = registeredUser.LastName
+                    LastName = registeredUser.LastName,
+                    Address = registeredUser.Address
                 };
 
                 var password = _passwordGenerator.GeneratePassword();

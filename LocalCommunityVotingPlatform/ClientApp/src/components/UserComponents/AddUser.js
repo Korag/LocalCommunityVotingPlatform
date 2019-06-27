@@ -14,6 +14,7 @@ export class AddUser extends Component {
             firstName: '',
             lastName: '',
             role: 'User',
+            address: '',
 
             formNotValid: false,
             validationErrors: []
@@ -41,6 +42,7 @@ export class AddUser extends Component {
                     FirstName: this.state.firstName,
                     LastName: this.state.lastName,
                     Email: this.state.email,
+                    Address: this.state.address,
                     SelectedRole: this.state.role
                 }
             }).then(res => {
@@ -73,6 +75,8 @@ export class AddUser extends Component {
                                     <input type="text" name="firstName" onChange={e => this.changeValue(e)} value={this.state.firstName} />
                                     <label>Nazwisko</label>
                                     <input type="text" name="lastName" onChange={e => this.changeValue(e)} value={this.state.lastName} />
+                                    <label>Adres zamieszkania</label>
+                                    <input type="text" name="address" onChange={e => this.changeValue(e)} value={this.state.address} />
                                     <label>Rola</label>
                                     <select value={this.state.role} onChange={this.handleChange}>
                                         <option value="User">Użytkownik</option>
@@ -98,6 +102,7 @@ export class AddUser extends Component {
                                     <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
                                      <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'LastName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Address'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'Role'} validationErrors={this.state.validationErrors} />
                                 </div>
                             </div>

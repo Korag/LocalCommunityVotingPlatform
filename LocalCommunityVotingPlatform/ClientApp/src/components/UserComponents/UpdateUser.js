@@ -15,6 +15,7 @@ export class UpdateUser extends Component {
             email: '',
             firstName: '',
             lastName: '',
+            address: '',
             role: '',
             availableRoles: [],
 
@@ -49,6 +50,7 @@ export class UpdateUser extends Component {
                     FirstName: this.state.firstName,
                     LastName: this.state.lastName,
                     Email: this.state.email,
+                    Address: this.state.address,
                     Role: this.state.role
                 }
             }).then(res => {
@@ -79,7 +81,8 @@ export class UpdateUser extends Component {
                 password: result.data.password,
                 firstName: result.data.firstName,
                 lastName: result.data.lastName,
-                role: result.data.role,
+                address: result.data.address,
+                role: result.data.role
             });
         })
     }
@@ -101,6 +104,8 @@ export class UpdateUser extends Component {
                                     <input type="text" name="firstName" onChange={e => this.changeValue(e)} value={this.state.firstName} />
                                     <label>Nazwisko</label>
                                     <input type="text" name="lastName" onChange={e => this.changeValue(e)} value={this.state.lastName} />
+                                    <label>Adres zamieszkania</label>
+                                    <input type="text" name="address" onChange={e => this.changeValue(e)} value={this.state.address} />
                                     <label>Rola</label>
                                     <select value={this.state.role} onChange={this.handleChange}>
                                         <option value="User">Użytkownik</option>
@@ -126,6 +131,7 @@ export class UpdateUser extends Component {
                                     <ValidationHandler fieldName={'Email'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'FirstName'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'LastName'} validationErrors={this.state.validationErrors} />
+                                    <ValidationHandler fieldName={'Address'} validationErrors={this.state.validationErrors} />
                                     <ValidationHandler fieldName={'Role'} validationErrors={this.state.validationErrors} />
                                 </div>
                             </div>

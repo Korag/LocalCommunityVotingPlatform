@@ -60,6 +60,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Address = user.Address,
                     Role = UserRoles.FirstOrDefault()
                 };
 
@@ -89,6 +90,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 LegacyUser.FirstName = updatedUser.FirstName;
                 LegacyUser.LastName = updatedUser.LastName;
                 LegacyUser.Email = updatedUser.Email;
+                LegacyUser.Address = updatedUser.Address;
 
                 _context.SaveChanges();
 
@@ -144,6 +146,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 Email = User.Email,
                 FirstName = User.FirstName,
                 LastName = User.LastName,
+                Address = User.Address,
                 Role = UserRoles.FirstOrDefault()
             };
 

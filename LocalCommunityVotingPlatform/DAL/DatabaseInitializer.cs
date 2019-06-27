@@ -20,7 +20,8 @@ namespace LocalCommunityVotingPlatform.DAL
                     FirstName = "Seed",
                     LastName = "Admin",
                     Email = "vertisio.com@gmail.com",
-                    UserName = "vertisio.com@gmail.com"
+                    UserName = "vertisio.com@gmail.com",
+                    Address = "LocalCommunity"
                 };
 
                 var result = userManager.CreateAsync(user, "Qwer!234").Result;

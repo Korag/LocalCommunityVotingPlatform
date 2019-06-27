@@ -94,7 +94,7 @@ export class VoteForResolutionAdmin extends Component {
                             <h2>Głosowanie nad uchwałą</h2>
                         </div>
 
-                        {!this.state.allVoted ?
+                        {!this.state.allVoted && !this.props.blockedForVote ?
                             <form>
                                 <div className="grid-container">
 
@@ -126,9 +126,19 @@ export class VoteForResolutionAdmin extends Component {
                                 </div>
                             </form>
                             :
+                            null}
+
+                        {this.state.allVoted ?
                             <div className="text-center">
                                 <p>Wszyscy użytkownicy oddali już swój głos na tą uchwałę</p>
-                            </div>}
+                            </div>
+                            : null}
+
+                        {this.props.blockedForVote ?
+                            <div className="text-center">
+                                <p>Głosowanie zostało już zamknięte</p>
+                            </div>
+                            : null}
                     </div>
                 </div>
             </div>

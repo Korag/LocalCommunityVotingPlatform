@@ -7,6 +7,7 @@ using System.Security.Claims;
 using LocalCommunityVotingPlatform.Models;
 using System;
 using LocalCommunityVotingPlatform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace LocalCommunityVotingPlatform.Controllers
 {
@@ -17,7 +18,6 @@ namespace LocalCommunityVotingPlatform.Controllers
         Against,
         Abstain
     }
-
 
     [Authorize]
     [Route("api/[controller]/[action]")]
@@ -123,6 +123,7 @@ namespace LocalCommunityVotingPlatform.Controllers
                 ArrayWithStatistics = _context.GetQuantityOfConcreteOptions(resolutionId)
             };
             voteStatisticsViewModel.NoVoteQuantity = _context.GetNoVotesQuantity(voteStatisticsViewModel.VoteQuantity);
+            voteStatisticsViewModel.UsersData = _context.GetUsersWithLackOfVoteBasicCredentials(resolutionId);
 
             return voteStatisticsViewModel;
         }

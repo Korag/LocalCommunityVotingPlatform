@@ -1,4 +1,5 @@
 ﻿using LocalCommunityVotingPlatform.Models;
+using LocalCommunityVotingPlatform.ViewModels;
 using System.Collections.Generic;
 
 namespace LocalCommunityVotingPlatform.DAL
@@ -12,6 +13,9 @@ namespace LocalCommunityVotingPlatform.DAL
 
         ICollection<User> GetUsers();
         User GetUserByEmail(string email);
+        ICollection<User> GetUsersWithoutAdmins();
+        User GetUserById(string userId);
+        ICollection<User> GetUsersById(ICollection<string> usersId);
 
         #endregion
 
@@ -37,6 +41,7 @@ namespace LocalCommunityVotingPlatform.DAL
         int GetNoVotesQuantity(int voteQuantity);
         int[] GetQuantityOfConcreteOptions(string resolutionId);
         int[] GetPercentageQuantityOfConcreteOptions(string resolutionId);
+        List<DisplayUserCredentials> GetUsersWithLackOfVoteBasicCredentials(string resolutionId);
         #endregion
 
         void SaveChanges();

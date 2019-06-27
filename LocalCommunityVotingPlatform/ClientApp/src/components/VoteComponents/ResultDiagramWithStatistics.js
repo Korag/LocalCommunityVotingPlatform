@@ -16,13 +16,14 @@ export class ResultDiagramWithStatistics extends Component {
         this.state = {
             voteQuantity: 0,
             noVoteQuantity: 0,
+            UsersData: [],
 
             dataBar: {
                 labels: ["Za", "Przeciw", "Wstrzymaj się"],
                 datasets: [
                     {
                         label: "Liczba oddanych głosów",
-                        data: [0,0,0],
+                        data: [0, 0, 0],
                         backgroundColor: [
                             "rgba(124, 252, 0, 0.4)",
                             "rgba(255, 134,159,0.4)",
@@ -90,7 +91,8 @@ export class ResultDiagramWithStatistics extends Component {
 
             this.setState({
                 voteQuantity: result.data.voteQuantity,
-                noVoteQuantity: result.data.noVoteQuantity
+                noVoteQuantity: result.data.noVoteQuantity,
+                UsersData: result.data.usersData
             });
             this.setState({
                 databar
@@ -123,7 +125,16 @@ export class ResultDiagramWithStatistics extends Component {
                                     <label>Liczba członków społeczności, którzy nie oddali głosu</label>
                                     <input type="text" name="noVoteQuantity" value={this.state.noVoteQuantity} disabled />
 
-                                    <div className="text-center">
+                                    {this.state.UsersData.length != 0 ?
+                                        <label> Osoby, które nie oddały swojego głosu:</label>
+                                        : null}
+                                    {this.state.UsersData.map(function (d, idx) {
+                                        return (
+                                            <input type="text" style={{ marginBottom: 0 }} name="noVoteUser" value={d.firstName + " " + d.lastName} disabled />
+                                        )
+                                    })}
+
+                                    <div className="text-center" style={{marginTop:20}}>
                                         <h2>Udział liczbowy</h2>
                                     </div>
 
@@ -147,7 +158,7 @@ export class ResultDiagramWithStatistics extends Component {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }

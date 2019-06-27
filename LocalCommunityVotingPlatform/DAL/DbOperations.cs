@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using LocalCommunityVotingPlatform.Models;
+using LocalCommunityVotingPlatform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace LocalCommunityVotingPlatform.DAL
 {
     public class DbOperations : IDbOperations
     {
+        private UserManager<User> _userManager;
         private EntityFrameworkContext _context;
+
+        public DbOperations(UserManager<User> userManager)
+        {
+            _context = new EntityFrameworkContext();
+            _userManager = userManager;
+
+            _context.Database.EnsureCreated();
+        }
 
         public DbOperations()
         {
@@ -64,6 +75,30 @@ namespace LocalCommunityVotingPlatform.DAL
             return _context.Users.Where(z => z.Email == email).FirstOrDefault();
         }
 
+        public User GetUserById(string userId)
+        {
+            return _context.Users.Where(z => z.Id == userId).FirstOrDefault();
+        }
+
+        public ICollection<User> GetUsersById(ICollection<string> usersId)
+        {
+            List<User> usersList = new List<User>();
+
+            foreach (var id in usersId)
+            {
+                User singleUser = GetUserById(id);
+                usersList.Add(singleUser);
+            }
+
+            return usersList;
+        }
+
+        public ICollection<User> GetUsersWithoutAdmins()
+        {
+            var usersInRoleUser = _userManager.GetUsersInRoleAsync("User").Result.ToList();
+            return usersInRoleUser;
+        }
+
         #endregion
 
         #region Resolutions
@@ -84,7 +119,7 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public ICollection<Resolution> GetArchiveResolutions()
         {
-            return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate < DateTime.Now).ToList();
+            return _context.Resolutions.Where(z => z.ActiveToVoteBeforeDate < DateTime.Now.Date).ToList();
         }
 
         public Resolution GetResolutionById(string resolutionId)
@@ -146,7 +181,31 @@ namespace LocalCommunityVotingPlatform.DAL
 
         public int GetNoVotesQuantity(int voteQuantity)
         {
-            return _context.Users.Count() - voteQuantity;
+            var usersInRoleUser = _userManager.GetUsersInRoleAsync("User").Result.Count();
+            return usersInRoleUser - voteQuantity;
+        }
+
+        public List<DisplayUserCredentials> GetUsersWithLackOfVoteBasicCredentials(string resolutionId)
+        {
+            var AllStandardUsers = GetUsersWithoutAdmins();
+
+            var UsersWithVotesId = _context.Votes.Where(z => z.ResolutionId == resolutionId).Select(z=> z.UserId).ToList();
+            var UsersWithVotes = GetUsersById(UsersWithVotesId);
+
+            var UsersWithoutVote = AllStandardUsers.Where(z => !UsersWithVotes.Select(t => t.Email).ToList().Contains(z.Email)).ToList();
+
+            List<DisplayUserCredentials> usersWithoutVotesViewModel = new List<DisplayUserCredentials>(); 
+
+            foreach (var user in UsersWithoutVote)
+            {
+                DisplayUserCredentials userViewModel = new DisplayUserCredentials
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                };
+                usersWithoutVotesViewModel.Add(userViewModel);
+            }
+            return usersWithoutVotesViewModel;
         }
 
         public int[] GetQuantityOfConcreteOptions(string resolutionId)

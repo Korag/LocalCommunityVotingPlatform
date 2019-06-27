@@ -141,9 +141,9 @@ export class ActiveResolutionsList extends Component {
                         let singleId = result[i].id;
                         let resolutionCredentials = result[i].indexer + " " + result[i].title;
 
-                        let title = result[i].title.substr(0, 180);
+                        let title = result[i].title.substr(0, 150);
 
-                        if (result[i].title.length > 180) {
+                        if (result[i].title.length > 150) {
                             title = title + "(...)";
                         }
 

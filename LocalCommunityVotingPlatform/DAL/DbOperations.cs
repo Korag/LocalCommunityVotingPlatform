@@ -227,13 +227,14 @@ namespace LocalCommunityVotingPlatform.DAL
             public int[] GetPercentageQuantityOfConcreteOptions(string resolutionId)
             {
                 int[] arrayWithStatistics = new int[3];
-                int totalNumberOfVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
+                float totalNumberOfVotes = _context.Votes.Where(z => z.ResolutionId == resolutionId).Count();
 
                 if (totalNumberOfVotes != 0)
                 {
                     for (int i = 1; i < 4; i++)
                     {
-                        arrayWithStatistics[i - 1] = (_context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count() / totalNumberOfVotes) * 100;
+                        float votesPerOption = _context.Votes.Where(z => z.ResolutionId == resolutionId && z.ChosenOption == i.ToString()).Count();
+                        arrayWithStatistics[i - 1] = Convert.ToInt32((votesPerOption / totalNumberOfVotes) * 100.00f);
                     }
                 }
 
